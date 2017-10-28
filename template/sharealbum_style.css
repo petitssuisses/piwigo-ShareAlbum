@@ -1,0 +1,65 @@
+#sharealbum {
+	
+}
+
+.sharealbum-button_inactive {
+  background:url('icon-share-grey.png') center center no-repeat !important;
+  min-width:18px;
+  min-height:18px;
+}
+
+.sharealbum-button_active {
+  background:url('icon-share-grey.png') center center no-repeat !important;
+  min-width:18px;
+  min-height:18px;
+}
+
+.sharealbum_li {
+	padding-top: 3px;
+    padding-right: 20px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    border:0px;
+}
+
+.sharealbum_input_url {
+	font-size: 11px;
+	padding-top: 3px;
+    padding-right: 20px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    border:0px;
+    color: #23527c;
+}
+
+.sharealbum_url {
+	font-size: 11px;
+	border-radius: 3px;
+	border-color: #fff;
+	outline: none;
+    outline-width: medium;
+    outline-style: none;
+    outline-color: currentcolor;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+	padding-top: 7px;
+	padding-right: 8px;
+	padding-bottom: 7px;
+	padding-left: 8px;
+}
+
+.sharealbum_button {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 3px;
+    font-size: 11px;
+    
+}
+.dropdown-menu > input {
+    display: block;
+       
+    clear: both;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;

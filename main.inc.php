@@ -1,0 +1,265 @@
+<?php
+/*
+Plugin Name: Share Album
+Version: 1.0
+Description: Plugin enabling a simple share feature for albums
+Plugin URI: auto
+Author: Arnaud (bonhommedeneige)
+Author URI: 
+*/
+
+defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
+
+if (basename(dirname(__FILE__)) != 'ShareAlbum')
+{
+  add_event_handler('init', 'sharealbum_error');
+  function sharealbum_error()
+  {
+    global $page;
+    $page['errors'][] = 'Share Album plugin folder name is incorrect, uninstall the plugin and rename it to "ShareAlbum"';
+  }
+  return;
+}
+
+
+// +-----------------------------------------------------------------------+
+// | Define plugin constants                                               |
+// +-----------------------------------------------------------------------+
+global $prefixeTable;
+
+define('SHAREALBUM_ID',      basename(dirname(__FILE__)));
+define('SHAREALBUM_PATH' ,   PHPWG_PLUGINS_PATH . SHAREALBUM_ID . '/');
+define('SHAREALBUM_TABLE',   $prefixeTable . 'sharealbum');
+define('SHAREALBUM_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SHAREALBUM_ID);
+define('SHAREALBUM_PUBLIC',  get_absolute_root_url() . make_index_url(array('section' => 'sharealbum')) . '/');
+define('SHAREALBUM_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'ShareAlbum/');
+
+define('SHAREALBUM_URL_AUTH', 'xauth'); 				// Shared album code identifier, used to trigger auto login feature for the album using this sharing key
+define('SHAREALBUM_KEY_LENGTH', 12);					// Length of the authentication key
+
+define('SHAREALBUM_URL_ACTION','xact');				// URL attribute for actions handling
+define('SHAREALBUM_URL_ACTION_CREATE','activate');		// Action value for creating a new album share
+define('SHAREALBUM_URL_ACTION_CANCEL','cancel');		// Action value for cancelling an album share
+define('SHAREALBUM_URL_ACTION_RENEW','renew');			// Action value for renewing an album sharing key
+define('SHAREALBUM_URL_CATEGORY','cat');				// URL attribute for categories handling
+define('SHAREALBUM_URL_MESSAGE','msg');					// URL attribute for passing feedback messages to user interface (such as 'creation successfull, renew done, ...')
+define('SHAREALBUM_URL_MESSAGE_SHARED','shared');		// Pass message to user that album was shared
+define('SHAREALBUM_URL_MESSAGE_CANCELLED','deleted');	// Pass message to user that album was cancelled
+define('SHAREALBUM_URL_MESSAGE_RENEWED','renewed');		// Pass message to user that album link was renewed
+
+define('SHAREALBUM_USER_PREFIX','share_');				// Prefix to prepend to a guest user
+define('SHAREALBUM_USER_CODE_SUFFIX_LENGTH',8);			// Length of the random suffix to apply to auto created users
+define('SHAREALBUM_USER_PASSWORD_LENGTH',16);			// Length of the random password for auto created users
+
+// load functions
+include_once(SHAREALBUM_PATH.'include/sharealbum_functions.inc.php');
+
+// +-----------------------------------------------------------------------+
+// | Add event handlers                                                    |
+// +-----------------------------------------------------------------------+
+// init the plugin
+add_event_handler('init', 'sharealbum_init');
+
+
+
+/*
+ * this is the common way to define event functions: create a new function for each event you want to handle
+ */
+if (defined('IN_ADMIN'))
+{
+  // file containing all admin handlers functions
+  $admin_file = SHAREALBUM_PATH . 'include/admin_events.inc.php';
+
+  // admin plugins menu link
+  add_event_handler('get_admin_plugin_menu_links', 'sharealbum_admin_plugin_menu_links',
+   EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+
+  // new tab on photo page
+//  add_event_handler('tabsheet_before_select', 'albumshare_tabsheet_before_select',
+//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+
+  // new prefiler in Batch Manager
+//  add_event_handler('get_batch_manager_prefilters', 'albumshare_add_batch_manager_prefilters',
+//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+//  add_event_handler('perform_batch_manager_prefilters', 'albumshare_perform_batch_manager_prefilters',
+//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+
+  // new action in Batch Manager
+//  add_event_handler('loc_end_element_set_global', 'albumshare_loc_end_element_set_global',
+//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+//  add_event_handler('element_set_global_action', 'albumshare_element_set_global_action',
+//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
+}
+else
+{
+  // file containing all public handlers functions
+  $public_file = SHAREALBUM_PATH . 'include/public_events.inc.php';
+
+  add_event_handler('init', 'sharealbum_init');
+
+  // Add Share button on album pages
+  add_event_handler('loc_end_index', 'sharealbum_add_button',
+    EVENT_HANDLER_PRIORITY_NEUTRAL, $public_file);
+  
+  add_event_handler('loc_end_section_init', 'sharealbum_loc_end_page',
+  EVENT_HANDLER_PRIORITY_NEUTRAL, $public_file);
+}
+
+// file containing API function
+//$ws_file = SHAREALBUM_PATH . 'include/ws_functions.inc.php';
+
+// add API function
+//add_event_handler('ws_add_methods', 'albumshare_ws_add_methods',
+//    EVENT_HANDLER_PRIORITY_NEUTRAL, $ws_file);
+
+
+/*
+ * event functions can also be wrapped in a class
+ */
+
+// file containing the class for menu handlers functions
+//$menu_file = SHAREALBUM_PATH . 'include/menu_events.class.php';
+
+// add item to existing menu (EVENT_HANDLER_PRIORITY_NEUTRAL+10 is for compatibility with Advanced Menu Manager plugin)
+//add_event_handler('blockmanager_apply', array('AlbumShareMenu', 'blockmanager_apply1'),
+//  EVENT_HANDLER_PRIORITY_NEUTRAL+10, $menu_file);
+
+// add a new menu block (the declaration must be done every time, in order to be able to manage the menu block in "Menus" screen and Advanced Menu Manager)
+//add_event_handler('blockmanager_register_blocks', array('AlbumShareMenu', 'blockmanager_register_blocks'),
+//  EVENT_HANDLER_PRIORITY_NEUTRAL, $menu_file);
+//add_event_handler('blockmanager_apply', array('AlbumShareMenu', 'blockmanager_apply2'),
+//  EVENT_HANDLER_PRIORITY_NEUTRAL, $menu_file);
+
+// NOTE: blockmanager_apply1() and blockmanager_apply2() can (must) be merged
+
+
+/**
+ * plugin initialization
+ *   - check for upgrades
+ *   - unserialize configuration
+ *   - load language
+ */
+function sharealbum_init()
+{
+  global $conf;
+
+  // load plugin language file
+  load_language('plugin.lang', SHAREALBUM_PATH);
+
+  // prepare plugin configuration
+  $conf['sharealbum'] = safe_unserialize($conf['sharealbum']);
+  
+  // Shared mode detection
+  if (isset($_GET[SHAREALBUM_URL_AUTH]))
+  {
+  	if (!is_a_guest()) {
+  		logout_user();
+  		redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
+  	} else {
+	  	$result = pwg_query("
+					SELECT `cat`,`user_id`
+					FROM `".SHAREALBUM_TABLE."`
+					WHERE
+						`code` = '".$_GET[SHAREALBUM_URL_AUTH]."'"
+	  	);
+	  	if (pwg_db_num_rows($result))
+	  	{
+	  		$row = pwg_db_fetch_assoc($result);
+	  		
+			log_user($row['user_id'],false);
+			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
+	  	}
+  	}
+  }
+  
+  // An administrative action is detected
+  if (isset($_GET[SHAREALBUM_URL_ACTION])) 
+  {
+  	if (isset($_GET[SHAREALBUM_URL_CATEGORY]))
+  	{
+  		$sharealbum_cat = $_GET[SHAREALBUM_URL_CATEGORY];
+  		
+  		//TODO : Check cat is a numeric and exists
+  		switch ($_GET[SHAREALBUM_URL_ACTION])
+  		{
+  			case SHAREALBUM_URL_ACTION_CREATE:
+  				// Generate a unique (and unused) code
+  				$new_code = "";
+  				do {
+  					$new_code = sharealbum_generate_code(SHAREALBUM_KEY_LENGTH,false,false);
+  				} while ($new_code == sharealbum_get_share_code($sharealbum_cat));
+  				
+  				// Determine user name
+  				$sharealbum_new_user = "";
+  				do {
+  					$sharealbum_new_user = SHAREALBUM_USER_PREFIX.sharealbum_generate_code(SHAREALBUM_USER_CODE_SUFFIX_LENGTH,true,false);
+  				} while (!empty(validate_login_case($sharealbum_new_user)));
+  				// Register user
+  				$new_user_id = register_user($sharealbum_new_user,sharealbum_generate_code(SHAREALBUM_USER_PASSWORD_LENGTH, false,true),null,0,$page['errors'],false);
+  				if (pwg_query("
+			      UPDATE `".USER_INFOS_TABLE."`
+			      SET `status` = 'generic'
+			      WHERE `user_id` = ".$new_user_id.";
+			    ")) {
+			    	if (sharealbum_grant_private_category($new_user_id,$sharealbum_cat)) {
+			    		// TODO handle insertion error
+			    		// Insert code into sharealbum table
+			    		pwg_query("
+  					INSERT INTO `".SHAREALBUM_TABLE."` (`cat`,`user_id`,`code`,`creation_date`)
+  					VALUES (".$sharealbum_cat.",".$new_user_id.",'".$new_code."','".date("Y-m-d H:i:s")."')
+  				");
+			    		redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
+			    	}
+  				}
+  				break;
+  			case SHAREALBUM_URL_ACTION_CANCEL:
+  				// List declared shares on this category (should be only one)
+  				$res = pwg_query("
+  					SELECT `id`,`user_id`
+  					FROM `".SHAREALBUM_TABLE."`
+  					WHERE `cat`=".$sharealbum_cat
+  				);
+  				while ($row = pwg_db_fetch_assoc($res)) {
+  					// Remove user permission on category
+  					pwg_query("
+  						DELETE FROM `".USER_ACCESS_TABLE."`
+  						WHERE `user_id`=".$row['user_id']." 
+  						AND `cat_id`=".$sharealbum_cat
+  					); //TODO Check result
+  					
+  					// Delete user
+  					pwg_query("
+  						DELETE FROM `".USERS_TABLE."`
+  						WHERE `id`=".$row['user_id']
+  					); //TODO Check result
+  				};
+  				// Remove code from sharealbum table
+  				pwg_query("
+  					DELETE FROM `".SHAREALBUM_TABLE."`
+  					WHERE `cat`=".$sharealbum_cat
+  				);
+  				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_CANCELLED);
+  				break;
+  			case SHAREALBUM_URL_ACTION_RENEW:
+  				// Renewal of a link
+  				$new_code = "";
+  				do {
+  					$new_code = sharealbum_generate_code(SHAREALBUM_KEY_LENGTH,true,false);
+  				} while ($new_code == sharealbum_get_share_code($sharealbum_cat));
+  				if (!pwg_query("
+		          UPDATE `".SHAREALBUM_TABLE."`
+		          SET `code` = '".$new_code."',`creation_date`='".date("Y-m-d H:i:s")."'  
+		          WHERE `cat` = ".$sharealbum_cat
+  				)) die('Could not update code');
+  				// TODO Do not die, return error
+  				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_RENEWED);
+  				break;
+  		}
+  	}
+  }
+}
+
+
+
+
+
