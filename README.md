@@ -9,8 +9,11 @@ From this function, you can :
 * Cancel an active share
 
 # Versions history
+* Version 0.3 Early release, please consider as a beta version and do not use it for production
+			  Implemented #1 Event handler on user deletion #1 https://github.com/petitssuisses/piwigo-ShareAlbum/issues/1
+* Version 0.2 Early release, please consider as a beta version and do not use it for production. Fixed package
 * Version 0.1 Early release, please consider as a beta version and do not use it for production
-			  Compatible with the Piwigo 2.9.1
+			  Compatible with the Piwigo 2.9
 			  Tested with the following themes : Bootstrap Darkroom, Bootstrap default, clear, dark, elegant
 			  Not tested with a lot of other plugins activated, especially those interacting with URL arguments
 			  
