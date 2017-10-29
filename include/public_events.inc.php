@@ -100,7 +100,6 @@ function sharealbum_loc_end_page()
 
 
 
-
 // /**
 //  * detect current section
 //  */

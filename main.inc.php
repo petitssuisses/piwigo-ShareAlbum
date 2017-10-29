@@ -60,7 +60,8 @@ include_once(SHAREALBUM_PATH.'include/sharealbum_functions.inc.php');
 // init the plugin
 add_event_handler('init', 'sharealbum_init');
 
-
+// catch users deletion events
+add_event_handler('delete_user', 'sharealbum_on_delete_user');
 
 /*
  * this is the common way to define event functions: create a new function for each event you want to handle
@@ -257,6 +258,18 @@ function sharealbum_init()
   		}
   	}
   }
+}
+
+/**
+ * Cleans sharealbum table when a user is manually deleted by an administrator.
+ * @param unknown $user_id
+ */
+function sharealbum_on_delete_user($user_id) {
+	$res = pwg_query("
+  		DELETE
+  		FROM `".SHAREALBUM_TABLE."`
+  		WHERE `user_id`=".$user_id
+	);
 }
 
 
