@@ -3,7 +3,7 @@
 /*
  * 
  */
-
+// Commmon
 $lang['Share'] = 'Partager';
 $lang['This album is shared via a public link'] = 'Cet album est partagé via un lien public';
 $lang['Copy to clipboard'] = 'Copier vers le presse-papier';
@@ -17,5 +17,10 @@ $lang['Cancel sharing'] = 'Annuler ce partage';
 $lang['Share link was successfully created. Click the share button to display it.'] = 'Un lien public a correctement été créé. Veuillez utiliser le bouton Partager pour l\'afficher';
 $lang['Link was successfully renewed. Click the share button to display it.'] = 'Le lien public a été regénéré avec succès. Veuillez utiliser le bouton Partager pour l\'afficher';
 $lang['Link was successfully deleted. Album is no longer publicly shared.'] = 'Le lien public a été annulé avec succès. Cet album n\'est plus accessible publiquement';
+// Admin
+$lang['Hide menus for albums visitors'] = 'Cacher les menus pour les visiteurs';
+$lang['When checked, menus are hidden for visitors of the shared album'] = 'Si coché, les menus sont cachés pour les visiteurs utilisant le lien de partage';
+$lang['Replace navigation breadcrumbs with album name'] = 'Remplace les liens de la barre de navigation par le nom de l\'album uniquement';
+$lang['When checked, breadcrumbs are replaced with the album name'] = 'Si coché, le nom de l\'album est montré à la place des liens de navigation';
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Share Album
-Version: 1.0
+Version: auto
 Description: Plugin enabling a simple share feature for albums
 Plugin URI: auto
 Author: Arnaud (bonhommedeneige)
@@ -37,7 +37,7 @@ define('SHAREALBUM_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'ShareAlbum/');
 define('SHAREALBUM_URL_AUTH', 'xauth'); 				// Shared album code identifier, used to trigger auto login feature for the album using this sharing key
 define('SHAREALBUM_KEY_LENGTH', 12);					// Length of the authentication key
 
-define('SHAREALBUM_URL_ACTION','xact');				// URL attribute for actions handling
+define('SHAREALBUM_URL_ACTION','xact');					// URL attribute for actions handling
 define('SHAREALBUM_URL_ACTION_CREATE','activate');		// Action value for creating a new album share
 define('SHAREALBUM_URL_ACTION_CANCEL','cancel');		// Action value for cancelling an album share
 define('SHAREALBUM_URL_ACTION_RENEW','renew');			// Action value for renewing an album sharing key
@@ -51,6 +51,8 @@ define('SHAREALBUM_USER_PREFIX','share_');				// Prefix to prepend to a guest us
 define('SHAREALBUM_USER_CODE_SUFFIX_LENGTH',8);			// Length of the random suffix to apply to auto created users
 define('SHAREALBUM_USER_PASSWORD_LENGTH',16);			// Length of the random password for auto created users
 
+define('SHAREALBUM_SESSION_VAR','sharealbum_guest');	// Session variable, used to identify user is browsing as a (URL identified) guest
+
 // load functions
 include_once(SHAREALBUM_PATH.'include/sharealbum_functions.inc.php');
 
@@ -63,6 +65,11 @@ add_event_handler('init', 'sharealbum_init');
 // catch users deletion events
 add_event_handler('delete_user', 'sharealbum_on_delete_user');
 
+// hide menus for users using a sharealbum link
+add_event_handler('blockmanager_apply', 'sharealbum_hide_menus');
+add_event_handler('loc_end_index', 'sharealbum_replace_breadcrumb');
+add_event_handler('loc_end_picture','sharealbum_replace_breadcrumb');
+
 /*
  * this is the common way to define event functions: create a new function for each event you want to handle
  */
@@ -74,22 +81,6 @@ if (defined('IN_ADMIN'))
   // admin plugins menu link
   add_event_handler('get_admin_plugin_menu_links', 'sharealbum_admin_plugin_menu_links',
    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
-
-  // new tab on photo page
-//  add_event_handler('tabsheet_before_select', 'albumshare_tabsheet_before_select',
-//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
-
-  // new prefiler in Batch Manager
-//  add_event_handler('get_batch_manager_prefilters', 'albumshare_add_batch_manager_prefilters',
-//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
-//  add_event_handler('perform_batch_manager_prefilters', 'albumshare_perform_batch_manager_prefilters',
-//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
-
-  // new action in Batch Manager
-//  add_event_handler('loc_end_element_set_global', 'albumshare_loc_end_element_set_global',
-//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
-//  add_event_handler('element_set_global_action', 'albumshare_element_set_global_action',
-//    EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
 }
 else
 {
@@ -105,34 +96,6 @@ else
   add_event_handler('loc_end_section_init', 'sharealbum_loc_end_page',
   EVENT_HANDLER_PRIORITY_NEUTRAL, $public_file);
 }
-
-// file containing API function
-//$ws_file = SHAREALBUM_PATH . 'include/ws_functions.inc.php';
-
-// add API function
-//add_event_handler('ws_add_methods', 'albumshare_ws_add_methods',
-//    EVENT_HANDLER_PRIORITY_NEUTRAL, $ws_file);
-
-
-/*
- * event functions can also be wrapped in a class
- */
-
-// file containing the class for menu handlers functions
-//$menu_file = SHAREALBUM_PATH . 'include/menu_events.class.php';
-
-// add item to existing menu (EVENT_HANDLER_PRIORITY_NEUTRAL+10 is for compatibility with Advanced Menu Manager plugin)
-//add_event_handler('blockmanager_apply', array('AlbumShareMenu', 'blockmanager_apply1'),
-//  EVENT_HANDLER_PRIORITY_NEUTRAL+10, $menu_file);
-
-// add a new menu block (the declaration must be done every time, in order to be able to manage the menu block in "Menus" screen and Advanced Menu Manager)
-//add_event_handler('blockmanager_register_blocks', array('AlbumShareMenu', 'blockmanager_register_blocks'),
-//  EVENT_HANDLER_PRIORITY_NEUTRAL, $menu_file);
-//add_event_handler('blockmanager_apply', array('AlbumShareMenu', 'blockmanager_apply2'),
-//  EVENT_HANDLER_PRIORITY_NEUTRAL, $menu_file);
-
-// NOTE: blockmanager_apply1() and blockmanager_apply2() can (must) be merged
-
 
 /**
  * plugin initialization
@@ -168,6 +131,7 @@ function sharealbum_init()
 	  		$row = pwg_db_fetch_assoc($result);
 	  		
 			log_user($row['user_id'],false);
+			pwg_set_session_var(SHAREALBUM_SESSION_VAR, true);
 			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
 	  	}
   	}
@@ -272,7 +236,31 @@ function sharealbum_on_delete_user($user_id) {
 	);
 }
 
+/**
+ * Removes menus for visitors using the link (identified through the session) when option
+ * option_hide_menus is turned on
+ * @param unknown $menublock
+ */
+function sharealbum_hide_menus($menublock) {
+	global $conf;
+  
+	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_hide_menus'])))
+  	{
+  		$menublock[0]->hide_block('mbIdentification'); 	// Removes Identification
+  		$menublock[0]->hide_block('mbCategories'); 		// Removes Albums
+  		$menublock[0]->hide_block('mbMenu');			// Removes Menu
+  		$menublock[0]->hide_block('mbSpecials');		// Removes Specials
+  	}
+}
 
-
-
-
+function sharealbum_replace_breadcrumb() {
+	global $conf,$template,$page;
+	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs'])))
+	{
+		$section = $page['title'];
+		$section_title = substr($section,strrpos($section,'">',0)+2,strlen($section)-strrpos($section,'">',0));
+		$section_title = substr($section_title,0,strrpos($section_title,'</a>',0));
+		$template->assign('TITLE', $section_title);
+		$template->assign('SECTION_TITLE',  $section_title." /&nbsp;");
+	}
+}

@@ -19,9 +19,28 @@ jQuery(".showInfo").tipTip({
 	<h2>Share Album</h2>
 </div>
 <div id="helpContent">
-  <p>{'Share Album plugin enables you to share albums through a simple click.<br>
-  For each shared album, it generates for a unique URL enabling autologin using a (unique) user, then having only access to the shared album.<br>
-  <br>Share menu is available to administrator users in each Private category page'|@translate}</p>
+  <p>{$INTRO_CONTENT}</p>
 </div>
 
+<form method="post" action="" class="properties">
+<fieldset>
+  <legend>{'Shared albums options'|translate}</legend>
+  <ul>
+    <li>
+      <label>
+        <input type="checkbox" name="option_hide_menus" value="{$sharealbum.option_hide_menus}" {if $sharealbum.option_hide_menus}checked="checked"{/if}>
+        <b>{'Hide menus for albums visitors'|translate}</b>
+      </label>
+      <a class="icon-info-circled-1 showInfo" title="{'When checked, menus are hidden for visitors of the shared album'|translate}"></a>
+    </li>
+    <li>
+      <label>
+        <input type="checkbox" name="option_replace_breadcrumbs" value="{$sharealbum.option_replace_breadcrumbs}" {if $sharealbum.option_replace_breadcrumbs}checked="checked"{/if}>
+        <b>{'Replace navigation breadcrumbs with album name'|translate}</b>
+      </label>
+      <a class="icon-info-circled-1 showInfo" title="{'When checked, breadcrumbs are replaced with the album name'|translate}"></a>
+    </li>
+  </ul>
+</fieldset>
+<p class="formButtons"><input type="submit" name="save_config" value="{'Save Settings'|translate}"></p>
 </form>

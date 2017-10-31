@@ -8,26 +8,19 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 // save config
 if (isset($_POST['save_config']))
 {
-  $conf['skeleton'] = array(
-    'option1' => intval($_POST['option1']),
-    'option2' => isset($_POST['option2']),
-    'option3' => $_POST['option3'],
+  $conf['sharealbum'] = array(
+    'option_hide_menus' => isset($_POST['option_hide_menus']),
+  	'option_replace_breadcrumbs' => isset($_POST['option_replace_breadcrumbs']),
     );
 
   conf_update_param('sharealbum', $conf['sharealbum']);
   $page['infos'][] = l10n('Information data registered in database');
 }
 
-$select_options = array(
-  'one' => l10n('One'),
-  'two' => l10n('Two'),
-  'three' => l10n('Three'),
-  );
-
 // send config to template
 $template->assign(array(
   'sharealbum' => $conf['sharealbum'],
-  'select_options' => $select_options
+  'INTRO_CONTENT' => load_language('intro.html', SHAREALBUM_PATH, array('return'=>true)),
   ));
 
 // define template file

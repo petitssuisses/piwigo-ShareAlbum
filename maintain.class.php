@@ -9,9 +9,8 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 class ShareAlbum_maintain extends PluginMaintain
 {
   private $default_conf = array(
-//     'option1' => 10,
-//     'option2' => true,
-//     'option3' => 'two',
+    'option_hide_menus' => true,			// option to hide menus for automatically logged in users
+    'option_replace_breadcrumbs' => true,	// option to replace navigation breadcrumbs with album name
     );
 
   private $table;
@@ -48,11 +47,6 @@ class ShareAlbum_maintain extends PluginMaintain
     else
     {
       $old_conf = safe_unserialize($conf['sharealbum']);
-
-      if (empty($old_conf['option3']))
-      { // use case: this parameter was added in a new version
-        $old_conf['option3'] = 'two';
-      }
       conf_update_param('sharealbum', $old_conf, true);
     }
 
