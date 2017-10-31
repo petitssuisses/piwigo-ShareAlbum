@@ -9,6 +9,11 @@ From this function, you can :
 * Cancel an active share
 
 # Versions history
+* Version 0.4 Early release
+			  Compatible with the Piwigo 2.9
+			  Implemented Issue #5 Option - Remove breadcrumbs and display only album name
+			  Implemented Issue #6 Option - Hide menus albums accessed though unique URL
+			  Fixed translations
 * Version 0.3 Early release, please consider as a beta version and do not use it for production
 			  Implemented #1 Event handler on user deletion #1 https://github.com/petitssuisses/piwigo-ShareAlbum/issues/1
 * Version 0.2 Early release, please consider as a beta version and do not use it for production. Fixed package
@@ -31,13 +36,7 @@ Requirements to share an album :
 - The share function is only available for private albums
 
 # Todo list / Upcoming features
-* Event handler on user deletion to remove the associated album share (in case of deletion of a auto generated user by an administrator) 
-* Cleanup code, better error handling
-* An decent administration / configuration interface 
-    * List of the currently shared albums and associated actions (regenerate link, cancel share)
-    * Option to remove the menus from user interface, especially to hide Identification menu
-* Option to share an album for n days instead of forever
-* A sanity check function which checks that shared albums, associated users, users granted visibility, etc... are coherent
+See issues list on GitHub : https://github.com/petitssuisses/piwigo-ShareAlbum/issues
 
 # Author 
 Arnaud (bonhommedeneige) http://piwigo.org/forum/profile.php?id=19052
