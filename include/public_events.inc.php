@@ -92,67 +92,6 @@ function sharealbum_loc_end_page()
 		} else {
 			// No shareing detected
 			$template->assign('SHAREALBUM_LINK_CREATE',get_absolute_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
-			
 		}
 	}
 }
-
-
-
-
-// /**
-//  * detect current section
-//  */
-// function albumshare_loc_end_section_init()
-// {
-//   global $tokens, $page, $conf;
-
-//   if ($tokens[0] == 'albumshare')
-//   {
-//     $page['section'] = 'albumshare';
-
-//     // section_title is for breadcrumb, title is for page <title>
-//     $page['section_title'] = '<a href="'.get_absolute_root_url().'">'.l10n('Home').'</a>'.$conf['level_separator'].'<a href="'.ALBUMSHARE_PUBLIC.'">'.l10n('Album Share').'</a>';
-//     $page['title'] = l10n('Skeleton');
-
-//     $page['body_id'] = 'theAlbumSharePage';
-//     $page['is_external'] = true; // inform Piwigo that you are on a new page
-//   }
-// }
-
-// /**
-//  * include public page
-//  */
-// function albumshare_loc_end_page()
-// {
-//   global $page, $template;
-
-//   if (isset($page['section']) and $page['section']=='albumshare')
-//   {
-//     include(ALBUMSHARE_PATH . 'include/albumshare_page.inc.php');
-//   }
-// }
-
-
-// /**
-//  * add a prefilter on photo page
-//  */
-// function albumshare_loc_end_picture()
-// {
-//   global $template;
-
-//   $template->set_prefilter('picture', 'albumshare_picture_prefilter');
-// }
-
-// function albumshare_picture_prefilter($content)
-// {
-//   $search = '{if $display_info.author and isset($INFO_AUTHOR)}';
-//   $replace = '
-// <div id="Skeleton" class="imageInfo">
-//   <dt>{\'Skeleton\'|@translate}</dt>
-//   <dd style="color:orange;">{\'Piwigo rocks\'|@translate}</dd>
-// </div>
-// ';
-
-//   return str_replace($search, $replace.$search, $content);
-// }

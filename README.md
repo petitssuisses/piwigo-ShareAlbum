@@ -8,7 +8,13 @@ From this function, you can :
 * Regenerate the unique URL
 * Cancel an active share
 
+Administrative functions : 
+* Optionnaly remove breadcrumbs on shared albums
+* Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
+
 # Versions history
+* Version 0.5 Beta release
+			  Implemented Issue #8 (bigs38) Return to the album view enhancement : Album name now links to the category page
 * Version 0.4 Early release
 			  Compatible with the Piwigo 2.9
 			  Implemented Issue #5 Option - Remove breadcrumbs and display only album name

@@ -8,7 +8,6 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 
 global $template, $page, $conf;
 
-
 // get current tab
 $page['tab'] = isset($_GET['tab']) ? $_GET['tab'] : $page['tab'] = 'config';
 

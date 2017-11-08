@@ -21,7 +21,6 @@ if (basename(dirname(__FILE__)) != 'ShareAlbum')
   return;
 }
 
-
 // +-----------------------------------------------------------------------+
 // | Define plugin constants                                               |
 // +-----------------------------------------------------------------------+
@@ -253,6 +252,10 @@ function sharealbum_hide_menus($menublock) {
   	}
 }
 
+/**
+ * Replaces the navigation breadcrumbs with the album name
+ * Album name is linked to album home page
+ */
 function sharealbum_replace_breadcrumb() {
 	global $conf,$template,$page;
 	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs'])))
@@ -260,7 +263,9 @@ function sharealbum_replace_breadcrumb() {
 		$section = $page['title'];
 		$section_title = substr($section,strrpos($section,'">',0)+2,strlen($section)-strrpos($section,'">',0));
 		$section_title = substr($section_title,0,strrpos($section_title,'</a>',0));
-		$template->assign('TITLE', $section_title);
-		$template->assign('SECTION_TITLE',  $section_title." /&nbsp;");
+		$breadcrumb = "<a href='".PHPWG_ROOT_PATH.'index.php?/category/'.$page['category']['id']."'>Accueil</a>";
+		$breadcrumb = $breadcrumb."&nbsp;/&nbsp;<a href='".PHPWG_ROOT_PATH.'index.php?/category/'.$page['category']['id']."'>".$section_title."</a>";
+		$template->assign('TITLE', $breadcrumb);
+		$template->assign('SECTION_TITLE',  $breadcrumb." /&nbsp;");
 	}
 }
