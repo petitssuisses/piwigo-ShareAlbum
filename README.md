@@ -4,7 +4,7 @@ For any private album, you can generate and share a unique URL that you can shar
 Use the new Share function available on private albums (for administrator users only).
 From this function, you can : 
 * Create a new share
-* Copy share URL to clipboad
+* Copy share URL to clipboard
 * Regenerate the unique URL
 * Cancel an active share
 
