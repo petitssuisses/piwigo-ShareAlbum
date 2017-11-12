@@ -80,7 +80,7 @@ function sharealbum_generate_code($len,$lower,$use_special_chars) {
 	$i = 0;
 	$code = '' ;
 
-	while ($i <= $len) {
+	while ($i < $len) {
 		$num = rand() % 33;
 		$tmp = substr($chars, $num, 1);
 		$code = $code . $tmp;
