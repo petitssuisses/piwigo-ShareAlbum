@@ -115,6 +115,11 @@ function sharealbum_init()
   // Shared mode detection
   if (isset($_GET[SHAREALBUM_URL_AUTH]))
   {
+  	// First handle security check on code
+  	if (strlen($_GET[SHAREALBUM_URL_AUTH]) != SHAREALBUM_KEY_LENGTH) {
+  		die("Hacking attempt");	// TODO enhance, redirect to index page without diying
+  	}
+  	
   	if (!is_a_guest()) {
   		logout_user();
   		redirect(PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_AUTH.'='.$_GET[SHAREALBUM_URL_AUTH]);
@@ -258,7 +263,7 @@ function sharealbum_hide_menus($menublock) {
  */
 function sharealbum_replace_breadcrumb() {
 	global $conf,$template,$page;
-	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs'])))
+	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs']) and isset($page['category'])))
 	{
 		$section = $page['title'];
 		$section_title = substr($section,strrpos($section,'">',0)+2,strlen($section)-strrpos($section,'">',0));
