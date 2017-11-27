@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
 
     // delete table
     pwg_query('DROP TABLE `'. $this->table .'`;');
+    pwg_query('DROP TABLE `'. $this->table_log .'`;');
 
     // delete local folder
     // use a recursive function if you plan to have nested directories
