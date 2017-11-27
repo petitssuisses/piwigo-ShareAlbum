@@ -13,6 +13,12 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.0 Implemented #15 Add number of visits and last visit using the shared link enhancement 
+			  Implemented #13 Provide a way to logout guest user when browsing in shared link mode enhancement
+			  Implemented #2 Administration / List of the currently shared albums
+			  Fixed #12 When browsing in guest mode, access to identification.php produces undifined index category errors
+			  Fixed #10 Prevent codes smaller or longer than expected
+			  Fixed #9 Share button shows on categories (with subcategories) page
 * Version 0.5 Beta release
 			  Implemented Issue #8 (bigs38) Return to the album view enhancement : Album name now links to the category page
 * Version 0.4 Early release

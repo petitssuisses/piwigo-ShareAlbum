@@ -29,6 +29,7 @@ global $prefixeTable;
 define('SHAREALBUM_ID',      basename(dirname(__FILE__)));
 define('SHAREALBUM_PATH' ,   PHPWG_PLUGINS_PATH . SHAREALBUM_ID . '/');
 define('SHAREALBUM_TABLE',   $prefixeTable . 'sharealbum');
+define('SHAREALBUM_TABLE_LOG',   $prefixeTable . 'sharealbum_log');
 define('SHAREALBUM_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SHAREALBUM_ID);
 define('SHAREALBUM_PUBLIC',  get_absolute_root_url() . make_index_url(array('section' => 'sharealbum')) . '/');
 define('SHAREALBUM_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'ShareAlbum/');
@@ -40,6 +41,7 @@ define('SHAREALBUM_URL_ACTION','xact');					// URL attribute for actions handlin
 define('SHAREALBUM_URL_ACTION_CREATE','activate');		// Action value for creating a new album share
 define('SHAREALBUM_URL_ACTION_CANCEL','cancel');		// Action value for cancelling an album share
 define('SHAREALBUM_URL_ACTION_RENEW','renew');			// Action value for renewing an album sharing key
+define('SHAREALBUM_URL_ACTION_LOGIN','login');			// Action value for login (logout from guest)
 define('SHAREALBUM_URL_CATEGORY','cat');				// URL attribute for categories handling
 define('SHAREALBUM_URL_MESSAGE','msg');					// URL attribute for passing feedback messages to user interface (such as 'creation successfull, renew done, ...')
 define('SHAREALBUM_URL_MESSAGE_SHARED','shared');		// Pass message to user that album was shared
@@ -63,9 +65,11 @@ add_event_handler('init', 'sharealbum_init');
 
 // catch users deletion events
 add_event_handler('delete_user', 'sharealbum_on_delete_user');
-
+// register new identification block
+add_event_handler('blockmanager_register_blocks', 'sharealbum_identification_menu_register');
 // hide menus for users using a sharealbum link
-add_event_handler('blockmanager_apply', 'sharealbum_hide_menus');
+//add_event_handler('blockmanager_apply', 'sharealbum_manage_menus');
+add_event_handler('blockmanager_prepare_display', 'sharealbum_manage_menus');
 add_event_handler('loc_end_index', 'sharealbum_replace_breadcrumb');
 add_event_handler('loc_end_picture','sharealbum_replace_breadcrumb');
 
@@ -135,6 +139,9 @@ function sharealbum_init()
 	  		$row = pwg_db_fetch_assoc($result);
 	  		
 			log_user($row['user_id'],false);
+			// log visit
+			pwg_query("INSERT INTO `".SHAREALBUM_TABLE_LOG."` (`cat_id`,`ip`,`visit_d`)
+  					VALUES (".$row['cat'].", '".$_SERVER['REMOTE_ADDR']."', '".date("Y-m-d H:i:s")."')");
 			pwg_set_session_var(SHAREALBUM_SESSION_VAR, true);
 			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
 	  	}
@@ -144,7 +151,10 @@ function sharealbum_init()
   // An administrative action is detected
   if (isset($_GET[SHAREALBUM_URL_ACTION])) 
   {
-  	if (isset($_GET[SHAREALBUM_URL_CATEGORY]))
+  	if ($_GET[SHAREALBUM_URL_ACTION] == SHAREALBUM_URL_ACTION_LOGIN) {
+  		logout_user(); // First logout current user
+  		redirect(PHPWG_ROOT_PATH.'identification.php');
+  	} else if (isset($_GET[SHAREALBUM_URL_CATEGORY]))
   	{
   		$sharealbum_cat = $_GET[SHAREALBUM_URL_CATEGORY];
   		
@@ -207,6 +217,11 @@ function sharealbum_init()
   					DELETE FROM `".SHAREALBUM_TABLE."`
   					WHERE `cat`=".$sharealbum_cat
   				);
+  				// Remove any existing log from sharealbum_log table
+  				pwg_query("
+  					DELETE FROM `".SHAREALBUM_TABLE_LOG."`
+  					WHERE `cat_id`=".$sharealbum_cat
+  				);
   				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_CANCELLED);
   				break;
   			case SHAREALBUM_URL_ACTION_RENEW:
@@ -245,15 +260,31 @@ function sharealbum_on_delete_user($user_id) {
  * option_hide_menus is turned on
  * @param unknown $menublock
  */
-function sharealbum_hide_menus($menublock) {
-	global $conf;
+function sharealbum_manage_menus($menublock) {
+	global $conf,$template,$user;
   
 	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_hide_menus'])))
   	{
-  		$menublock[0]->hide_block('mbIdentification'); 	// Removes Identification
-  		$menublock[0]->hide_block('mbCategories'); 		// Removes Albums
-  		$menublock[0]->hide_block('mbMenu');			// Removes Menu
-  		$menublock[0]->hide_block('mbSpecials');		// Removes Specials
+  		$blocks = $menublock[0]->get_registered_blocks();
+  		foreach($blocks as $block) {
+  			if ($block->get_id() != 'mbShareConnect') {
+  				// Hide any block other than mbShareConnect if enabled
+  				$menublock[0]->hide_block($block->get_id());
+  			}
+  		}
+  	}
+  	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_show_login_menu'])))
+  	{
+	  	if (($menublock[0]->get_block('mbShareConnect')) != null) {
+	  			$template->assign(
+	  				array(
+	  					'sharealbum_login_link' => PHPWG_ROOT_PATH.'index.php?'.SHAREALBUM_URL_ACTION.'='.SHAREALBUM_URL_ACTION_LOGIN,
+	  					'sharealbum_theme' => $user['theme'],
+	  				)
+	  			);
+				$template->set_template_dir(SHAREALBUM_PATH.'template/');
+				$menublock[0]->get_block('mbShareConnect')->template = 'menubar_ident.tpl';
+		}
   	}
 }
 
@@ -273,4 +304,16 @@ function sharealbum_replace_breadcrumb() {
 		$template->assign('TITLE', $breadcrumb);
 		$template->assign('SECTION_TITLE',  $breadcrumb." /&nbsp;");
 	}
+}
+
+/**
+ *
+ * @param unknown $menu_ref_arr
+ */
+function sharealbum_identification_menu_register($menu_ref_arr )
+{
+	$menu = & $menu_ref_arr[0];
+	if ($menu->get_id() != 'menubar')
+		return;
+	$menu->register_block( new RegisteredBlock( 'mbShareConnect', 'mbShareConnect', 'ShareAlbum'));
 }

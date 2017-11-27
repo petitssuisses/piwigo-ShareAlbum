@@ -1,20 +1,5 @@
 {combine_css path=$SHAREALBUM_PATH|@cat:"admin/template/style.css"}
 
-{footer_script}
-jQuery('input[name="option2"]').change(function() {
-  $('.option1').toggle();
-});
-
-jQuery(".showInfo").tipTip({
-  delay: 0,
-  fadeIn: 200,
-  fadeOut: 200,
-  maxWidth: '300px',
-  defaultPosition: 'bottom'
-});
-{/footer_script}
-
-
 <div class="titrePage">
 	<h2>Share Album</h2>
 </div>
@@ -28,10 +13,17 @@ jQuery(".showInfo").tipTip({
   <ul>
     <li>
       <label>
-        <input type="checkbox" name="option_hide_menus" value="{$sharealbum.option_hide_menus}" {if $sharealbum.option_hide_menus}checked="checked"{/if}>
+        <input type="checkbox" id="option_hide_menus" name="option_hide_menus" value="{$sharealbum.option_hide_menus}" {if $sharealbum.option_hide_menus}checked="checked"{/if}>
         <b>{'Hide menus for albums visitors'|translate}</b>
       </label>
       <a class="icon-info-circled-1 showInfo" title="{'When checked, menus are hidden for visitors of the shared album'|translate}"></a>
+    </li>
+    <li>
+      <label>
+        &nbsp;<input type="checkbox" id="option_show_login_menu" name="option_show_login_menu" value="{$sharealbum.option_show_login_menu}" {if $sharealbum.option_show_login_menu}checked="checked"{/if}>
+        <b>{'Show a login menu'|translate}</b>
+      </label>
+      <a class="icon-info-circled-1 showInfo" title="{'When checked, a login menu is shown for guests browsing via a shared link'|translate}"></a>
     </li>
     <li>
       <label>
@@ -44,3 +36,27 @@ jQuery(".showInfo").tipTip({
 </fieldset>
 <p class="formButtons"><input type="submit" name="save_config" value="{'Save Settings'|translate}"></p>
 </form>
+
+{footer_script require='jquery'}{literal}
+function update_options() {
+	if (jQuery('#option_hide_menus').prop('checked') == true)  {
+  		jQuery('#option_show_login_menu').prop('disabled', false);
+  	} else {
+  		jQuery('#option_show_login_menu').prop('disabled', true);
+      	jQuery('#option_show_login_menu').prop('checked', false);
+    }
+};
+
+jQuery(".showInfo").tipTip({
+  delay: 0,
+  fadeIn: 200,
+  fadeOut: 200,
+  maxWidth: '300px',
+  defaultPosition: 'bottom'
+});
+
+jQuery('#option_hide_menus').change(function() {
+    update_options();
+});
+{/literal}
+{/footer_script}

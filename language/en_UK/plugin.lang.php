@@ -19,5 +19,8 @@ $lang['Hide menus for albums visitors'] = 'Hide menus for albums visitors';
 $lang['When checked, menus are hidden for visitors of the shared album'] = 'When checked, menus are hidden for visitors of the shared album';
 $lang['Replace navigation breadcrumbs with album name'] = 'Replace navigation breadcrumbs with album name';
 $lang['When checked, breadcrumbs are replaced with the album name'] = 'When checked, breadcrumbs are replaced with the album name';
-
+$lang['Show a login menu'] = 'Show a login menu';
+$lang['When checked, a login menu is shown for guests browsing via a shared link'] = 'When checked, a login menu is shown for guests browsing via a shared link';
+$lang['This will disconnect you from the current album and load the identification page. Do you confirm ?'] = 'This will disconnect you from the current album and load the identification page. Do you confirm ?';
+$lang['Last visit'] = 'Last visit';
 ?>

@@ -22,5 +22,8 @@ $lang['Hide menus for albums visitors'] = 'Cacher les menus pour les visiteurs';
 $lang['When checked, menus are hidden for visitors of the shared album'] = 'Si coché, les menus sont cachés pour les visiteurs utilisant le lien de partage';
 $lang['Replace navigation breadcrumbs with album name'] = 'Remplace les liens de la barre de navigation par le nom de l\'album uniquement';
 $lang['When checked, breadcrumbs are replaced with the album name'] = 'Si coché, le nom de l\'album est montré à la place des liens de navigation';
-
+$lang['Show a login menu'] = 'Ajouter un menu de connexion';
+$lang['When checked, a login menu is shown for guests browsing via a shared link'] = 'Si coché, ajoute un menu permettant de connecter un utilisateur';
+$lang['This will disconnect you from the current album and load the identification page. Do you confirm ?'] = 'Vous allez quitter la consultation de cet album et charger la page d\'identification. Confirmez-vous ?';
+$lang['Last visit'] = 'Dernière visite';
 ?>

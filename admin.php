@@ -19,8 +19,9 @@ if ($page['tab'] != 'photo')
   $tabsheet = new tabsheet();
   $tabsheet->set_id('ShareAlbum');
 
- // $tabsheet->add('home', l10n('Welcome'), SHAREALBUM_ADMIN . '-home');
   $tabsheet->add('config', l10n('Configuration'), SHAREALBUM_ADMIN . '-config');
+  $tabsheet->add('albums', l10n('Shared Albums'), SHAREALBUM_ADMIN . '-albums');
+ 
   $tabsheet->select($page['tab']);
   $tabsheet->assign();
 }
