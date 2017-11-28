@@ -32,6 +32,13 @@
       </label>
       <a class="icon-info-circled-1 showInfo" title="{'When checked, breadcrumbs are replaced with the album name'|translate}"></a>
     </li>
+     <li>
+      <label>
+        <input type="checkbox" name="option_remember_me" value="{$sharealbum.option_remember_me}" {if $sharealbum.option_remember_me}checked="checked"{/if}>
+        <b>{'Sets remember me cookie for logged in guests (auto-login)'|translate}</b>
+      </label>
+      <a class="icon-info-circled-1 showInfo" title="{'When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'|translate}"></a>
+    </li>
   </ul>
 </fieldset>
 <p class="formButtons"><input type="submit" name="save_config" value="{'Save Settings'|translate}"></p>

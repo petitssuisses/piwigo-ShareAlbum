@@ -12,6 +12,7 @@ if (isset($_POST['save_config']))
     'option_hide_menus' => isset($_POST['option_hide_menus']),
   	'option_replace_breadcrumbs' => isset($_POST['option_replace_breadcrumbs']),
   	'option_show_login_menu' => isset($_POST['option_show_login_menu']),
+  	'option_remember_me' => isset($_POST['option_remember_me']),
     );
 
   conf_update_param('sharealbum', $conf['sharealbum']);

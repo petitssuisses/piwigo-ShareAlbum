@@ -137,8 +137,11 @@ function sharealbum_init()
 	  	if (pwg_db_num_rows($result))
 	  	{
 	  		$row = pwg_db_fetch_assoc($result);
-	  		
-			log_user($row['user_id'],false);
+	  		$auto_login = false;
+	  		if ($conf['sharealbum']['option_remember_me']) {
+	  			$auto_login = true;
+	  		}
+			log_user($row['user_id'],$auto_login);
 			// log visit
 			pwg_query("INSERT INTO `".SHAREALBUM_TABLE_LOG."` (`cat_id`,`ip`,`visit_d`)
   					VALUES (".$row['cat'].", '".$_SERVER['REMOTE_ADDR']."', '".date("Y-m-d H:i:s")."')");

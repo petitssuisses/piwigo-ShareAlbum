@@ -23,4 +23,6 @@ $lang['Show a login menu'] = 'Show a login menu';
 $lang['When checked, a login menu is shown for guests browsing via a shared link'] = 'When checked, a login menu is shown for guests browsing via a shared link';
 $lang['This will disconnect you from the current album and load the identification page. Do you confirm ?'] = 'This will disconnect you from the current album and load the identification page. Do you confirm ?';
 $lang['Last visit'] = 'Last visit';
+$lang['Sets remember me cookie for logged in guests (auto-login)'] = 'Sets remember me cookie for logged in guests (auto-login)';
+$lang['When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'] = 'When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album';
 ?>

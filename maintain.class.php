@@ -12,6 +12,7 @@ class ShareAlbum_maintain extends PluginMaintain
     'option_hide_menus' => true,			// option to hide menus for automatically logged in users
     'option_show_login_menu' => true,		// option to show a login menu
     'option_replace_breadcrumbs' => true,	// option to replace navigation breadcrumbs with album name
+    'option_remember_me' => true,			// option to indicate remember me option for logged in users
     );
 
   private $table;
