@@ -13,6 +13,10 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.2 (NOT RELEASED YET)
+			  Fixed #18 Click on Connect within identification menu should trigger warning
+			  Implemented #14 Add option to "remember me" users logged in via shared link
+* Version 1.1 Fixed #17 Warning: [mysql error 1146] Table 'xxx.piwigo_sharealbum' doesn't exist
 * Version 1.0 Implemented #15 Add number of visits and last visit using the shared link enhancement 
 			  Implemented #13 Provide a way to logout guest user when browsing in shared link mode enhancement
 			  Implemented #2 Administration / List of the currently shared albums
