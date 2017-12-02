@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Share Album
+Plugin Name: ShareAlbum
 Version: auto
 Description: Plugin enabling a simple share feature for albums
 Plugin URI: auto
@@ -32,7 +32,7 @@ define('SHAREALBUM_TABLE',   $prefixeTable . 'sharealbum');
 define('SHAREALBUM_TABLE_LOG',   $prefixeTable . 'sharealbum_log');
 define('SHAREALBUM_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SHAREALBUM_ID);
 define('SHAREALBUM_PUBLIC',  get_absolute_root_url() . make_index_url(array('section' => 'sharealbum')) . '/');
-define('SHAREALBUM_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'ShareAlbum/');
+define('SHAREALBUM_DIR',     PHPWG_ROOT_PATH . PWG_LOCAL_DIR . 'Share_Album/');
 
 define('SHAREALBUM_URL_AUTH', 'xauth'); 				// Shared album code identifier, used to trigger auto login feature for the album using this sharing key
 define('SHAREALBUM_KEY_LENGTH', 12);					// Length of the authentication key

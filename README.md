@@ -13,6 +13,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.2.1
+  * Fixed #22 Fatal error: Class 'Share_Album_maintain' not found
 * Version 1.2
   * Implemented #19 List visits / ip of visitors of a shared album when clicking on the number of visits 
   * Implemented #14 Add option to "remember me" users logged in via shared link
