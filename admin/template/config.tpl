@@ -20,7 +20,7 @@
     </li>
     <li>
       <label>
-        &nbsp;<input type="checkbox" id="option_show_login_menu" name="option_show_login_menu" value="{$sharealbum.option_show_login_menu}" {if $sharealbum.option_show_login_menu}checked="checked"{/if}>
+        &nbsp;&nbsp;&nbsp;<input type="checkbox" id="option_show_login_menu" name="option_show_login_menu" value="{$sharealbum.option_show_login_menu}" {if $sharealbum.option_show_login_menu}checked="checked"{/if}>
         <b>{'Show a login menu'|translate}</b>
       </label>
       <a class="icon-info-circled-1 showInfo" title="{'When checked, a login menu is shown for guests browsing via a shared link'|translate}"></a>
@@ -43,6 +43,7 @@
 </fieldset>
 <p class="formButtons"><input type="submit" name="save_config" value="{'Save Settings'|translate}"></p>
 </form>
+
 
 {footer_script require='jquery'}{literal}
 function update_options() {

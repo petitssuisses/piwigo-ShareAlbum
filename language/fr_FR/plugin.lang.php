@@ -28,4 +28,6 @@ $lang['This will disconnect you from the current album and load the identificati
 $lang['Last visit'] = 'Dernière visite';
 $lang['Sets remember me cookie for logged in guests (auto-login)'] = 'Active l\'auto-login pour les visiteurs (pose de cookie remember me)';
 $lang['When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'] = 'Si coché, les visiteurs seront automatiquement connectés pour les visites ultérieures';
+$lang['IP address'] = 'Adresse IP';
+$lang['Visit date'] = 'Date de visite';
 ?>
