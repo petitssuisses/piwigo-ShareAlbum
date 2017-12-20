@@ -13,6 +13,9 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.2.2 (not released)
+  * Fixed #7 Interaction with CSS in LocalFiles Editor
+  * Fixed #23 Translation missing for french : Connection log for selected album
 * Version 1.2.1
   * Fixed #22 Fatal error: Class 'Share_Album_maintain' not found
 * Version 1.2
