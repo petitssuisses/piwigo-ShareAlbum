@@ -28,4 +28,5 @@ $lang['When checked, users can go back to root Piwigo url and automatically logg
 $lang['IP address'] = 'IP address';
 $lang['Visit date'] = 'Visit date';
 $lang['Connection log for selected album'] = 'Connection log for selected album';
+$lang['Activity logs shown below'] = 'Activity logs shown below';
 ?>

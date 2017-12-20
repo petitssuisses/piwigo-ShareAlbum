@@ -13,6 +13,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.3 (not released)
+  * Fixed #31 Translation : Activity logs shown below
 * Version 1.2.2
   * Fixed #7 Interaction with CSS in LocalFiles Editor
   * Fixed #23 Translation missing for french : Connection log for selected album
