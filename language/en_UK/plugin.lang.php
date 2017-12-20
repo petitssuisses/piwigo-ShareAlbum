@@ -27,4 +27,5 @@ $lang['Sets remember me cookie for logged in guests (auto-login)'] = 'Sets remem
 $lang['When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'] = 'When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album';
 $lang['IP address'] = 'IP address';
 $lang['Visit date'] = 'Visit date';
+$lang['Connection log for selected album'] = 'Connection log for selected album';
 ?>
