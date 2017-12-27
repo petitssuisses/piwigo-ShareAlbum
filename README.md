@@ -14,6 +14,7 @@ Administrative functions :
 
 # Versions history
 * Version 1.3 (not released)
+  * Implemented #29 Manage users within a group
   * Fixed #31 Translation : Activity logs shown below
 * Version 1.2.2
   * Fixed #7 Interaction with CSS in LocalFiles Editor

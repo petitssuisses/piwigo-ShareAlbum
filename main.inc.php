@@ -53,6 +53,7 @@ define('SHAREALBUM_USER_CODE_SUFFIX_LENGTH',8);			// Length of the random suffix
 define('SHAREALBUM_USER_PASSWORD_LENGTH',16);			// Length of the random password for auto created users
 
 define('SHAREALBUM_SESSION_VAR','sharealbum_guest');	// Session variable, used to identify user is browsing as a (URL identified) guest
+define('SHAREALBUM_GROUP','sharealbum');			// Group name of the guest users
 
 // load functions
 include_once(SHAREALBUM_PATH.'include/sharealbum_functions.inc.php');
@@ -177,13 +178,8 @@ function sharealbum_init()
   					$sharealbum_new_user = SHAREALBUM_USER_PREFIX.sharealbum_generate_code(SHAREALBUM_USER_CODE_SUFFIX_LENGTH,true,false);
   				} while (!empty(validate_login_case($sharealbum_new_user)));
   				// Register user
-  				$new_user_id = register_user($sharealbum_new_user,sharealbum_generate_code(SHAREALBUM_USER_PASSWORD_LENGTH, false,true),null,0,$page['errors'],false);
-  				if (pwg_query("
-			      UPDATE `".USER_INFOS_TABLE."`
-			      SET `status` = 'generic'
-			      WHERE `user_id` = ".$new_user_id.";
-			    ")) {
-			    	if (sharealbum_grant_private_category($new_user_id,$sharealbum_cat)) {
+  				$new_user_id = sharealbum_register_user($sharealbum_new_user,sharealbum_generate_code(SHAREALBUM_USER_PASSWORD_LENGTH, false,true));
+		    	if (sharealbum_grant_private_category($new_user_id,$sharealbum_cat)) {
 			    		// TODO handle insertion error
 			    		// Insert code into sharealbum table
 			    		pwg_query("
@@ -192,7 +188,6 @@ function sharealbum_init()
   				");
 			    		redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
 			    	}
-  				}
   				break;
   			case SHAREALBUM_URL_ACTION_CANCEL:
   				// List declared shares on this category (should be only one)
@@ -206,19 +201,33 @@ function sharealbum_init()
   					pwg_query("
   						DELETE FROM `".USER_ACCESS_TABLE."`
   						WHERE `user_id`=".$row['user_id']." 
-  						AND `cat_id`=".$sharealbum_cat
-  					); //TODO Check result
-  					
+  						AND `cat_id`=".$sharealbum_cat."
+  						LIMIT 1"
+  					);
+  					// Remove user infos from user_infos tables
+  					pwg_query("
+  						DELETE FROM `".USER_INFOS_TABLE."`
+  						WHERE `user_id`=".$row['user_id']."
+  						LIMIT 1"
+  					);
+  					// Remove group membership
+  					pwg_query("
+  						DELETE FROM `".USER_GROUP_TABLE."`
+  						WHERE `user_id`=".$row['user_id']."
+  						LIMIT 1"
+  					);
   					// Delete user
   					pwg_query("
   						DELETE FROM `".USERS_TABLE."`
-  						WHERE `id`=".$row['user_id']
-  					); //TODO Check result
+  						WHERE `id`=".$row['user_id']."
+  						LIMIT 1"
+  					);
   				};
   				// Remove code from sharealbum table
   				pwg_query("
   					DELETE FROM `".SHAREALBUM_TABLE."`
-  					WHERE `cat`=".$sharealbum_cat
+  					WHERE `cat`=".$sharealbum_cat."
+  					LIMIT 1"
   				);
   				// Remove any existing log from sharealbum_log table
   				pwg_query("
@@ -247,7 +256,7 @@ function sharealbum_init()
 }
 
 /**
- * Cleans sharealbum table when a user is manually deleted by an administrator.
+ * Cleans sharealbum table when a user is manually deleted by an administrator (through the interface)
  * @param unknown $user_id
  */
 function sharealbum_on_delete_user($user_id) {

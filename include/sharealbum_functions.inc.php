@@ -20,21 +20,27 @@ function sharealbum_grant_private_category($user_id,$cat_id) {
  * Creates a new user for being used with an album share
  * @param string $username Username
  * @param int $password_length Password length
- * @return int user_id in case of success | NULL in case of error
+ * @return int user_id in case of success | -1 in case of error
  */
 function sharealbum_register_user($username,$password_length) {
 	global $page;
 	$new_user_id = -1;
 	$new_user_id = register_user($username,sharealbum_generate_code($password_length, false,true),null,0,$page['errors'],false);
-	if (pwg_query("
+	// Sets user status to generic
+	pwg_query("
 	      UPDATE `".USER_INFOS_TABLE."`
 	      SET `status` = 'generic'
 	      WHERE `user_id` = ".$new_user_id.";
-	")) {
-		return $new_user_id;
-	} else {
-		return NULL;
-	}
+	");
+	// Put the user in the sharealbum group
+	pwg_query("
+			INSERT INTO `".USER_GROUP_TABLE."` (group_id, user_id)
+			SELECT g.id, ".$new_user_id."
+			FROM `".GROUPS_TABLE."` g
+			WHERE g.name like 'sharealbum'
+			LIMIT 1
+	");
+	return $new_user_id;
 }
 
 /**
@@ -90,5 +96,26 @@ function sharealbum_generate_code($len,$lower,$use_special_chars) {
 		$code = strtolower($code);
 	}
 	return $code;
+}
+
+/**
+ * 
+ * @param unknown $group_name
+ * @return Ambigous <number, unknown>
+ */
+function sharealbum_get_group_id($group_name) {
+	$group_id = -1;
+	$result = pwg_query("
+			SELECT `id`
+			FROM ".GROUPS_TABLE." 
+			WHERE `name`='".$group_name."'"
+			);
+	if (pwg_db_num_rows($result))
+	{
+		// Existing code found for this album
+		$row = pwg_db_fetch_assoc($result);
+		$group_id = $row['id'];
+	}
+	return $group_id;
 }
 ?>
