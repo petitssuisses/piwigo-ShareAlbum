@@ -16,6 +16,7 @@ Administrative functions :
 * Version 1.3 (not released)
   * Implemented #29 Manage users within a group
   * Fixed #31 Translation : Activity logs shown below
+  * Fixed #34 Fatal error "Can't use function return value in write con… #34 (merge request thanks to p10trk)
 * Version 1.2.2
   * Fixed #7 Interaction with CSS in LocalFiles Editor
   * Fixed #23 Translation missing for french : Connection log for selected album
