@@ -21,7 +21,7 @@
 	    <script>
 	    var clipboard = new Clipboard('.sharealbum_button');
 	    clipboard.on('success', function(e) {
-	        alert("{'Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'|translate}");
+	        alert("{'Link was successfully copied to clipboard. You can now use system paste functionality to share it !'|translate}");
 	    });
 	    clipboard.on('error', function(e) {
 	        alert("{'Please select the link and use the Edit > Copy function from your browser.'|translate}");

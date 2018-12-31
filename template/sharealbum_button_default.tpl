@@ -15,7 +15,7 @@
 		  <span class="glyphicon sharealbum-button_inactive"> </span>
 		</a>
 	{/if}
-	
+
 	{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
 		{'This album is shared via a public link'|translate}<br>
 		<input class="sharealbum_input_url" id="sharealbum_code" selected="yes" type="text" size="{$SHAREALBUM_CODE|count_characters:true+10}" value="{$SHAREALBUM_CODE}"/><br>
@@ -32,7 +32,7 @@ window.SwitchBox=window.SwitchBox||[]).push("#sharealbumLink", "#sharealbumBox")
 {footer_script}
 	    var clipboard = new Clipboard('.sharealbum_button');
 	    clipboard.on('success', function(e) {
-	        alert("{'Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'|translate}");
+	        alert("{'Link was successfully copied to clipboard. You can now use system paste functionality to share it !'|translate}");
 	    });
 	    clipboard.on('error', function(e) {
 	        alert("{'Please select the link and use the Edit > Copy function from your browser.'|translate}");
