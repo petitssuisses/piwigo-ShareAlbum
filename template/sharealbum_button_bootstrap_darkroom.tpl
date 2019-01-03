@@ -13,18 +13,18 @@
 		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>
 		</a>
 	{/if}
-	
+
 	<div class="dropdown-menu dropdown-menu-right" role="menu">
-	
+
 	{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
 		<span class="dropdown-item">{'This album is shared via a public link'|translate}</span>
 		<span class="dropdown-item"><span class="sharealbum_url">{$SHAREALBUM_CODE}</span></span>
-		
+
 		<button class="sharealbum_button" data-clipboard-text="{$SHAREALBUM_CODE}">{'Copy to clipboard'|translate}</button><br>
 	    <script>
 	    	var clipboard = new Clipboard('.sharealbum_button');
 	    	clipboard.on('success', function(e) {
-	        	alert("{'Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'|translate}");
+	        	alert("{'Link was successfully copied to clipboard. You can now use system paste functionality to share it !'|translate}");
 	    	});
 	    	clipboard.on('error', function(e) {
 	        	alert("{'Please select the link and use the Edit > Copy function from your browser.'|translate}");
