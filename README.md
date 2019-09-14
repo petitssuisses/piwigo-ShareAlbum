@@ -1,5 +1,9 @@
 Share Album is a [Piwigo](http://www.piwigo.org/) plugin to enable a simple (per album) share function.
 For any private album, you can generate and share a unique URL that you can share with the users you trust in enough to browse an album.
+
+# Download
+Released versions of the ShareAlbum plugin can be downloaded directly from Piwigo extensions page. See https://piwigo.org/ext/extension_view.php?eid=865 for releases history.
+
 # Usage
 Use the new Share function available on private albums (for administrator users only).
 From this function, you can : 
