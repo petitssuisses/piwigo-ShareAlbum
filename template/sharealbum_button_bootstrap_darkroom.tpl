@@ -5,7 +5,7 @@
  <li class="nav-item dropdown">
 	{* <!-- nothing more than the button itself must be defined here --> *}
 	{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
-		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" title="{'Share'|translate}">
+		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" title="{$T_SHAREALBUM_ALBUM_SHARE}">
 		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>
 		</a>
 	{else}
@@ -13,42 +13,42 @@
 		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>
 		</a>
 	{/if}
-
+	
 	<div class="dropdown-menu dropdown-menu-right" role="menu">
-
+	
 	{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
-		<span class="dropdown-item">{'This album is shared via a public link'|translate}</span>
+		<span class="dropdown-item">{$T_SHAREALBUM_ALBUM_SHARED}</span>
 		<span class="dropdown-item"><span class="sharealbum_url">{$SHAREALBUM_CODE}</span></span>
-
-		<button class="sharealbum_button" data-clipboard-text="{$SHAREALBUM_CODE}">{'Copy to clipboard'|translate}</button><br>
+		
+		<button class="sharealbum_button" data-clipboard-text="{$SHAREALBUM_CODE}">{$T_SHAREALBUM_COPY_TO_CLIPBOARD}</button><br>
 	    <script>
 	    	var clipboard = new Clipboard('.sharealbum_button');
 	    	clipboard.on('success', function(e) {
-	        	alert("{'Link was successfully copied to clipboard. You can now use system paste functionality to share it !'|translate}");
+				alert('{$T_SHAREALBUM_LINK_COPIED_SUCCESS}');
 	    	});
 	    	clipboard.on('error', function(e) {
-	        	alert("{'Please select the link and use the Edit > Copy function from your browser.'|translate}");
+	        	alert('{$T_SHAREALBUM_LINK_COPIED_FAILURE}');
 	    	});
 	    </script>
-		<a class="dropdown-item" href="{$SHAREALBUM_LINK_RENEW}" onclick="return(confirm('{'You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'|translate}'));">{'Renew link'|translate}</a>
-		<a class="dropdown-item" href="{$SHAREALBUM_LINK_CANCEL}" onclick="return(confirm('{'Are you sure you wish to cancel this album sharing ?'|translate}'));">{'Cancel sharing'|translate}</a>
+		<a class="dropdown-item" href="{$SHAREALBUM_LINK_RENEW}" onclick="return(confirm('{$T_SHAREALBUM_RENEW_WARNING}'));">{$T_SHAREALBUM_RENEW}</a>
+		<a class="dropdown-item" href="{$SHAREALBUM_LINK_CANCEL}" onclick="return(confirm('{$T_SHAREALBUM_CANCEL_WARNING}'));">{$T_SHAREALBUM_CANCEL}</a>
 	{else}
-		<a class="dropdown-item" href="{$SHAREALBUM_LINK_CREATE}">{'Share this album'|translate}</a>
+		<a href="{$SHAREALBUM_LINK_CREATE}" rel="nofollow">{$T_SHAREALBUM_SHARE}</a>
 	{/if}
 	</div>
 {/strip}
 {if ($SHAREALBUM_USER_MESSAGE == 'link_created')}
 <script>
-	alert("{'Share link was successfully created. Click the share button to display it.'|translate}");
+	alert("{$T_SHAREALBUM_LINK_CREATED}");
 </script>
 {/if}
 {if ($SHAREALBUM_USER_MESSAGE == 'link_renewed')}
 <script>
-	alert("{'Link was successfully renewed. Click the share button to display it.'|translate}");
+	alert("{$T_SHAREALBUM_LINK_RENEWED}");
 	</script>
 {/if}
 {if ($SHAREALBUM_USER_MESSAGE == 'link_cancelled')}
 <script>
-	alert("{'Link was successfully deleted. Album is no longer publicly shared.'|translate}");
+	alert("{$T_SHAREALBUM_LINK_CANCELLED}");
 	</script>
 {/if}

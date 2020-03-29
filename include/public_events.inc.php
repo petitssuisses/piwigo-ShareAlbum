@@ -9,7 +9,24 @@ function sharealbum_add_button()
 	global $template,$page,$user;
 
 	$template->assign('SHAREALBUM_PATH', SHAREALBUM_PATH);
-	
+	$template->assign(
+		array(
+			'T_SHAREALBUM_ALBUM_SHARE' => l10n('Share'),
+			'T_SHAREALBUM_ALBUM_SHARED' => l10n('Cet album est partagé par un lien public'),
+			'T_SHAREALBUM_COPY_TO_CLIPBOARD' => l10n('Copy to clipboard'),
+			'T_SHAREALBUM_LINK_COPIED_SUCCESS' => l10n('Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'),
+			'T_SHAREALBUM_LINK_COPIED_FAILURE' => l10n('lease select the link and use the Edit > Copy function from your browser.'),
+			'T_SHAREALBUM_RENEW_WARNING' => l10n('You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'),
+			'T_SHAREALBUM_RENEW' => l10n('Renew link'),
+			'T_SHAREALBUM_CANCEL' => l10n('Cancel sharing'),
+			'T_SHAREALBUM_CANCEL_WARNING' => l10n('Are you sure you wish to cancel this album sharing ?'),
+			'T_SHAREALBUM_SHARE' => l10n('Share this album'),
+			'T_SHAREALBUM_LINK_CREATED' => l10n('Share link was successfully created. Click the share button to display it.'),
+			'T_SHAREALBUM_LINK_RENEWED' => l10n('Link was successfully renewed. Click the share button to display it.'),
+			'T_SHAREALBUM_LINK_CANCELLED' => l10n('Link was successfully deleted. Album is no longer publicly shared.')
+		)
+	);
+
 	switch($user['theme'])
 	{
 		case 'bootstrapdefault':
@@ -17,6 +34,9 @@ function sharealbum_add_button()
 			break;
 		case 'bootstrap_darkroom':
 				$template->set_filename('sharealbum_button', realpath(SHAREALBUM_PATH.'template/sharealbum_button_bootstrap_darkroom.tpl'));
+				break;
+		case 'modus':
+				$template->set_filename('sharealbum_button', realpath(SHAREALBUM_PATH.'template/sharealbum_button_modus.tpl'));
 				break;
 		default:
 			$template->set_filename('sharealbum_button', realpath(SHAREALBUM_PATH.'template/sharealbum_button_default.tpl'));
