@@ -2,12 +2,12 @@
 {combine_script id="clip" path=$SHAREALBUM_PATH|cat:"template/js/clipboard.min.js"}
 {combine_css id="sharealbum" path=$SHAREALBUM_PATH|cat:"template/sharealbum_style.css"}
 
-<a id="sharealbumLink" title="{T_SHAREALBUM_ALBUM_SHARE}" class="pwg-state-default pwg-button" rel="nofollow">
+<a id="sharealbumLink" title="{$T_SHAREALBUM_ALBUM_SHARE}" class="pwg-state-default pwg-button" rel="nofollow">
 		<span class="pwg-icon sharealbum-button_active"></span><span class="pwg-button-text">{'Share'|translate}</span>
 	</a>
 	<div id="sharealbumBox" class="switchBox">
 	{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
-		<a title="{T_SHAREALBUM_ALBUM_SHARE}" class="pwg-state-default pwg-button" rel="nofollow" class="dropdown-toggle" data-toggle="dropdown">
+		<a title="{$T_SHAREALBUM_ALBUM_SHARE}" class="pwg-state-default pwg-button" rel="nofollow" class="dropdown-toggle" data-toggle="dropdown">
 		  <span class="glyphicon sharealbum-button_active"> </span>
 		</a>
 	{else}
