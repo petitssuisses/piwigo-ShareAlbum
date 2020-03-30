@@ -4,7 +4,7 @@
 $lang['Share'] = 'Share';
 $lang['This album is shared via a public link'] = 'This album is shared via a public link';
 $lang['Copy to clipboard'] = 'Copy to clipboard';
-$lang['Link was successfully copied to clipboard. You can now use system paste functionality to share it !'] = 'Link was successfully copied to clipboard. You can now use system paste functionality to share it !';
+$lang['Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'] = 'Link was successfully copied to clipboard. You can now use system paste functionnality to share it !';
 $lang['Please select the link and use the Edit > Copy function from your browser.'] = 'Please select the link and use the Edit > Copy function from your browser.';
 $lang['You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'] = 'You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?';
 $lang['Are you sure you wish to cancel this album sharing ?'] = 'Are you sure you wish to cancel this album sharing ?';

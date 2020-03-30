@@ -174,11 +174,9 @@ function sharealbum_init()
   				
   				// Determine user name
   				$sharealbum_new_user = "";
-				$user_is_in_use_str = NULL;
   				do {
   					$sharealbum_new_user = SHAREALBUM_USER_PREFIX.sharealbum_generate_code(SHAREALBUM_USER_CODE_SUFFIX_LENGTH,true,false);
-					$user_is_in_use_str = validate_login_case($sharealbum_new_user);
-                                } while (!empty($user_is_in_use_str));
+  				} while (!empty(validate_login_case($sharealbum_new_user)));
   				// Register user
   				$new_user_id = sharealbum_register_user($sharealbum_new_user,sharealbum_generate_code(SHAREALBUM_USER_PASSWORD_LENGTH, false,true));
 		    	if (sharealbum_grant_private_category($new_user_id,$sharealbum_cat)) {

@@ -12,7 +12,7 @@ function sharealbum_add_button()
 	$template->assign(
 		array(
 			'T_SHAREALBUM_ALBUM_SHARE' => l10n('Share'),
-			'T_SHAREALBUM_ALBUM_SHARED' => l10n('Cet album est partagé par un lien public'),
+			'T_SHAREALBUM_ALBUM_SHARED' => l10n('This album is shared via a public link'),
 			'T_SHAREALBUM_COPY_TO_CLIPBOARD' => l10n('Copy to clipboard'),
 			'T_SHAREALBUM_LINK_COPIED_SUCCESS' => l10n('Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'),
 			'T_SHAREALBUM_LINK_COPIED_FAILURE' => l10n('lease select the link and use the Edit > Copy function from your browser.'),
