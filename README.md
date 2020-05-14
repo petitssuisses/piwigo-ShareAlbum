@@ -13,9 +13,9 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
-* Version 1.4 (not release)
+* Version 1.4
   * Fixed #45 Modus theme compatibiliy
-* Version 1.3 (not released)
+* Version 1.3
   * Implemented #29 Manage users within a group
   * Fixed #31 Translation : Activity logs shown below
 * Version 1.2.2
