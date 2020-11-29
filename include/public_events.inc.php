@@ -106,12 +106,12 @@ function sharealbum_loc_end_page()
 			$row = pwg_db_fetch_assoc($result);
 			$template->assign('SHAREALBUM_LINK_IS_ACTIVE', 1);
 			$template->assign('SHAREALBUM_CODE', get_absolute_root_url()."?".SHAREALBUM_URL_AUTH."=".$row['code']);
-			$template->assign('SHAREALBUM_LINK_CANCEL',get_absolute_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CANCEL."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
-			$template->assign('SHAREALBUM_LINK_RENEW',get_absolute_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_RENEW."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
+			$template->assign('SHAREALBUM_LINK_CANCEL',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CANCEL."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
+			$template->assign('SHAREALBUM_LINK_RENEW',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_RENEW."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
 				
 		} else {
-			// No shareing detected
-			$template->assign('SHAREALBUM_LINK_CREATE',get_absolute_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
+			// No sharing detected
+			$template->assign('SHAREALBUM_LINK_CREATE',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
 		}
 	}
 }
