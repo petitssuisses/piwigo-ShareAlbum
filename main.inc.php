@@ -188,6 +188,26 @@ function sharealbum_init()
   				");
 			    		redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
 			    	}
+					
+				 // Set user privacy level to lowest level of images in share album
+			     // Get minimum privacy level
+			     $result = pwg_query("
+			                          SELECT MIN(`level`) AS min_level
+			                          FROM `pi_images`
+			                          WHERE `storage_category_id` = '".$sharealbum_cat."'
+			                         ");
+			
+			     if (pwg_db_num_rows($result))
+			         {
+			          $row = pwg_db_fetch_assoc($result);
+			          $privacy_level = $row['min_level'];
+			         }
+			
+			     // Set user level in USER_INFOS_TABLE
+			     pwg_query("
+			                UPDATE `".USER_INFOS_TABLE."`
+			                SET `level` = ".$privacy_level."
+			                WHERE `user_id` = ".$new_user_id);
   				break;
   			case SHAREALBUM_URL_ACTION_CANCEL:
   				// List declared shares on this category (should be only one)

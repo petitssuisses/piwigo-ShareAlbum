@@ -13,6 +13,10 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.5
+  * Fixed #47 Host not filled in correctly (probably when using a reverse proxy. Alternate method for host detection
+  * Fixed #40 You are not authorised to access the requested page. Thanks to drenghel
+  * Fixed #42 Can't find Share Button
 * Version 1.4
   * Fixed #45 Modus theme compatibiliy
 * Version 1.3
