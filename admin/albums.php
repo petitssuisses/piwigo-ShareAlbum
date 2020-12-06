@@ -41,6 +41,9 @@ foreach ($shareable_albums as &$album) {
 	$name_with_uppercats = sharealbum_getname_with_uppercats($album['name'],$album['uppercats']);
 	$album['name'] = $name_with_uppercats;
 }
+// Sorts the output (sort by album name-with uppercats)
+$columns = array_column($shareable_albums,'name');
+array_multisort($columns, SORT_ASC, $shareable_albums);
 
 // 
 $shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, c.uppercats as `uppercats`, s.user_id, u.username as `user`, s.code as 'code', s.creation_date as `creation_date`, count(l.id) as `visits`, max(l.visit_d) as `last_visit`

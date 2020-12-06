@@ -13,6 +13,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.7
+  * Fixed #50 Administration page, albums are not sorted (share a new album)
 * Version 1.6
   * Added version number into plugin (instead of auto) for better identification
   * Implemented New administration pages features : create shares, renew share, cancel share. Copy share URL to clipboard
