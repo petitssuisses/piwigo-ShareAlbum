@@ -1,1 +1,1 @@
-This is not a plugin. It's a skeleton for future plugins.
+Share Album allows the sharing of private albums.
