@@ -5,6 +5,7 @@ $lang['Share'] = 'Share';
 $lang['This album is shared via a public link'] = 'This album is shared via a public link';
 $lang['Copy to clipboard'] = 'Copy to clipboard';
 $lang['Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'] = 'Link was successfully copied to clipboard. You can now use system paste functionnality to share it !';
+$lang['The link was not copied to clipboard. Your browser may now support this functionnality.'] = 'The link was not copied to clipboard. Your browser may now support this functionnality.';
 $lang['Please select the link and use the Edit > Copy function from your browser.'] = 'Please select the link and use the Edit > Copy function from your browser.';
 $lang['You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'] = 'You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?';
 $lang['Are you sure you wish to cancel this album sharing ?'] = 'Are you sure you wish to cancel this album sharing ?';
@@ -29,4 +30,12 @@ $lang['IP address'] = 'IP address';
 $lang['Visit date'] = 'Visit date';
 $lang['Connection log for selected album'] = 'Connection log for selected album';
 $lang['Activity logs shown below'] = 'Activity logs shown below';
+$lang['Please choose an action : '] = 'Please choose an action : ';
+$lang['Shared link'] = 'Shared link';
+$lang['Share a new album'] = 'Share a new album';
+$lang['Active shares'] = 'Shared albums';
+$lang['No shared album'] = 'No shared album';
+$lang['No private album to be shared (or which is not yet shared)'] = 'No private album to be shared (or which is not yet shared)';
+
+
 ?>

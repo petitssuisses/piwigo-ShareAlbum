@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: ShareAlbum
-Version: auto
+Version: 1.6
 Description: Plugin enabling a simple share feature for albums
-Plugin URI: auto
+Plugin URI: https://piwigo.org/ext/extension_view.php?eid=865
 Author: Arnaud (bonhommedeneige)
-Author URI: 
+Author URI: http://piwigo.org/forum/profile.php?id=19052
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
@@ -166,107 +166,15 @@ function sharealbum_init()
   		switch ($_GET[SHAREALBUM_URL_ACTION])
   		{
   			case SHAREALBUM_URL_ACTION_CREATE:
-  				// Generate a unique (and unused) code
-  				$new_code = "";
-  				do {
-  					$new_code = sharealbum_generate_code(SHAREALBUM_KEY_LENGTH,false,false);
-  				} while ($new_code == sharealbum_get_share_code($sharealbum_cat));
-  				
-  				// Determine user name
-  				$sharealbum_new_user = "";
-  				do {
-  					$sharealbum_new_user = SHAREALBUM_USER_PREFIX.sharealbum_generate_code(SHAREALBUM_USER_CODE_SUFFIX_LENGTH,true,false);
-  				} while (!empty(validate_login_case($sharealbum_new_user)));
-  				// Register user
-  				$new_user_id = sharealbum_register_user($sharealbum_new_user,sharealbum_generate_code(SHAREALBUM_USER_PASSWORD_LENGTH, false,true));
-		    	if (sharealbum_grant_private_category($new_user_id,$sharealbum_cat)) {
-			    		// TODO handle insertion error
-			    		// Insert code into sharealbum table
-			    		pwg_query("
-  					INSERT INTO `".SHAREALBUM_TABLE."` (`cat`,`user_id`,`code`,`creation_date`)
-  					VALUES (".$sharealbum_cat.",".$new_user_id.",'".$new_code."','".date("Y-m-d H:i:s")."')
-  				");
-			    		redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
-			    	}
-					
-				 // Set user privacy level to lowest level of images in share album
-			     // Get minimum privacy level
-			     $result = pwg_query("
-			                          SELECT MIN(`level`) AS min_level
-			                          FROM `pi_images`
-			                          WHERE `storage_category_id` = '".$sharealbum_cat."'
-			                         ");
-			
-			     if (pwg_db_num_rows($result))
-			         {
-			          $row = pwg_db_fetch_assoc($result);
-			          $privacy_level = $row['min_level'];
-			         }
-			
-			     // Set user level in USER_INFOS_TABLE
-			     pwg_query("
-			                UPDATE `".USER_INFOS_TABLE."`
-			                SET `level` = ".$privacy_level."
-			                WHERE `user_id` = ".$new_user_id);
+  				sharealbum_create($sharealbum_cat);
+				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
   				break;
   			case SHAREALBUM_URL_ACTION_CANCEL:
-  				// List declared shares on this category (should be only one)
-  				$res = pwg_query("
-  					SELECT `id`,`user_id`
-  					FROM `".SHAREALBUM_TABLE."`
-  					WHERE `cat`=".$sharealbum_cat
-  				);
-  				while ($row = pwg_db_fetch_assoc($res)) {
-  					// Remove user permission on category
-  					pwg_query("
-  						DELETE FROM `".USER_ACCESS_TABLE."`
-  						WHERE `user_id`=".$row['user_id']." 
-  						AND `cat_id`=".$sharealbum_cat."
-  						LIMIT 1"
-  					);
-  					// Remove user infos from user_infos tables
-  					pwg_query("
-  						DELETE FROM `".USER_INFOS_TABLE."`
-  						WHERE `user_id`=".$row['user_id']."
-  						LIMIT 1"
-  					);
-  					// Remove group membership
-  					pwg_query("
-  						DELETE FROM `".USER_GROUP_TABLE."`
-  						WHERE `user_id`=".$row['user_id']."
-  						LIMIT 1"
-  					);
-  					// Delete user
-  					pwg_query("
-  						DELETE FROM `".USERS_TABLE."`
-  						WHERE `id`=".$row['user_id']."
-  						LIMIT 1"
-  					);
-  				};
-  				// Remove code from sharealbum table
-  				pwg_query("
-  					DELETE FROM `".SHAREALBUM_TABLE."`
-  					WHERE `cat`=".$sharealbum_cat."
-  					LIMIT 1"
-  				);
-  				// Remove any existing log from sharealbum_log table
-  				pwg_query("
-  					DELETE FROM `".SHAREALBUM_TABLE_LOG."`
-  					WHERE `cat_id`=".$sharealbum_cat
-  				);
+  				sharealbum_cancel_share($sharealbum_cat);
   				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_CANCELLED);
   				break;
   			case SHAREALBUM_URL_ACTION_RENEW:
-  				// Renewal of a link
-  				$new_code = "";
-  				do {
-  					$new_code = sharealbum_generate_code(SHAREALBUM_KEY_LENGTH,true,false);
-  				} while ($new_code == sharealbum_get_share_code($sharealbum_cat));
-  				if (!pwg_query("
-		          UPDATE `".SHAREALBUM_TABLE."`
-		          SET `code` = '".$new_code."',`creation_date`='".date("Y-m-d H:i:s")."'  
-		          WHERE `cat` = ".$sharealbum_cat
-  				)) die('Could not update code');
+  				sharealbum_renew_share($sharealbum_cat);
   				// TODO Do not die, return error
   				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_RENEWED);
   				break;

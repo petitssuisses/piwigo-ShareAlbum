@@ -7,8 +7,43 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 
 global $prefixeTable;
 
+// Create a new share action
+if (isset($_POST['create']) && isset ($_POST['new_share_cat']) && ($_POST['new_share_cat']!="")) {
+	sharealbum_create($_POST['new_share_cat']);
+}
+
+// Actions on existing shares
+if (isset($_POST['p_sharedalbums_action']) && isset($_POST['sa_cat'])) {
+	if ($_POST['p_sharedalbums_action'] == "renew") {
+		sharealbum_renew_share($_POST['sa_cat']);
+	} elseif ($_POST['p_sharedalbums_action'] == "cancel") {
+		sharealbum_cancel_share($_POST['sa_cat']);
+	}		
+}
+
+
+// Private albums which are not already shared
+// Displays only albums containing images
+$private_albums_query = '
+SELECT c.*, count(i.id) as nb_images
+  FROM '.CATEGORIES_TABLE.' c, '.IMAGES_TABLE.' i
+  WHERE status = \'private\'
+  AND c.id NOT IN (
+	SELECT s.cat
+	FROM '.SHAREALBUM_TABLE.' s
+  )
+  AND i.storage_category_id = c.id
+  GROUP BY c.id
+;';
+$shareable_albums = query2array($private_albums_query);
+// replace album name with full path to album (with uppercats)
+foreach ($shareable_albums as &$album) {
+	$name_with_uppercats = sharealbum_getname_with_uppercats($album['name'],$album['uppercats']);
+	$album['name'] = $name_with_uppercats;
+}
+
 // 
-$shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, s.user_id, u.username as `user`, s.code as 'code', s.creation_date as `creation_date`, count(l.id) as `visits`, max(l.visit_d) as `last_visit`
+$shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, c.uppercats as `uppercats`, s.user_id, u.username as `user`, s.code as 'code', s.creation_date as `creation_date`, count(l.id) as `visits`, max(l.visit_d) as `last_visit`
 	FROM ".SHAREALBUM_TABLE." s
 	LEFT JOIN ".SHAREALBUM_TABLE_LOG." l
 		ON s.cat = l.cat_id 
@@ -17,7 +52,17 @@ $shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, s.u
 	LEFT JOIN ".$prefixeTable."users u
 		ON u.id = s.user_id
 	GROUP BY s.id";
+
 $shared_albums = query2array($shared_albums_query);
+// replace code with the absolute URL to access the shared album
+// replace album name with full path to album (with uppercats)
+foreach ($shared_albums as &$shared_album) {
+	$code=sharealbum_get_shareable_url($shared_album['code']);
+	$shared_album['code']=$code;
+	$name_with_uppercats = sharealbum_getname_with_uppercats($shared_album['album'],$shared_album['uppercats']);
+	$shared_album['album']=$name_with_uppercats;
+}
+
 $log_category = 0;
 $shared_albums_logs=array();
 if (isset($_GET['log'])) {
@@ -34,6 +79,7 @@ if (isset($_GET['log'])) {
 // send config to template
 $template->assign(array(
 		'sharealbum' => $conf['sharealbum'],
+		'shareable_albums' => $shareable_albums,
 		'shared_albums' => $shared_albums,
 		'shared_albums_logs' => $shared_albums_logs,
 		'log_category' => $log_category,
