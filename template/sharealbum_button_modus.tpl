@@ -6,7 +6,7 @@
 window.SwitchBox=window.SwitchBox||[]).push("#sharealbumSwitchLink", "#sharealbumBox");
 {/footer_script}
 
-<li><a id="sharealbumSwitchLink" title="{$T_SHAREALBUM_ALBUM_SHARE}" class="pwg-state-default pwg-button" rel="nofollow"> <span class="fa fa-share-alt fa-lg"></span><span class="pwg-button-text">{$T_SHAREALBUM_ALBUM_SHARE}</span> </a>
+<li><a id="sharealbumSwitchLink" title="{$T_SHAREALBUM_ALBUM_SHARE}" class="pwg-state-default pwg-button" rel="nofollow"> <span style="font-size: 22px;" class="pwg-icon fa fa-share-alt fa-2x fa-fw"></span><span class="pwg-button-text">{$T_SHAREALBUM_ALBUM_SHARE}</span> </a>
 	<div id="sharealbumBox" class="switchBox">
 		{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
 		<div class="switchBoxTitle">{$T_SHAREALBUM_ALBUM_SHARED}</div>

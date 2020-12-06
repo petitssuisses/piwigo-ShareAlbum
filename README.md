@@ -14,7 +14,8 @@ Administrative functions :
 
 # Versions history
 * Version 1.7
-  * Fixed #50 Administration page, albums are not sorted (share a new album)
+  * Fixed #50 Administration page, albums were not sorted (share a new album)
+  * Fixed #38 Mobile device browsing, the share icon does not have a text description 
 * Version 1.6
   * Added version number into plugin (instead of auto) for better identification
   * Implemented New administration pages features : create shares, renew share, cancel share. Copy share URL to clipboard

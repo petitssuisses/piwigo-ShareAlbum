@@ -6,11 +6,11 @@
 	{* <!-- nothing more than the button itself must be defined here --> *}
 	{if ($SHAREALBUM_LINK_IS_ACTIVE == 1)}
 		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" title="{$T_SHAREALBUM_ALBUM_SHARE}">
-		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>
+		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>{'Share'|translate}
 		</a>
 	{else}
 		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" title="{'Share'|translate}">
-		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>
+		  <i class="fa fa-share-alt fa-fw" aria-hidden="true"></i><span class="d-lg-none ml-2"></span><span class="glyphicon sharealbum-button_active"></span>{'Share'|translate}
 		</a>
 	{/if}
 	
