@@ -13,7 +13,7 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
-* Version 1.8
+* Version 1.9
   * Fixed #51 After upgrade to 1.7 no private albums recognized : Virtual albums are now detected as well as physical albums
 * Version 1.7
   * Fixed #50 Administration page, albums were not sorted (share a new album)
