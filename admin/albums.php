@@ -25,14 +25,14 @@ if (isset($_POST['p_sharedalbums_action']) && isset($_POST['sa_cat'])) {
 // Private albums which are not already shared
 // Displays only albums containing images
 $private_albums_query = '
-SELECT c.*, count(i.id) as nb_images
-  FROM '.CATEGORIES_TABLE.' c, '.IMAGES_TABLE.' i
+SELECT c.*, count(i.image_id) as nb_images
+  FROM '.CATEGORIES_TABLE.' c, '.IMAGE_CATEGORY_TABLE.' i
   WHERE status = \'private\'
   AND c.id NOT IN (
 	SELECT s.cat
 	FROM '.SHAREALBUM_TABLE.' s
   )
-  AND i.storage_category_id = c.id
+  AND i.image_id = c.id
   GROUP BY c.id
 ;';
 $shareable_albums = query2array($private_albums_query);

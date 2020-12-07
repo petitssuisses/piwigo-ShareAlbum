@@ -221,8 +221,6 @@ function sharealbum_create($cat_id) {
 				INSERT INTO `".SHAREALBUM_TABLE."` (`cat`,`user_id`,`code`,`creation_date`)
 				VALUES (".$cat_id.",".$new_user_id.",'".$new_code."','".date("Y-m-d H:i:s")."')
 			");
-			// TODO only on album page
-			//redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$cat_id.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
 		}
 		
 	 // Set user privacy level to lowest level of images in share album
