@@ -21,20 +21,22 @@ if (isset($_POST['p_sharedalbums_action']) && isset($_POST['sa_cat'])) {
 	}		
 }
 
-
 // Private albums which are not already shared
 // Displays only albums containing images
-$private_albums_query = '
-SELECT c.*, count(i.image_id) as nb_images
-  FROM '.CATEGORIES_TABLE.' c, '.IMAGE_CATEGORY_TABLE.' i
-  WHERE status = \'private\'
-  AND c.id NOT IN (
-	SELECT s.cat
-	FROM '.SHAREALBUM_TABLE.' s
-  )
-  AND i.image_id = c.id
-  GROUP BY c.id
-;';
+$private_albums_query = "
+	SELECT c.*, COUNT(ic.image_id) as nb_images
+	FROM ".IMAGE_CATEGORY_TABLE." ic, ".CATEGORIES_TABLE." c
+	WHERE ic.category_id IN 
+		( 
+			SELECT c.id
+			FROM ".CATEGORIES_TABLE." c 
+			LEFT JOIN ".SHAREALBUM_TABLE." s 
+			ON c.id = s.cat
+			WHERE s.cat IS NULL 
+			AND c.status = 'private'
+		)
+	AND c.id = ic.category_id
+	GROUP BY ic.category_id";
 $shareable_albums = query2array($private_albums_query);
 // replace album name with full path to album (with uppercats)
 foreach ($shareable_albums as &$album) {
