@@ -1,18 +1,20 @@
 Share Album is a piwigo plugin to enable simple per album share function.
 For any private album, you can generate and share a unique URL that you can share with the users you trust in enough to browse an album.
 # Usage
-Use the new Share function available on private albums (for administrator users only).
-From this function, you can : 
-* Create a new share
-* Copy share URL to clipboard
-* Regenerate the unique URL
-* Cancel an active share
+In the administrative area, you can from the Plugin > Share album screens : 
+- Individually share albums (create a new share)
+- For each shared album, you can : copy the one-click share URL, regenerate this unique link, cancel it
+The same features are available when you navigate (as an administrator) in your albums.
 
 Administrative functions : 
 * Optionnaly remove breadcrumbs on shared albums
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 1.10
+  * Fixed #53 1 of 3 albums won't show up in the picklist
+  * Fixed #56 Share option should be available only on private albums containing at least picture
+  * Fixed #57 Share icon with Bootstrap Darkroom theme displays the text "Share". To be removed
 * Version 1.9
   * Fixed #51 After upgrade to 1.7 no private albums recognized : Virtual albums are now detected as well as physical albums
 * Version 1.7
@@ -80,4 +82,4 @@ Requirements to share an album :
 See issues list on GitHub : https://github.com/petitssuisses/piwigo-ShareAlbum/issues
 
 # Author 
-Arnaud (bonhommedeneige) http://piwigo.org/forum/profile.php?id=19052
+Arnaud (petitssuisses) http://piwigo.org/forum/profile.php?id=19052
