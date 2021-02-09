@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.1
+  * Fixed #64 Piwigo 11 compatibility
 * Version 1.10
   * Fixed #53 1 of 3 albums won't show up in the picklist
   * Fixed #56 Share option should be available only on private albums containing at least picture

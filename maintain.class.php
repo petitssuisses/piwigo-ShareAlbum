@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
     pwg_query("
     	DELETE
     	FROM ".USERS_TABLE."
-		WHERE user_id IN (
+		WHERE id IN (
 			SELECT s.user_id
     		FROM ".$this->table." s
     	)
