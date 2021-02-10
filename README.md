@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.2 (not released)
+  * Fixed #61 When users use different share link, the get cookies related errors
 * Version 11.1
   * Fixed #64 Piwigo 11 compatibility
 * Version 1.10

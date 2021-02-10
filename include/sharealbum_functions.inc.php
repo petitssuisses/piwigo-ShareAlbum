@@ -165,6 +165,9 @@ function sharealbum_cancel_share($cat_id) {
 			WHERE `id`=".$row['user_id']."
 			LIMIT 1"
 		);
+		
+		// Delete any user existing user session for this specific share
+		delete_user_sessions($row['user_id']);
 	};
 	// Remove code from sharealbum table
 	pwg_query("
