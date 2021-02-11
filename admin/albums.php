@@ -7,15 +7,36 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 
 global $prefixeTable;
 
+$filter_sort_field = "s.creation_date";
 $filter_sort_order = "ASC";
 $filter_show_links = "no";
 
 
 if (isset($_POST['apply_filter'])) {
+	if (isset($_POST['sort_order'])) {
+		$filter_sort_order = $_POST['sort_order'];
+	}
+	if (isset($_POST['sort_field'])) {
+		switch ($_POST['sort_field']) {
+			case "sort_creation_date":
+				$filter_sort_field = "s.creation_date";
+				break;
+			case "sort_album_name":
+				$filter_sort_field = "c.name";
+				break;
+			case "sort_expiration_date":
+				$filter_sort_field = "s.expiration_d";
+				break;
+			case "sort_visits":
+				$filter_sort_field = "visits";
+				break;
+		}
 	}
 	if (isset($_POST['show_link']) && $_POST['show_link']=="yes") {
 		$filter_show_links = "yes";
 	}
+
+}
 
 
 
@@ -68,7 +89,8 @@ $shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, c.u
 		ON c.id = s.cat
 	LEFT JOIN ".$prefixeTable."users u
 		ON u.id = s.user_id
-	GROUP BY s.id";
+	GROUP BY s.id
+	ORDER BY ".$filter_sort_field." ".$filter_sort_order;
 
 $shared_albums = query2array($shared_albums_query);
 // replace code with the absolute URL to access the shared album

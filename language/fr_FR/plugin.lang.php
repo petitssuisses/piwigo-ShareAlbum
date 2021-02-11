@@ -40,5 +40,6 @@ $lang['Active shares'] = 'Albums partagés';
 $lang['No shared album'] = 'Aucun album partagé';
 $lang['No private album to be shared (or which is not yet shared)'] = 'Aucun album privé trouvé pouvant être partagé';
 $lang['Show links'] = 'Afficher les liens';
-
+$lang['Ascending'] = 'Croissant';
+$lang['Descending'] = 'Décroissant';
 ?>

@@ -71,8 +71,18 @@ jQuery(".showInfo").tipTip({
 </td>
 <td>
 {'Show links'|@translate} : <input type="radio" name="show_link" value="yes" {if $smarty.post.show_link=="yes"}checked="checked"{/if}> {'Yes'|@translate} <input type="radio" name="show_link" {if $smarty.post.show_link!="yes"}checked="checked"{/if} value="no"> {'No'|@translate}
+ - 
+{'Sort by'|@translate} : <select name="sort_field" id="sort_field">
+<option value="sort_creation_date" {if $smarty.post.sort_field=="sort_creation_date"}selected{/if}>{'Creation date'|@translate}</option>
+<option value="sort_album_name" {if $smarty.post.sort_field=="sort_album_name"}selected{/if}>{'Album'|@translate}</option>
 
+<option value="sort_visits" {if $smarty.post.sort_field=="sort_visits"}selected{/if}>{'Visits'|@translate}</option>
+</select>
 
+<select name="sort_order" id="sort_field">
+<option value="ASC" {if $smarty.post.sort_order=="ASC"}selected{/if}>{'Ascending'|@translate}</option>
+<option value="DESC" {if $smarty.post.sort_order=="DESC"}selected{/if}>{'Descending'|@translate}</option>
+</select>
 <button type="submit" name="apply_filter" value="apply_filter">{'Apply'|translate}</button>
 </td>
 </tr>
