@@ -100,6 +100,11 @@ foreach ($shared_albums as &$shared_album) {
 	$shared_album['code']=$code;
 	$name_with_uppercats = sharealbum_getname_with_uppercats($shared_album['album'],$shared_album['uppercats']);
 	$shared_album['album']=$name_with_uppercats;
+	if (strlen($shared_album['album'])>70) {
+	    $shared_album['album_short']=substr($shared_album['album'],0,70)."...";
+	} else {
+	    $shared_album['album_short']=$shared_album['album'];
+	}
 }
 
 $log_category = 0;
