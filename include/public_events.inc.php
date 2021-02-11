@@ -47,7 +47,7 @@ function sharealbum_add_button()
 	// Only add button on index pages and categories which are not public
 	if ((script_basename()=='index') and (isset($page['category']['id'])))
 	{
-		if ( isset($page['category']['status']) and ($page['category']['status'] == 'private') and is_admin())
+		if ( isset($page['category']['status']) and ($page['category']['status'] == 'private') and count($page['items'])>0 and is_admin())
 		{
 			$template->add_index_button($button, BUTTONS_RANK_NEUTRAL);
 		}
