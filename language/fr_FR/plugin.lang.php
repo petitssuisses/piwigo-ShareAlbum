@@ -34,9 +34,11 @@ $lang['Visit date'] = 'Date de visite';
 $lang['Connection log for selected album'] = 'Logs de connexion pour l\'album sélectionné';
 $lang['Activity logs shown below'] = 'Logs connexion ci-dessous';
 $lang['Please choose an action : '] = 'Veuillez choisir une action : ';
-$lang['Shared link'] = 'URL d\'accès à l\'album';
+$lang['Shared link'] = 'Lien';
 $lang['Share a new album'] = 'Partager un nouvel album';
 $lang['Active shares'] = 'Albums partagés';
 $lang['No shared album'] = 'Aucun album partagé';
 $lang['No private album to be shared (or which is not yet shared)'] = 'Aucun album privé trouvé pouvant être partagé';
+$lang['Show links'] = 'Afficher les liens';
+
 ?>

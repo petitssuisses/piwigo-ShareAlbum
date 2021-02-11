@@ -14,6 +14,7 @@ Administrative functions :
 * Version 11.2 (not released)
   * Fixed #61 When users use different share link, the get cookies related errors
   * Fixed #65 Share option should only be available on albums which contains at least 1 picture
+  * Fixed #58 Admin interface : lines are too long and displayed on 2 lines : remove display of the share link (but keep copy paste feature)
 * Version 11.1
   * Fixed #64 Piwigo 11 compatibility
 * Version 1.10

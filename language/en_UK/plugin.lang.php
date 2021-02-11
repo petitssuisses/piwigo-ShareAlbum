@@ -36,6 +36,6 @@ $lang['Share a new album'] = 'Share a new album';
 $lang['Active shares'] = 'Shared albums';
 $lang['No shared album'] = 'No shared album';
 $lang['No private album to be shared (or which is not yet shared)'] = 'No private album to be shared (or which is not yet shared)';
-
+$lang['Show links'] = 'Show links';
 
 ?>

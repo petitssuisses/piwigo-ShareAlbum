@@ -7,6 +7,18 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 
 global $prefixeTable;
 
+$filter_sort_order = "ASC";
+$filter_show_links = "no";
+
+
+if (isset($_POST['apply_filter'])) {
+	}
+	if (isset($_POST['show_link']) && $_POST['show_link']=="yes") {
+		$filter_show_links = "yes";
+	}
+
+
+
 // Create a new share action
 if (isset($_POST['create']) && isset ($_POST['new_share_cat']) && ($_POST['new_share_cat']!="")) {
 	sharealbum_create($_POST['new_share_cat']);

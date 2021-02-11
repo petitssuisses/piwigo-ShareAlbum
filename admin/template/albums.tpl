@@ -37,14 +37,27 @@ jQuery(".showInfo").tipTip({
 <option value="{$private_album.id}">{$private_album.name}</option>
 {/foreach}
 </select>
-<input type="submit" name="create" value="{'Share this album'|translate}" {if $shareable_albums|@count eq 0}disabled{/if}>
-</form>
+<br/><br/>
+<table align=left>
 
+	<tr>
+		<td><input type="submit" name="create" value="{'Share this album'|translate}" {if $shareable_albums|@count eq 0}disabled{/if}></td>
+		<td></td>
+	</tr>
+</table>
+
+<br/>
+<br/><br/>
+</form>
 </fieldset>
 <fieldset>
 <legend>{'Active shares'|@translate}</legend>
 <form method="post" action="" class="properties">
-{'Please choose an action : '|@translate}<select name="p_sharedalbums_action">
+
+<table align="left" width="100%">
+<tr>
+<td>
+{'Please choose an action : '|@translate}<select name="p_sharedalbums_action"  onchange="existshare_option_onchange(this);">
 {if $shared_albums|@count gt 0}
 <option></option>
 <option value="renew">{'Renew link'|@translate}</option>
@@ -53,7 +66,17 @@ jQuery(".showInfo").tipTip({
 <option>{'No shared album'|@translate}</option>
 {/if}
 </select>
-<input type="submit" name="action" value="{'Go'|translate}" {if $shared_albums|@count eq 0}disabled{/if}>
+
+<button type="submit" name="apply_action" value="apply_action" {if $shared_albums|@count eq 0}disabled{/if}>{'Go'|translate}</button>
+</td>
+<td>
+{'Show links'|@translate} : <input type="radio" name="show_link" value="yes" {if $smarty.post.show_link=="yes"}checked="checked"{/if}> {'Yes'|@translate} <input type="radio" name="show_link" {if $smarty.post.show_link!="yes"}checked="checked"{/if} value="no"> {'No'|@translate}
+
+
+<button type="submit" name="apply_filter" value="apply_filter">{'Apply'|translate}</button>
+</td>
+</tr>
+</table>
 <br>
 <table id="sharedAlbumsTable" align="left">
 {if $shared_albums|@count gt 0}
@@ -75,7 +98,9 @@ jQuery(".showInfo").tipTip({
 	<td><input type="radio" name="sa_cat" value="{$shared_album.category}" {if $smarty.post.sa_cat==$shared_album.category}checked="checked"{/if}></td>
 	<td>{$shared_album.creation_date}</td>
 	<td><i class="fa fa-user showInfo" title="{'User'|@translate}: {$shared_album.user}"></i>&nbsp; <a href="{$shared_root_path}/index.php?/category/{$shared_album.category}" alt="{$shared_album.album}">{$shared_album.album}</a></td>
-	<td><button type="image" class="sharealbum_button fa fa-copy showInfo" title="{'Copy to clipboard'|@translate}" data-clipboard-text="{$shared_album.code}"></button>&nbsp;{$shared_album.code}</td>
+	<td><button type="image" class="sharealbum_button fa fa-copy showInfo" title="{'Copy to clipboard'|@translate}" data-clipboard-text="{$shared_album.code}"></button>{if $smarty.post.show_link=="yes"}&nbsp;{$shared_album.code}{/if}</td>
+
+
 	<td align="center"><a href="{$shared_album_logs}{$shared_album.category}">{$shared_album.visits}</a></td>
 	<td align="center">{$shared_album.last_visit}</td>
 	<td>	
