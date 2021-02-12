@@ -8,7 +8,7 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 global $prefixeTable;
 
 $filter_sort_field = "s.creation_date";
-$filter_sort_order = "ASC";
+$filter_sort_order = "DESC";
 $filter_show_links = "no";
 
 

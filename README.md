@@ -13,6 +13,7 @@ Administrative functions :
 # Versions history
 * Version 11.3
   * Added #68 Admin add sort by last visit date
+  * Added #69 Admin default sort by creation date DESC
 * Version 11.2
   * Fixed #61 When users use different share link, the get cookies related errors
   * Added #65 Share option should only be available on albums which contains at least 1 picture
