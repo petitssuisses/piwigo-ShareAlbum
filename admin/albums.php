@@ -30,6 +30,8 @@ if (isset($_POST['apply_filter'])) {
 			case "sort_visits":
 				$filter_sort_field = "visits";
 				break;
+			case "sort_last_visit":
+			    $filter_sort_field = "l.visit_d";
 		}
 	}
 	if (isset($_POST['show_link']) && $_POST['show_link']=="yes") {

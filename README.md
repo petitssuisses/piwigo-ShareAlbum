@@ -11,13 +11,15 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.3
+  * Added #68 Admin add sort by last visit date
 * Version 11.2
   * Fixed #61 When users use different share link, the get cookies related errors
-  * New feature #65 Share option should only be available on albums which contains at least 1 picture
-  * New feature #58 Admin interface : lines are too long and displayed on 2 lines : optional display of the share link (but keep copy paste feature)
-  * New feature #59 Admin interface : Implement sort in the shared albums list
-  * New feature #66 Admin interface : Restrict max displayed length of the album
-  * New feature #60 Admin interface - Implement multi select
+  * Added #65 Share option should only be available on albums which contains at least 1 picture
+  * Added #58 Admin interface : lines are too long and displayed on 2 lines : optional display of the share link (but keep copy paste feature)
+  * Added #59 Admin interface : Implement sort in the shared albums list
+  * Added #66 Admin interface : Restrict max displayed length of the album
+  * Added #60 Admin interface - Implement multi select
 * Version 11.1
   * Fixed #64 Piwigo 11 compatibility
 * Version 1.10

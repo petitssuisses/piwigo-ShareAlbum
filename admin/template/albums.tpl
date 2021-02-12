@@ -77,6 +77,7 @@ jQuery(".showInfo").tipTip({
 <option value="sort_album_name" {if $smarty.post.sort_field=="sort_album_name"}selected{/if}>{'Album'|@translate}</option>
 
 <option value="sort_visits" {if $smarty.post.sort_field=="sort_visits"}selected{/if}>{'Visits'|@translate}</option>
+<option value="sort_last_visit" {if $smarty.post.sort_field=="sort_last_visit"}selected{/if}>{'Last visit'|@translate}</option>
 </select>
 
 <select name="sort_order" id="sort_field">
