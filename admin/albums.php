@@ -46,11 +46,15 @@ if (isset($_POST['create']) && isset ($_POST['new_share_cat']) && ($_POST['new_s
 }
 
 // Actions on existing shares
-if (isset($_POST['p_sharedalbums_action']) && isset($_POST['sa_cat'])) {
+if (isset($_POST['p_sharedalbums_action']) && isset($_POST['sa_cat']) && !empty($_POST['sa_cat'])) {
 	if ($_POST['p_sharedalbums_action'] == "renew") {
-		sharealbum_renew_share($_POST['sa_cat']);
+	    foreach($_POST['sa_cat'] as $p_cat) {
+	       sharealbum_renew_share($p_cat);
+	    }
 	} elseif ($_POST['p_sharedalbums_action'] == "cancel") {
-		sharealbum_cancel_share($_POST['sa_cat']);
+	    foreach($_POST['sa_cat'] as $p_cat) {
+	        sharealbum_cancel_share($p_cat);
+	    }
 	}		
 }
 
