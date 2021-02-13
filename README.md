@@ -14,6 +14,7 @@ Administrative functions :
 * Version 11.3
   * Added #68 Admin add sort by last visit date
   * Added #69 Admin default sort by creation date DESC
+  * Added #70 Add default number of photos per page for shared albums
 * Version 11.2
   * Fixed #61 When users use different share link, the get cookies related errors
   * Added #65 Share option should only be available on albums which contains at least 1 picture

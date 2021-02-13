@@ -9,7 +9,7 @@
 
 <form method="post" action="" class="properties">
 <fieldset>
-  <legend>{'Shared albums options'|translate}</legend>
+  <legend>{'Navigation options'|translate}</legend>
   <ul>
     <li>
       <label>
@@ -25,19 +25,38 @@
       </label>
       <a class="icon-info-circled-1" title="{'When checked, a login menu is shown for guests browsing via a shared link'|translate}"></a>
     </li>
+   
     <li>
+      <label>
+        <input type="checkbox" name="option_remember_me" value="{$sharealbum.option_remember_me}" {if $sharealbum.option_remember_me}checked="checked"{/if}>
+        <b>{'Sets remember me cookie for logged in guests (auto-login)'|translate}</b>
+      </label>
+      <a class="icon-info-circled-1" title="{'When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'|translate}"></a>
+    </li>
+ 	</ul>
+ 	</fieldset>
+ 	<fieldset>
+ 	<legend>{'Shared albums options'|translate}</legend>
+ 	<ul>
+      <li>
       <label>
         <input type="checkbox" name="option_replace_breadcrumbs" value="{$sharealbum.option_replace_breadcrumbs}" {if $sharealbum.option_replace_breadcrumbs}checked="checked"{/if}>
         <b>{'Replace navigation breadcrumbs with album name'|translate}</b>
       </label>
       <a class="icon-info-circled-1" title="{'When checked, breadcrumbs are replaced with the album name'|translate}"></a>
     </li>
-     <li>
+    <li>
       <label>
-        <input type="checkbox" name="option_remember_me" value="{$sharealbum.option_remember_me}" {if $sharealbum.option_remember_me}checked="checked"{/if}>
-        <b>{'Sets remember me cookie for logged in guests (auto-login)'|translate}</b>
+        <b>{'Number of displayed images per page for shared albums'|translate} : </b>
       </label>
-      <a class="icon-info-circled-1" title="{'When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'|translate}"></a>
+       <select name="option_pics_per_page"">
+			<option value="25" {if $sharealbum.option_pics_per_page==25}selected{/if}>25</option>
+			<option value="50" {if $sharealbum.option_pics_per_page==50}selected{/if}>50</option>
+			<option value="75" {if $sharealbum.option_pics_per_page==75}selected{/if}>75</option>
+			<option value="100" {if $sharealbum.option_pics_per_page==100}selected{/if}>100</option>
+			<option value="999" {if $sharealbum.option_pics_per_page==999}selected{/if}>999</option>
+		</select>
+      <a class="icon-info-circled-1" title="{'Defines the number of maximum images are displayed per page for shared albums. This setting applies to all shared albums'|translate}"></a>
     </li>
   </ul>
 </fieldset>

@@ -13,9 +13,10 @@ if (isset($_POST['save_config']))
   	'option_replace_breadcrumbs' => isset($_POST['option_replace_breadcrumbs']),
   	'option_show_login_menu' => isset($_POST['option_show_login_menu']),
   	'option_remember_me' => isset($_POST['option_remember_me']),
+    'option_pics_per_page' => $_POST['option_pics_per_page'],
     );
-
   conf_update_param('sharealbum', $conf['sharealbum']);
+  sharealbum_set_nb_image_page($_POST['option_pics_per_page']);
   $page['infos'][] = l10n('Information data registered in database');
 }
 

@@ -16,6 +16,7 @@ class ShareAlbum_maintain extends PluginMaintain
     'option_show_login_menu' => true,		// option to show a login menu
     'option_replace_breadcrumbs' => true,	// option to replace navigation breadcrumbs with album name
     'option_remember_me' => true,			// option to indicate remember me option for logged in users
+    'option_pics_per_page' => SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT,  // option to specify the maximum pictures per page
     );
 
   private $table;

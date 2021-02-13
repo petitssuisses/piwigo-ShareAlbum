@@ -24,6 +24,7 @@ function sharealbum_grant_private_category($user_id,$cat_id) {
  */
 function sharealbum_register_user($username,$password_length) {
 	global $page;
+	global $conf;
 	$new_user_id = -1;
 	$new_user_id = register_user($username,sharealbum_generate_code($password_length, false,true),null,0,$page['errors'],false);
 	// Sets user status to generic
@@ -32,6 +33,7 @@ function sharealbum_register_user($username,$password_length) {
 	      SET `status` = 'generic'
 	      WHERE `user_id` = ".$new_user_id.";
 	");
+	sharealbum_set_user_nb_image_page($conf['sharealbum']['option_pics_per_page'],$new_user_id);
 	// Put the user in the sharealbum group
 	pwg_query("
 			INSERT INTO `".USER_GROUP_TABLE."` (group_id, user_id)
@@ -278,4 +280,41 @@ function sharealbum_getname_with_uppercats($cat_name, $uppercats) {
 	}
 	return $name_with_uppercats;
 }
+
+/**
+ * Gets sharealbum related users ids
+ * @return unknown an array with the users id
+ */
+function sharealbum_get_users_id() {
+    $result = query2array("
+        SELECT `user_id`
+        FROM ".SHAREALBUM_TABLE
+    );
+    return $result;
+}
+
+/**
+ * Sets a number of images per page for all sharealbum users
+ * @param unknown $nb_image_page Number of images to be displayed per page
+ */
+function sharealbum_set_nb_image_page($nb_image_page) {
+    $sa_users_a = sharealbum_get_users_id();
+    foreach ($sa_users_a as $sa_user) {
+        sharealbum_set_user_nb_image_page($nb_image_page, $sa_user['user_id']);
+    }
+}
+
+/**
+ * Sets a number of images per page for a sharealbum user
+ * @param unknown $nb_image_page
+ * @param unknown $user_id
+ */
+function sharealbum_set_user_nb_image_page($nb_image_page = SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT, $user_id) {
+    pwg_query("
+            UPDATE ".USER_INFOS_TABLE."
+            SET `nb_image_page`=".$nb_image_page."
+            WHERE `user_id`=".$user_id
+        );
+}
+
 ?>

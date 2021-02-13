@@ -42,4 +42,6 @@ $lang['No private album to be shared (or which is not yet shared)'] = 'Aucun alb
 $lang['Show links'] = 'Afficher les liens';
 $lang['Ascending'] = 'Croissant';
 $lang['Descending'] = 'Décroissant';
+$lang['Number of displayed images per page for shared albums'] = 'Nombre d\'images affichées par page';
+$lang['Defines the number of maximum images are displayed per page for shared albums. This setting applies to all shared albums'] = "Définit le nombre d'images affichées par page. Ce paramètre s'applique à tous les albums partagés.";
 ?>
