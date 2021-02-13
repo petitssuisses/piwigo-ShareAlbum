@@ -30,7 +30,8 @@ function sharealbum_register_user($username,$password_length) {
 	// Sets user status to generic
 	pwg_query("
 	      UPDATE `".USER_INFOS_TABLE."`
-	      SET `status` = 'generic'
+	      SET `status` = 'generic',
+              `language` = '".get_default_language()."'
 	      WHERE `user_id` = ".$new_user_id.";
 	");
 	sharealbum_set_user_nb_image_page($conf['sharealbum']['option_pics_per_page'],$new_user_id);

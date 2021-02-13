@@ -15,6 +15,7 @@ Administrative functions :
   * Added #68 Admin add sort by last visit date
   * Added #69 Admin default sort by creation date DESC
   * Added #70 Add default number of photos per page for shared albums
+  * Fixed #26 Localization issue. Created users are now set a locale equal to default Piwigo locale
 * Version 11.2
   * Fixed #61 When users use different share link, the get cookies related errors
   * Added #65 Share option should only be available on albums which contains at least 1 picture
