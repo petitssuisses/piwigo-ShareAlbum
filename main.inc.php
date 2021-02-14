@@ -54,7 +54,7 @@ define('SHAREALBUM_USER_PASSWORD_LENGTH',16);			// Length of the random password
 
 define('SHAREALBUM_SESSION_VAR','sharealbum_guest');	// Session variable, used to identify user is browsing as a (URL identified) guest
 define('SHAREALBUM_GROUP','sharealbum');			    // Group name of the guest users
-define('SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT',50);     // Default number of images per page for shared albums
+define('SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT',15);     // Default number of images per page for shared albums
 
 // load functions
 include_once(SHAREALBUM_PATH.'include/sharealbum_functions.inc.php');
