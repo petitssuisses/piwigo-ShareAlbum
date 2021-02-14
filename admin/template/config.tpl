@@ -1,4 +1,6 @@
 {combine_css path=$SHAREALBUM_PATH|@cat:"admin/template/style.css"}
+{footer_script}
+{/footer_script}
 
 <div class="titrePage">
 	<h2>Share Album</h2>
@@ -49,12 +51,10 @@
       <label>
         <b>{'Number of displayed images per page for shared albums'|translate} : </b>
       </label>
-       <select name="option_pics_per_page"">
-			<option value="25" {if $sharealbum.option_pics_per_page==25}selected{/if}>25</option>
-			<option value="50" {if $sharealbum.option_pics_per_page==50}selected{/if}>50</option>
-			<option value="75" {if $sharealbum.option_pics_per_page==75}selected{/if}>75</option>
-			<option value="100" {if $sharealbum.option_pics_per_page==100}selected{/if}>100</option>
-			<option value="999" {if $sharealbum.option_pics_per_page==999}selected{/if}>999</option>
+       <select name="option_pics_per_page">
+       		{foreach from=$nb_image_page_values key=mKey item=mItem}
+       		<option value="{$mItem}" {if $sharealbum.option_pics_per_page==$mItem}selected{/if}>{$mItem}</option>
+       		{/foreach}
 		</select>
       <a class="icon-info-circled-1" title="{'Defines the number of maximum images are displayed per page for shared albums. This setting applies to all shared albums'|translate}"></a>
     </li>

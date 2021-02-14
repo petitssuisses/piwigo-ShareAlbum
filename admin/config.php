@@ -20,9 +20,12 @@ if (isset($_POST['save_config']))
   $page['infos'][] = l10n('Information data registered in database');
 }
 
+// Possible number of images per page for shared albums (same as in Piwigo core)
+$nb_image_page_values = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,35,40,45,50,60,70,80,90,100,200,300,500,999);
 // send config to template
 $template->assign(array(
   'sharealbum' => $conf['sharealbum'],
+  'nb_image_page_values' => $nb_image_page_values,
   'INTRO_CONTENT' => load_language('intro.html', SHAREALBUM_PATH, array('return'=>true)),
   ));
 
