@@ -1,0 +1,3 @@
+Comparteix Àlbum permet compartir àlbums privats.
+
+
