@@ -1,1 +1,1 @@
-Share Album allows the sharing of private albums.
+Share Album allows sharing of private albums.
