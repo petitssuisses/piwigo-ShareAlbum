@@ -60,6 +60,23 @@
     </li>
   </ul>
 </fieldset>
+
+<fieldset>
+ 	<legend>{'Advanced options'|translate}</legend>
+ 	<ul>
+      <li>
+      <label>
+        <input type="checkbox" name="option_enable_powerusers" value="{$sharealbum.option_enable_powerusers}" {if $sharealbum.option_enable_powerusers}checked="checked"{/if}>
+        <b>{'Enable non-admin powerusers to share albums'|translate}</b>
+      </label>
+      <a class="icon-info-circled-1" title="{'When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'|translate}"></a>
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'For this, add power users into the group <b>\'sharealbum_powerusers\'</b>.'|translate}
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'Warning : those users will be able to create shared albums as well as to remove existing shares'|translate}
+    </li>
+    
+  </ul>
+</fieldset>
+
 <p class="formButtons"><input type="submit" name="save_config" value="{'Save Settings'|translate}"></p>
 </form>
 

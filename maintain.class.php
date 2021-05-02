@@ -16,7 +16,8 @@ class ShareAlbum_maintain extends PluginMaintain
     'option_show_login_menu' => true,		// option to show a login menu
     'option_replace_breadcrumbs' => true,	// option to replace navigation breadcrumbs with album name
     'option_remember_me' => true,			// option to indicate remember me option for logged in users
-    'option_pics_per_page' => 15,  // option to specify the maximum pictures per page
+    'option_pics_per_page' => 15,           // option to specify the maximum pictures per page
+    'option_enable_powerusers' => false,    // option to enable power to selected non-admin users to share private albums
     );
 
   private $table;
@@ -58,9 +59,10 @@ class ShareAlbum_maintain extends PluginMaintain
 CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
   	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   	`cat` smallint(5) unsigned NOT NULL,
-    `user_id`mediumint(8) unsigned NOT NULL,
+    `user_id` mediumint(8) unsigned NOT NULL,
     `code` varchar(32) NOT NULL,
     `creation_date` datetime DEFAULT NULL,
+    `created_by` mediumint(8) unsigned DEFAULT NULL,
     PRIMARY KEY (`id`)
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ');
@@ -80,11 +82,18 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
 		INSERT INTO `".GROUPS_TABLE."` (`name`)
 		VALUES ('sharealbum')
 	");
+    
+    // 11.4 create the sharealbum_powerusers group
+    pwg_query("
+		INSERT INTO `".GROUPS_TABLE."` (`name`)
+		VALUES ('sharealbum_powerusers')
+	");
+    
     // create a local directory
     if (!file_exists($this->dir))
     {
       mkdir($this->dir, 0755);
-    }
+    }    
   }
 
   /**
@@ -125,6 +134,7 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
   			
 		}
   	}
+  	
   	// sharealbum group
   	$group_id = -1;
   	$result_group = pwg_query("
@@ -151,6 +161,28 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
 			AND u.username like 'share_%'
   		");
   	}
+  	
+  	// 11.4 sharealbum_powerusers group
+  	$group_id = -1;
+  	$result_group = pwg_query("
+			SELECT `id`
+			FROM ".GROUPS_TABLE."
+			WHERE `name`='sharealbum_powerusers'"
+  	    );
+  	if (pwg_db_num_rows($result_group))
+  	{
+  	    $row = pwg_db_fetch_assoc($result_group);
+  	    $group_id = $row['id'];
+  	}
+  	if ($group_id < 0) {
+  	    pwg_query("
+			INSERT INTO `".GROUPS_TABLE."` (`name`)
+			VALUES ('sharealbum_powerusers')
+		");
+  	}
+  	
+  	// 11.4 add created_by column sharealbum table
+  	pwg_query("ALTER TABLE ".$this->table." ADD `created_by` MEDIUMINT NULL AFTER `creation_date`");
   	
     //$this->install($new_version, $errors);
   	$old_conf = safe_unserialize($conf['sharealbum']);
@@ -209,11 +241,17 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
     	)
     ");
     
-    // delete group
+    // delete groups
     pwg_query("
     	DELETE 
     	FROM ".GROUPS_TABLE."
     	WHERE name like 'sharealbum'
+    ");
+    // 11.4
+    pwg_query("
+    	DELETE
+    	FROM ".GROUPS_TABLE."
+    	WHERE name like 'sharealbum_powerusers'
     ");
     
     // delete tables

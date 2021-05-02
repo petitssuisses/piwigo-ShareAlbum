@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: ShareAlbum
-Version: 11.3
+Version: 11.4
 Description: Plugin enabling a simple share feature for albums
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=865
 Author: petitssuisses
@@ -111,6 +111,7 @@ else
 function sharealbum_init()
 {
   global $conf;
+  global $user;
 
   // load plugin language file
   load_language('plugin.lang', SHAREALBUM_PATH);
@@ -167,14 +168,20 @@ function sharealbum_init()
   		switch ($_GET[SHAREALBUM_URL_ACTION])
   		{
   			case SHAREALBUM_URL_ACTION_CREATE:
+  			    if (!sharealbum_is_poweruser($user['id']))
+  			        die('Hacking attempt!');
   				sharealbum_create($sharealbum_cat);
 				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_SHARED);
   				break;
   			case SHAREALBUM_URL_ACTION_CANCEL:
+  			    if (!sharealbum_is_poweruser($user['id']))
+  			        die('Hacking attempt!');
   				sharealbum_cancel_share($sharealbum_cat);
   				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_CANCELLED);
   				break;
   			case SHAREALBUM_URL_ACTION_RENEW:
+  			    if (!sharealbum_is_poweruser($user['id']))
+  			        die('Hacking attempt!');
   				sharealbum_renew_share($sharealbum_cat);
   				// TODO Do not die, return error
   				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_RENEWED);

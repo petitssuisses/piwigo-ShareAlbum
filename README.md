@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.4
+  * Added #72 Allow non-administrators to create share-urls (via a group)
 * Version 11.3
   * Added #68 Admin add sort by last visit date
   * Added #69 Admin default sort by creation date DESC

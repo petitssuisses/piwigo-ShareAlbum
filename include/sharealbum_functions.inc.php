@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gives user permission to access a private category
  * @param unknown $user_id
@@ -207,6 +208,8 @@ function sharealbum_renew_share($cat_id) {
  * @cat_id id of the album on which a share is applied
  */
 function sharealbum_create($cat_id) {
+    global $user;
+    
 	// Generate a unique (and unused) code
 	$new_code = "";
 	do {
@@ -224,8 +227,8 @@ function sharealbum_create($cat_id) {
 			// TODO handle insertion error
 			// Insert code into sharealbum table
 			pwg_query("
-				INSERT INTO `".SHAREALBUM_TABLE."` (`cat`,`user_id`,`code`,`creation_date`)
-				VALUES (".$cat_id.",".$new_user_id.",'".$new_code."','".date("Y-m-d H:i:s")."')
+				INSERT INTO `".SHAREALBUM_TABLE."` (`cat`,`user_id`,`code`,`creation_date`,`created_by`)
+				VALUES (".$cat_id.",".$new_user_id.",'".$new_code."','".date("Y-m-d H:i:s")."', ".$user['id'].")
 			");
 		}
 		
@@ -318,4 +321,24 @@ function sharealbum_set_user_nb_image_page($nb_image_page = SHAREALBUM_NB_IMAGES
         );
 }
 
+function sharealbum_is_poweruser($user_id) {
+    global $conf;
+    
+    $is_poweruser = false;
+    if (is_admin()) {
+        $is_poweruser = true;
+    } else {
+        if ($conf['sharealbum']['option_enable_powerusers']) {
+            $result = pwg_query("
+                SELECT * FROM piwigo_user_group pug WHERE pug.user_id=".$user_id." AND pug.group_id in (
+                    SELECT pg.id FROM piwigo_groups pg WHERE name LIKE 'sharealbum_powerusers' 
+                ) 
+            ");
+            if (pwg_db_num_rows($result)) {
+                $is_poweruser = true;
+            }
+        }
+    }
+    return $is_poweruser;
+}
 ?>

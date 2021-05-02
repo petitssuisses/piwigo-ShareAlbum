@@ -87,7 +87,7 @@ $columns = array_column($shareable_albums,'name');
 array_multisort($columns, SORT_ASC, $shareable_albums);
 
 // 
-$shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, c.uppercats as `uppercats`, s.user_id, u.username as `user`, s.code as 'code', s.creation_date as `creation_date`, count(l.id) as `visits`, max(l.visit_d) as `last_visit`
+$shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, c.uppercats as `uppercats`, s.user_id, u.username as `user`, s.code as 'code', s.creation_date as `creation_date`, count(l.id) as `visits`, max(l.visit_d) as `last_visit`, s.created_by, uc.username as `shared_by`
 	FROM ".SHAREALBUM_TABLE." s
 	LEFT JOIN ".SHAREALBUM_TABLE_LOG." l
 		ON s.cat = l.cat_id 
@@ -95,6 +95,8 @@ $shared_albums_query = "SELECT s.id, s.cat as 'category', c.name as `album`, c.u
 		ON c.id = s.cat
 	LEFT JOIN ".$prefixeTable."users u
 		ON u.id = s.user_id
+    LEFT JOIN ".$prefixeTable."users uc
+    	ON s.created_by = uc.id
 	GROUP BY s.id
 	ORDER BY ".$filter_sort_field." ".$filter_sort_order;
 

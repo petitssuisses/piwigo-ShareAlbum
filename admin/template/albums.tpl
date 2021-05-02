@@ -99,6 +99,7 @@ jQuery(".showInfo").tipTip({
 	<th class="">{'Shared link'|@translate}</th>
 	<th class="">{'Visits'|@translate}</th>
 	<th class="dtc_date">{'Last visit'|@translate}</th>
+	<th class="">{'Shared by'|@translate}</th>
 	<th></th>
 </tr>
 </thead>
@@ -114,6 +115,7 @@ jQuery(".showInfo").tipTip({
 
 	<td align="center"><a href="{$shared_album_logs}{$shared_album.category}">{$shared_album.visits}</a></td>
 	<td align="center">{$shared_album.last_visit}</td>
+	<td>{$shared_album.shared_by}</td>
 	<td>	
 		{if $log_category == $shared_album.category}&nbsp;{'Activity logs shown below'|@translate}{/if}
 	</td>
