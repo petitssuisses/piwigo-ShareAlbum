@@ -182,8 +182,14 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
   	}
   	
   	// 11.4 add created_by column sharealbum table
-  	pwg_query("ALTER TABLE ".$this->table." ADD `created_by` MEDIUMINT NULL AFTER `creation_date`");
-  	
+  	$result = pwg_query('SHOW COLUMNS FROM `' . $this->table . '` LIKE "created_by";');
+  	if (!pwg_db_num_rows($result)) {
+        pwg_query('
+            ALTER TABLE `' . $this->table . '`
+            ADD `created_by` mediumint(8) NULL                  
+        ;');
+    }
+      	
     //$this->install($new_version, $errors);
   	$old_conf = safe_unserialize($conf['sharealbum']);
   	conf_update_param('sharealbum', $old_conf, true);
