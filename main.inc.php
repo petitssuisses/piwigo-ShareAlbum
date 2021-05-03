@@ -53,6 +53,7 @@ define('SHAREALBUM_USER_CODE_SUFFIX_LENGTH',8);			// Length of the random suffix
 define('SHAREALBUM_USER_PASSWORD_LENGTH',16);			// Length of the random password for auto created users
 
 define('SHAREALBUM_SESSION_VAR','sharealbum_guest');	// Session variable, used to identify user is browsing as a (URL identified) guest
+define('SHAREALBUM_SESSION_CAT','-1');                  // Session variable, keeps the shared album category id
 define('SHAREALBUM_GROUP','sharealbum');			    // Group name of the guest users
 define('SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT',15);     // Default number of images per page for shared albums
 
@@ -149,6 +150,7 @@ function sharealbum_init()
 			pwg_query("INSERT INTO `".SHAREALBUM_TABLE_LOG."` (`cat_id`,`ip`,`visit_d`)
   					VALUES (".$row['cat'].", '".$_SERVER['REMOTE_ADDR']."', '".date("Y-m-d H:i:s")."')");
 			pwg_set_session_var(SHAREALBUM_SESSION_VAR, true);
+			pwg_set_session_var(SHAREALBUM_SESSION_CAT, $row['cat']);
 			redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$row['cat']);
 	  	}
   	}
@@ -242,15 +244,15 @@ function sharealbum_manage_menus($menublock) {
  */
 function sharealbum_replace_breadcrumb() {
 	global $conf,$template,$page;
+	
 	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs']) and isset($page['category'])))
 	{
-		$section = $page['title'];
-		$section_title = substr($section,strrpos($section,'">',0)+2,strlen($section)-strrpos($section,'">',0));
-		$section_title = substr($section_title,0,strrpos($section_title,'</a>',0));
-		$breadcrumb = "<a href='".PHPWG_ROOT_PATH.'index.php?/category/'.$page['category']['id']."'>Accueil</a>";
-		$breadcrumb = $breadcrumb."&nbsp;/&nbsp;<a href='".PHPWG_ROOT_PATH.'index.php?/category/'.$page['category']['id']."'>".$section_title."</a>";
-		$template->assign('TITLE', $breadcrumb);
-		$template->assign('SECTION_TITLE',  $breadcrumb." /&nbsp;");
+	    $pos_cat_str = strpos($page['title'],"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
+	    $pos_lower_str = strrpos(substr($page['title'],0,$pos_cat_str),"<");
+	    
+	    $template->assign('SECTION_TITLE',  substr($page['title'],$pos_lower_str) );
+	    $template->assign('TITLE',  substr($page['title'],$pos_lower_str) );
+	    // TODO Change page title to same path without HTML Chars
 	}
 }
 
