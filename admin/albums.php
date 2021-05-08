@@ -80,8 +80,8 @@ $private_albums_query = "
 if ($conf['sharealbum']['option_recursive_shares']) {
     $private_albums_query = "
         SELECT c.*
-        FROM  piwigo_categories c 
-        LEFT JOIN piwigo_sharealbum s 
+        FROM  ".CATEGORIES_TABLE." c 
+        LEFT JOIN ".SHAREALBUM_TABLE." s 
         ON c.id = s.cat
         WHERE s.cat IS NULL 
         AND c.status = 'private'
