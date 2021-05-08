@@ -6,7 +6,7 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
  */
 function sharealbum_add_button()
 {
-	global $template,$page,$user;
+	global $template,$page,$user,$conf;
 
 	$template->assign('SHAREALBUM_PATH', SHAREALBUM_PATH);
 	$template->assign(
@@ -47,9 +47,16 @@ function sharealbum_add_button()
 	// Only add button on index pages and categories which are not public
 	if ((script_basename()=='index') and (isset($page['category']['id'])))
 	{
-	    if ( isset($page['category']['status']) and ($page['category']['status'] == 'private') and count($page['items'])>0 and sharealbum_is_poweruser($user['id']))
+	    // Depending on the configuration setting 'option_recursive_shares', check whether the button should be displayed on single album pages (album with photos in it) or
+	    // if a album without any photo (a root dir for example)
+	    // if option_recursive_shares is true :    any private category page
+	    // else                                    only private categories with at least one photo 
+	    
+	    if ( isset($page['category']['status']) and ($page['category']['status'] == 'private') and sharealbum_is_poweruser($user['id']))
 		{
-			$template->add_index_button($button, BUTTONS_RANK_NEUTRAL);
+		    if (($conf['sharealbum']['option_recursive_shares']) or (count($page['items'])>0)) {
+		        $template->add_index_button($button, BUTTONS_RANK_NEUTRAL);
+		    }
 		}
 	}
 }

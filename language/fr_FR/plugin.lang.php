@@ -1,8 +1,4 @@
 <?php
-
-/*
- * 
- */
 // Commmon
 $lang['Share'] = 'Partager';
 $lang['This album is shared via a public link'] = 'Cet album est partagé via un lien public';
@@ -43,12 +39,13 @@ $lang['Show links'] = 'Afficher les liens';
 $lang['Ascending'] = 'Croissant';
 $lang['Descending'] = 'Décroissant';
 $lang['Number of displayed images per page for shared albums'] = 'Nombre d\'images affichées par page';
-$lang['Defines the number of maximum images are displayed per page for shared albums. This setting applies to all shared albums'] = "Définit le nombre d'images affichées par page. Ce paramètre s'applique Ã  tous les albums partagés.";
+$lang['Defines the number of maximum images are displayed per page for shared albums. This setting applies to all shared albums'] = "Définit le nombre d'images affichées par page. Ce paramètre s'applique à tous les albums partagés.";
 $lang['Shared by'] = 'Partagé par';
 $lang['Advanced options'] = 'Options avancées';
 $lang['Enable non-admin powerusers to share albums'] = 'Autoriser la création de partages par des utilisateurs non admin';
-$lang['When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'] = 'Si sélectionné, les utilisateurs appartenant au groupe \'sharealbum_powerusers\' pourront partager des albums privés depuis les pages albums';
+$lang['When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'] = 'Si coché, les utilisateurs appartenant au groupe \'sharealbum_powerusers\' pourront partager des albums privés depuis les pages albums';
 $lang['For this, add power users into the group <b>\'sharealbum_powerusers\'</b>.'] = 'Ajouter les utilisateurs sélectionnés dans le groupe <b>\'sharealbum_powerusers\'</b>.';
 $lang['Warning : those users will be able to create shared albums as well as to remove existing shares'] = 'Attention : ces utilisateurs pourront créer des partages, mais également supprimer des partages existants';
-
+$lang['Apply shares to sub-albums']='Partage également les sous-albums';
+$lang['When checked, nested albums are shared as well as the parent shared album']='Si coché, les albums enfants sont également accessibles à travers le partage';
 ?>

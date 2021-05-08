@@ -185,7 +185,6 @@ function sharealbum_init()
   			    if (!sharealbum_is_poweruser($user['id']))
   			        die('Hacking attempt!');
   				sharealbum_renew_share($sharealbum_cat);
-  				// TODO Do not die, return error
   				redirect(PHPWG_ROOT_PATH.'index.php?/category/'.$sharealbum_cat.'&'.SHAREALBUM_URL_MESSAGE.'='.SHAREALBUM_URL_MESSAGE_RENEWED);
   				break;
   		}
@@ -241,6 +240,8 @@ function sharealbum_manage_menus($menublock) {
 /**
  * Replaces the navigation breadcrumbs with the album name
  * Album name is linked to album home page
+ * 
+ * SHAREALBUM_SESSION_CAT stores the category id of the shared album (at its root level in case it contains nested albums)
  */
 function sharealbum_replace_breadcrumb() {
 	global $conf,$template,$page;

@@ -7,11 +7,22 @@
  * @return true success
  */
 function sharealbum_grant_private_category($user_id,$cat_id) {
+    global $conf;
 	if (pwg_query("
   		INSERT INTO `".USER_ACCESS_TABLE."` (`user_id`,`cat_id`)
   		VALUES (".$user_id.",".$cat_id.")
   	")) {
-		return true;	
+      	if ($conf['sharealbum']['option_recursive_shares']) {
+      	    // List all albums having this cat_id
+      	    $res = pwg_query("SELECT id FROM ".CATEGORIES_TABLE."
+                WHERE id_uppercat=".$cat_id."
+            ");
+      	    while ($row = pwg_db_fetch_assoc($res)) {
+      	        $sub_cat = $row['id'];
+      	        sharealbum_grant_private_category($user_id,$sub_cat);
+      	    }
+      	}
+		return true;
 	} else {
 		return false;
 	}

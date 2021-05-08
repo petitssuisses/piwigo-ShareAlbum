@@ -12,7 +12,8 @@ Administrative functions :
 
 # Versions history
 * Version 11.4
-  * Added #72 Allow non-administrators to create share-urls (via a group)
+  * Added #72 Allow non-administrators to create share-urls (via a sharealbum_powerusers group)
+  * Added #43 (and duplicate #73) Shares can now be applied recursively to include nested / sub-albums (There's a new option in the configuration page to activate this feature. Please not that existing shares will not modified, you need to cancel and recreate them)
 * Version 11.3
   * Added #68 Admin add sort by last visit date
   * Added #69 Admin default sort by creation date DESC

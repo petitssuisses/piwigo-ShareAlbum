@@ -5,7 +5,7 @@ defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 // | Shared Albums tab                                                     |
 // +-----------------------------------------------------------------------+
 
-global $prefixeTable;
+global $prefixeTable, $conf;
 
 $filter_sort_field = "s.creation_date";
 $filter_sort_order = "DESC";
@@ -65,17 +65,31 @@ if (isset($_POST['p_sharedalbums_action']) && isset($_POST['sa_cat']) && !empty(
 $private_albums_query = "
 	SELECT c.*, COUNT(ic.image_id) as nb_images
 	FROM ".IMAGE_CATEGORY_TABLE." ic, ".CATEGORIES_TABLE." c
-	WHERE ic.category_id IN 
-		( 
+	WHERE ic.category_id IN
+		(
 			SELECT c.id
-			FROM ".CATEGORIES_TABLE." c 
-			LEFT JOIN ".SHAREALBUM_TABLE." s 
+			FROM ".CATEGORIES_TABLE." c
+			LEFT JOIN ".SHAREALBUM_TABLE." s
 			ON c.id = s.cat
-			WHERE s.cat IS NULL 
+			WHERE s.cat IS NULL
 			AND c.status = 'private'
 		)
 	AND c.id = ic.category_id
 	GROUP BY ic.category_id";
+// if option_recursive_shares is active, do not limit to single albums with photos but show all private non-shared albums
+if ($conf['sharealbum']['option_recursive_shares']) {
+    $private_albums_query = "
+        SELECT c.*
+        FROM  piwigo_categories c 
+        LEFT JOIN piwigo_sharealbum s 
+        ON c.id = s.cat
+        WHERE s.cat IS NULL 
+        AND c.status = 'private'
+        ORDER BY global_rank
+        ";
+}
+
+
 $shareable_albums = query2array($private_albums_query);
 // replace album name with full path to album (with uppercats)
 foreach ($shareable_albums as &$album) {

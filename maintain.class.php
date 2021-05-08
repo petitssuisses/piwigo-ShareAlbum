@@ -18,6 +18,7 @@ class ShareAlbum_maintain extends PluginMaintain
     'option_remember_me' => true,			// option to indicate remember me option for logged in users
     'option_pics_per_page' => 15,           // option to specify the maximum pictures per page
     'option_enable_powerusers' => false,    // option to enable power to selected non-admin users to share private albums
+    'option_recursive_shares' => true,      // option to enable recursive shares (on sub-albums)
     );
 
   private $table;

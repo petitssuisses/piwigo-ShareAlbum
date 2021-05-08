@@ -15,6 +15,7 @@ if (isset($_POST['save_config']))
   	'option_remember_me' => isset($_POST['option_remember_me']),
     'option_pics_per_page' => $_POST['option_pics_per_page'],
     'option_enable_powerusers'=>isset($_POST['option_enable_powerusers']),
+    'option_recursive_shares'=>isset($_POST['option_recursive_shares'])
     );
   conf_update_param('sharealbum', $conf['sharealbum']);
   sharealbum_set_nb_image_page($_POST['option_pics_per_page']);
