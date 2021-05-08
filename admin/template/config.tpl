@@ -40,13 +40,20 @@
  	<fieldset>
  	<legend>{'Shared albums options'|translate}</legend>
  	<ul>
-      <li>
-      <label>
-        <input type="checkbox" name="option_replace_breadcrumbs" value="{$sharealbum.option_replace_breadcrumbs}" {if $sharealbum.option_replace_breadcrumbs}checked="checked"{/if}>
-        <b>{'Replace navigation breadcrumbs with album name'|translate}</b>
-      </label>
-      <a class="icon-info-circled-1" title="{'When checked, breadcrumbs are replaced with the album name'|translate}"></a>
-    </li>
+      	<li>
+	    	<label>
+	        <input type="checkbox" name="option_replace_breadcrumbs" value="{$sharealbum.option_replace_breadcrumbs}" {if $sharealbum.option_replace_breadcrumbs}checked="checked"{/if}>
+	        <b>{'Replace navigation breadcrumbs with album name'|translate}</b>
+	      	</label>
+	      	<a class="icon-info-circled-1" title="{'When checked, breadcrumbs are replaced with the album name'|translate}"></a>
+    	</li>
+    	<li>
+	    	<label>
+	        <input type="checkbox" name="option_recursive_shares" value="{$sharealbum.option_recursive_shares}" {if $sharealbum.option_recursive_shares}checked="checked"{/if}>
+	        <b>{'Apply shares to sub-albums'|translate}</b>
+	      	</label>
+	      	<a class="icon-info-circled-1" title="{'When checked, nested albums are shared as well as the parent shared album'|translate}"></a>
+    	</li>
     <li>
       <label>
         <b>{'Number of displayed images per page for shared albums'|translate} : </b>
