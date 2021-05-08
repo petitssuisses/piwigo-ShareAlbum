@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.5
+  * Fixed #74 Uncaught error - following 11.4 upgrade
 * Version 11.4
   * Added #72 Allow non-administrators to create share-urls (via a sharealbum_powerusers group)
   * Added #43 (and duplicate #73) Shares can now be applied recursively to include nested / sub-albums (There's a new option in the configuration page to activate this feature. Please not that existing shares will not modified, you need to cancel and recreate them)
