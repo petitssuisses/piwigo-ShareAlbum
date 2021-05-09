@@ -48,5 +48,5 @@ $lang['When checked, any user belonging to the group \'sharealbum_powerusers\' h
 $lang['For this, add power users into the group <b>\'sharealbum_powerusers\'</b>.'] = 'For this, add power users into the group <b>\'sharealbum_powerusers\'</b>.';
 $lang['Warning : those users will be able to create shared albums as well as to remove existing shares'] = 'Warning : those users will be able to create shared albums as well as to remove existing shares';
 $lang['Apply shares to sub-albums']='Apply shares to sub-albums';
-$lang['When checked, nested albums are shared as well as the parent shared album'='When checked, nested albums can be browsed as well';
+$lang['When checked, nested albums are shared as well as the parent shared album']='When checked, nested albums can be browsed as well';
 ?>
