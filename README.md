@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.6
+  * Fixed a language file issue
 * Version 11.5
   * Fixed #74 Uncaught error - following 11.4 upgrade
 * Version 11.4
