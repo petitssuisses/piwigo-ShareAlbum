@@ -44,3 +44,11 @@ $lang['When checked, a login menu is shown for guests browsing via a shared link
 $lang['When checked, breadcrumbs are replaced with the album name'] = 'При проверке "хлебные крошки" заменяются названием альбома';
 $lang['When checked, menus are hidden for visitors of the shared album'] = 'При проверке меню скрыты для гостей общего альбома';
 $lang['You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'] = 'Вы собираетесь обновить общую ссылку на этот альбом. Ранее переданная ссылка больше не будет активна. Уверены?';
+$lang['For this, add power users into the group <b>\'sharealbum_powerusers\'</b>.'] = 'Для этого добавьте людей в качестве суперпользователей в группу <b>\'sharealbum_powerusers\'</b>.';
+$lang['When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'] = 'После проверки любой пользователь, принадлежащий к группе \'sharealbum _ powerusers\' будет иметь доступ к общему выбору в частных страницах альбома';
+$lang['When checked, nested albums are shared as well as the parent shared album'] = 'После проверки, вложенные альбомы тоже могут быть просмотрены';
+$lang['Advanced options'] = 'Дополнительные опции';
+$lang['Apply shares to sub-albums'] = 'Применение действий к субальбомам';
+$lang['Enable non-admin powerusers to share albums'] = 'Позволить суперпользователям (не относящимся к админам) возможность делиться альбомами';
+$lang['Shared by'] = 'Предоставлено';
+$lang['Warning : those users will be able to create shared albums as well as to remove existing shares'] = 'Предупреждение: эти пользователи смогут создавать общие альбомы, а также удалять существующие действия с альбомами';
