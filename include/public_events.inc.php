@@ -2,6 +2,21 @@
 defined('SHAREALBUM_PATH') or die('Hacking attempt!');
 
 /*
+ * Escape a literal ' apostrophe if it isn't already \' escaped (*after* PHP
+ * interpreted it as literal string, so original 'foo\'bar' will be escaped but
+ * 'foo\\\'bar' will not.). Such that JavaScript alert('foo\'bar') again can
+ * interpret it. Yay for hell of interpreter languages.
+ * @param l10n string
+ * @return escaped string
+ */
+function sharealbum_escape_apostrophe($str)
+{
+	// Yes this looks weird, but.. PHP being an interpreter the [^\\\] sequence
+	// becomes [^\] in the pattern literal.
+	return preg_replace('/([^\\\])\'/', '$1\\\'', $str);
+}
+
+/*
  * Button on album pages
  */
 function sharealbum_add_button()
@@ -11,19 +26,19 @@ function sharealbum_add_button()
 	$template->assign('SHAREALBUM_PATH', SHAREALBUM_PATH);
 	$template->assign(
 		array(
-			'T_SHAREALBUM_ALBUM_SHARE' => l10n('Share'),
-			'T_SHAREALBUM_ALBUM_SHARED' => l10n('This album is shared via a public link'),
-			'T_SHAREALBUM_COPY_TO_CLIPBOARD' => l10n('Copy to clipboard'),
-			'T_SHAREALBUM_LINK_COPIED_SUCCESS' => l10n('Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'),
-			'T_SHAREALBUM_LINK_COPIED_FAILURE' => l10n('lease select the link and use the Edit > Copy function from your browser.'),
-			'T_SHAREALBUM_RENEW_WARNING' => l10n('You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'),
-			'T_SHAREALBUM_RENEW' => l10n('Renew link'),
-			'T_SHAREALBUM_CANCEL' => l10n('Cancel sharing'),
-			'T_SHAREALBUM_CANCEL_WARNING' => l10n('Are you sure you wish to cancel this album sharing ?'),
-			'T_SHAREALBUM_SHARE' => l10n('Share this album'),
-			'T_SHAREALBUM_LINK_CREATED' => l10n('Share link was successfully created. Click the share button to display it.'),
-			'T_SHAREALBUM_LINK_RENEWED' => l10n('Link was successfully renewed. Click the share button to display it.'),
-			'T_SHAREALBUM_LINK_CANCELLED' => l10n('Link was successfully deleted. Album is no longer publicly shared.')
+			'T_SHAREALBUM_ALBUM_SHARE' => sharealbum_escape_apostrophe(l10n('Share')),
+			'T_SHAREALBUM_ALBUM_SHARED' => sharealbum_escape_apostrophe(l10n('This album is shared via a public link')),
+			'T_SHAREALBUM_COPY_TO_CLIPBOARD' => sharealbum_escape_apostrophe(l10n('Copy to clipboard')),
+			'T_SHAREALBUM_LINK_COPIED_SUCCESS' => sharealbum_escape_apostrophe(l10n('Link was successfully copied to clipboard. You can now use system paste functionnality to share it !')),
+			'T_SHAREALBUM_LINK_COPIED_FAILURE' => sharealbum_escape_apostrophe(l10n('Please select the link and use the Edit > Copy function from your browser.')),
+			'T_SHAREALBUM_RENEW_WARNING' => sharealbum_escape_apostrophe(l10n('You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?')),
+			'T_SHAREALBUM_RENEW' => sharealbum_escape_apostrophe(l10n('Renew link')),
+			'T_SHAREALBUM_CANCEL' => sharealbum_escape_apostrophe(l10n('Cancel sharing')),
+			'T_SHAREALBUM_CANCEL_WARNING' => sharealbum_escape_apostrophe(l10n('Are you sure you wish to cancel this album sharing ?')),
+			'T_SHAREALBUM_SHARE' => sharealbum_escape_apostrophe(l10n('Share this album')),
+			'T_SHAREALBUM_LINK_CREATED' => sharealbum_escape_apostrophe(l10n('Share link was successfully created. Click the share button to display it.')),
+			'T_SHAREALBUM_LINK_RENEWED' => sharealbum_escape_apostrophe(l10n('Link was successfully renewed. Click the share button to display it.')),
+			'T_SHAREALBUM_LINK_CANCELLED' => sharealbum_escape_apostrophe(l10n('Link was successfully deleted. Album is no longer publicly shared.'))
 		)
 	);
 
