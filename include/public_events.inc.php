@@ -15,7 +15,7 @@ function sharealbum_add_button()
 			'T_SHAREALBUM_ALBUM_SHARED' => l10n('This album is shared via a public link'),
 			'T_SHAREALBUM_COPY_TO_CLIPBOARD' => l10n('Copy to clipboard'),
 			'T_SHAREALBUM_LINK_COPIED_SUCCESS' => l10n('Link was successfully copied to clipboard. You can now use system paste functionnality to share it !'),
-			'T_SHAREALBUM_LINK_COPIED_FAILURE' => l10n('lease select the link and use the Edit > Copy function from your browser.'),
+			'T_SHAREALBUM_LINK_COPIED_FAILURE' => l10n('Please select the link and use the Edit > Copy function from your browser.'),
 			'T_SHAREALBUM_RENEW_WARNING' => l10n('You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'),
 			'T_SHAREALBUM_RENEW' => l10n('Renew link'),
 			'T_SHAREALBUM_CANCEL' => l10n('Cancel sharing'),
