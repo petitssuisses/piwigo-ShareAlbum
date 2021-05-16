@@ -182,9 +182,18 @@ class ShareAlbum_maintain extends PluginMaintain
   	}
   	
   	// Required for versions 11.4 and above : add 'created_by' column in sharealbum table
-  	pwg_query('
-            ALTER TABLE `'.$this->table.'` ADD COLUMN IF NOT EXISTS created_by mediumint(8) NULL
-        ;');
+//   	pwg_query('
+//             ALTER TABLE `'.$this->table.'` ADD COLUMN IF NOT EXISTS created_by mediumint(8) NULL
+//         ;');
+  	
+  	$res_check_column = pwg_query("
+           SHOW COLUMNS FROM `".$this->table."` LIKE 'created_by' 
+    ");
+  	if (pwg_db_num_rows($res_check_column) == 0) {
+  	    pwg_query("
+            ALTER TABLE `".$this->table."` ADD COLUMN created_by mediumint(8) NULL
+        ");
+  	}  	
       	
   	$old_conf = safe_unserialize($conf['sharealbum']);
   	conf_update_param('sharealbum', $old_conf, true);

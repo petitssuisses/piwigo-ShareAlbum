@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.8
+  * Fixed #80 Need to improve compatibility of update method (to add columns) for older MySQL / MariaDB versions
 * Version 11.7
   * Fixed #77 #78 #79 with language not escaped characters
 * Version 11.6
