@@ -2,8 +2,8 @@
 
 /**
  * Gives user permission to access a private category
- * @param unknown $user_id
- * @param unknown $cat_id
+ * @param int $user_id
+ * @param int $cat_id
  * @return true success
  */
 function sharealbum_grant_private_category($user_id,$cat_id) {
@@ -61,7 +61,7 @@ function sharealbum_register_user($username,$password_length) {
 /**
  * Get the share code for a specified album (category)
  * Returns the album code or null if not found
- * @param unknown $cat
+ * @param int $cat
  * @return Ambigous <NULL, unknown>
  */
 function sharealbum_get_share_code($cat)
@@ -115,7 +115,7 @@ function sharealbum_generate_code($len,$lower,$use_special_chars) {
 
 /**
  * 
- * @param unknown $group_name
+ * @param string $group_name
  * @return Ambigous <number, unknown>
  */
 function sharealbum_get_group_id($group_name) {
@@ -136,7 +136,7 @@ function sharealbum_get_group_id($group_name) {
 
 /**
  * Returns the absolute url to be shared for a defined code
- * @param unknown $group_name
+ * @param string $group_name
  * @return Ambigous <number, unknown>
  */
 function sharealbum_get_shareable_url($code) {
@@ -298,7 +298,7 @@ function sharealbum_getname_with_uppercats($cat_name, $uppercats) {
 
 /**
  * Gets sharealbum related users ids
- * @return unknown an array with the users id
+ * @return array an array with the users id
  */
 function sharealbum_get_users_id() {
     $result = query2array("
@@ -310,7 +310,7 @@ function sharealbum_get_users_id() {
 
 /**
  * Sets a number of images per page for all sharealbum users
- * @param unknown $nb_image_page Number of images to be displayed per page
+ * @param int $nb_image_page Number of images to be displayed per page
  */
 function sharealbum_set_nb_image_page($nb_image_page) {
     $sa_users_a = sharealbum_get_users_id();
@@ -321,8 +321,8 @@ function sharealbum_set_nb_image_page($nb_image_page) {
 
 /**
  * Sets a number of images per page for a sharealbum user
- * @param unknown $nb_image_page
- * @param unknown $user_id
+ * @param int $nb_image_page
+ * @param int $user_id
  */
 function sharealbum_set_user_nb_image_page($nb_image_page = SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT, $user_id) {
     pwg_query("

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: ShareAlbum
-Version: 11.6
+Version: 11.7
 Description: Plugin enabling a simple share feature for albums
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=865
 Author: petitssuisses
@@ -194,7 +194,7 @@ function sharealbum_init()
 
 /**
  * Cleans sharealbum table when a user is manually deleted by an administrator (through the interface)
- * @param unknown $user_id
+ * @param int $user_id
  */
 function sharealbum_on_delete_user($user_id) {
 	$res = pwg_query("
@@ -245,21 +245,22 @@ function sharealbum_manage_menus($menublock) {
  */
 function sharealbum_replace_breadcrumb() {
 	global $conf,$template,$page;
-	
 	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs']) and isset($page['category'])))
 	{
 	    $pos_cat_str = strpos($page['title'],"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
 	    $pos_lower_str = strrpos(substr($page['title'],0,$pos_cat_str),"<");
 	    
-	    $template->assign('SECTION_TITLE',  substr($page['title'],$pos_lower_str) );
-	    $template->assign('TITLE',  substr($page['title'],$pos_lower_str) );
-	    // TODO Change page title to same path without HTML Chars
+	    $nav_breadcrumbs = "";
+	    $nav_breadcrumbs .= substr($page['title'],$pos_lower_str);
+	    
+	    $template->assign('SECTION_TITLE',  $nav_breadcrumbs );
+	    $template->assign('TITLE',  $nav_breadcrumbs );
 	}
 }
 
 /**
  *
- * @param unknown $menu_ref_arr
+ * @param array $menu_ref_arr
  */
 function sharealbum_identification_menu_register($menu_ref_arr )
 {

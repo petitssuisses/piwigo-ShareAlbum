@@ -57,26 +57,26 @@ class ShareAlbum_maintain extends PluginMaintain
 
     // add the piwigo_sharealbum configuration table
     pwg_query('
-CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
-  	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  	`cat` smallint(5) unsigned NOT NULL,
-    `user_id` mediumint(8) unsigned NOT NULL,
-    `code` varchar(32) NOT NULL,
-    `creation_date` datetime DEFAULT NULL,
-    `created_by` mediumint(8) unsigned DEFAULT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-');
+    CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
+      	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+      	`cat` smallint(5) unsigned NOT NULL,
+        `user_id` mediumint(8) unsigned NOT NULL,
+        `code` varchar(32) NOT NULL,
+        `creation_date` datetime DEFAULT NULL,
+        `created_by` mediumint(8) unsigned DEFAULT NULL,
+        PRIMARY KEY (`id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    ');
     
     pwg_query('
-CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
-	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	`cat_id` smallint(5) unsigned NOT NULL,
-	`ip` varchar(40) DEFAULT NULL,
-	`visit_d` datetime DEFAULT NULL,
-	PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-');
+    CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
+    	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    	`cat_id` smallint(5) unsigned NOT NULL,
+    	`ip` varchar(40) DEFAULT NULL,
+    	`visit_d` datetime DEFAULT NULL,
+    	PRIMARY KEY (`id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    ');
 
     // create the sharealbum group
     pwg_query("
@@ -132,7 +132,6 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
   		if (!array_key_exists($default_conf_key,$old_conf)) {
   			$old_conf += [ $default_conf_key => $this->default_conf[$default_conf_key] ];
   			conf_update_param('sharealbum', $old_conf, true);
-  			
 		}
   	}
   	
@@ -182,12 +181,11 @@ CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
 		");
   	}
   	
-  	// 11.4 + 11.5 add created_by column sharealbum table
+  	// Required for versions 11.4 and above : add 'created_by' column in sharealbum table
   	pwg_query('
-            ALTER TABLE `' . $this->table . '` ADD COLUMN IF NOT EXISTS created_by mediumint(8) NULL
+            ALTER TABLE `'.$this->table.'` ADD COLUMN IF NOT EXISTS created_by mediumint(8) NULL
         ;');
       	
-    //$this->install($new_version, $errors);
   	$old_conf = safe_unserialize($conf['sharealbum']);
   	conf_update_param('sharealbum', $old_conf, true);
   }

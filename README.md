@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 11.7
+  * Fixed #77 #78 #79 with language not escaped characters
 * Version 11.6
   * Fixed a language file issue
 * Version 11.5
@@ -71,7 +73,7 @@ Administrative functions :
   * Fixed #12 When browsing in guest mode, access to identification.php produces undifined index category errors
   * Fixed #10 Prevent codes smaller or longer than expected
   * Fixed #9 Share button shows on categories (with subcategories) page
-* Version 0.5 Beta rele∏ase
+* Version 0.5 Beta release
   * Implemented Issue #8 (bigs38) Return to the album view enhancement : Album name now links to the category page
 * Version 0.4 Early release
   * Compatible with the Piwigo 2.9
