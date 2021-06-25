@@ -50,3 +50,5 @@ $lang['For this, add power users into the group <b>\'sharealbum_powerusers\'</b>
 $lang['Shared by'] = 'Gedeeld door';
 $lang['Warning : those users will be able to create shared albums as well as to remove existing shares'] = 'Waarschuwing: die gebruikers kunnen zowel gedeelde albums maken als bestaande gedeelde verwijderen';
 $lang['When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'] = 'Indien aangevinkt, heeft elke gebruiker die tot de groep \'sharealbum_powerusers\' behoort toegang tot de deeloptie in privé-albumpagina\'s';
+$lang['When checked, nested albums are shared as well as the parent shared album'] = 'Indien aangevinkt, kunnen geneste albums ook worden doorzocht';
+$lang['Apply shares to sub-albums'] = 'Shares toepassen op sub-albums';
