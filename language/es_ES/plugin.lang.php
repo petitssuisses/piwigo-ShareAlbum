@@ -44,3 +44,11 @@ $lang['When checked, a login menu is shown for guests browsing via a shared link
 $lang['When checked, breadcrumbs are replaced with the album name'] = 'Cuando está seleccionado, el rastro de navegación se sustituye por el nombre del álbum';
 $lang['When checked, users can go back to root Piwigo url and automatically logged in to browse the last visited shared album'] = 'Cuando está seleccionado, los usuarios pueden volver atrás hasta el URL de inicio de Piwigo e iniciar sesión automáticamente para visualizar el último álbum compartido visitado';
 $lang['You are going to renew the shared link for this album. Previously communicated link will no more be active. Do you confirm ?'] = 'Va a renovar el enlace compartido de este álbum. Cualquier enlace compartido anterior dejará de funcionar. ¿Confirma la operación?';
+$lang['Advanced options'] = 'Opciones avanzadas';
+$lang['Apply shares to sub-albums'] = 'Aplicar comparticiones a sub-álbumes';
+$lang['Enable non-admin powerusers to share albums'] = 'Permitir que usuarios avanzados no administradores compartan álbumes';
+$lang['For this, add power users into the group <b>\'sharealbum_powerusers\'</b>.'] = 'Para ello, añada a los usuarios avanzados al grupo <b>\'sharealbum_powerusers\'</b>';
+$lang['Shared by'] = 'Compartido por';
+$lang['Warning : those users will be able to create shared albums as well as to remove existing shares'] = 'Atención: estos usuarios podrán crear álbumes compartidos y también eliminar comparticiones existentes';
+$lang['When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'] = 'Cuando está seleccionado, cualquier usuario que pertenezca al grupo \'sharealbum_powerusers\' tiene acceso a la opción de compartir en las páginas de álbumes privados';
+$lang['When checked, nested albums are shared as well as the parent shared album'] = 'Cuando está seleccionado, los álbumes anidados también pueden visitarse';
