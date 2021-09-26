@@ -69,7 +69,7 @@ function sharealbum_add_button()
 	    
 	    if ( isset($page['category']['status']) and ($page['category']['status'] == 'private') and sharealbum_is_poweruser($user['id']))
 		{
-		    if (($conf['sharealbum']['option_recursive_shares']) or (count($page['items'])>0)) {
+		    if (($conf['sharealbum']['option_recursive_shares']) or (!($conf['sharealbum']['option_recursive_shares']) && (count($page['items'])>0))) {
 		        $template->add_index_button($button, BUTTONS_RANK_NEUTRAL);
 		    }
 		}
@@ -135,18 +135,23 @@ function sharealbum_loc_end_page()
 			// No sharing detected
 			
 			// Check if album can be shared (is private and contains at least 1 picture) - Implemented #56
-			$result_chk = pwg_query("SELECT COUNT(ic.image_id) as nb
-				FROM ".CATEGORIES_TABLE." c, ".IMAGE_CATEGORY_TABLE." ic 
-				WHERE c.id = ".$page['category']['id']." 
-				AND c.status = 'private'
-				AND c.id = ic.category_id");
-			if (pwg_db_num_rows($result_chk)) 
-			{
-				$row_chk = pwg_db_fetch_assoc($result_chk);
-				if ($row_chk['nb'] > 0) {
-					$template->assign('SHAREALBUM_LINK_CREATE',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
-				}
-			}
+// 			$result_chk = pwg_query("SELECT COUNT(ic.image_id) as nb
+// 				FROM ".CATEGORIES_TABLE." c, ".IMAGE_CATEGORY_TABLE." ic 
+// 				WHERE c.id = ".$page['category']['id']." 
+// 				AND c.status = 'private'
+// 				AND c.id = ic.category_id");
+// 			if (pwg_db_num_rows($result_chk)) 
+// 			{
+// 				$row_chk = pwg_db_fetch_assoc($result_chk);
+// 				if ($row_chk['nb'] > 0) {
+// 					$template->assign('SHAREALBUM_LINK_CREATE',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
+// 				} else {
+// 				    $template->assign('SHAREALBUM_LINK_IS_ACTIVE', 0);
+
+// 				}
+// 			}
+			
+			$template->assign('SHAREALBUM_LINK_CREATE',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
 		}
 	}
 }
