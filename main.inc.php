@@ -1,11 +1,12 @@
 <?php
 /*
 Plugin Name: ShareAlbum
-Version: 11.8
+Version: 12.1
 Description: Plugin enabling a simple share feature for albums
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=865
 Author: petitssuisses
 Author URI: http://piwigo.org/forum/profile.php?id=19052
+Has Settings: true
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
@@ -83,10 +84,6 @@ if (defined('IN_ADMIN'))
 {
   // file containing all admin handlers functions
   $admin_file = SHAREALBUM_PATH . 'include/admin_events.inc.php';
-
-  // admin plugins menu link
-  add_event_handler('get_admin_plugin_menu_links', 'sharealbum_admin_plugin_menu_links',
-   EVENT_HANDLER_PRIORITY_NEUTRAL, $admin_file);
 }
 else
 {
