@@ -241,17 +241,35 @@ function sharealbum_manage_menus($menublock) {
  * SHAREALBUM_SESSION_CAT stores the category id of the shared album (at its root level in case it contains nested albums)
  */
 function sharealbum_replace_breadcrumb() {
-	global $conf,$template,$page;
+	global $conf,$template,$page,$user;
+	
 	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs']) and isset($page['category'])))
 	{
-	    $pos_cat_str = strpos($page['title'],"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
-	    $pos_lower_str = strrpos(substr($page['title'],0,$pos_cat_str),"<");
+	    // Breadcrumbs for albums navigation
+	    $pos_cat_str = strpos($template->get_template_vars('TITLE'),"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
+	    $pos_lower_str = strrpos(substr($template->get_template_vars('TITLE'),0,$pos_cat_str),"<");
 	    
 	    $nav_breadcrumbs = "";
-	    $nav_breadcrumbs .= substr($page['title'],$pos_lower_str);
+	    $nav_breadcrumbs .= substr($template->get_template_vars('TITLE'),$pos_lower_str);
 	    
-	    $template->assign('SECTION_TITLE',  $nav_breadcrumbs );
+	    if($user['theme']=='bootstrap_darkroom') {
+	        // Special treatment for bootstrap darkroom. Need to add a first level to map home icon to shared root category
+	        $nav_breadcrumbs = "<a class=\"nav-breadcrumb-item\" href=\"index.php?/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT)."\">".l10n('Home')."</a>".$nav_breadcrumbs;
+	    }
 	    $template->assign('TITLE',  $nav_breadcrumbs );
+	    
+	    // Breadcrumbs for pictures page navigation
+	    $pos_cat_str = strpos($template->get_template_vars('SECTION_TITLE'),"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
+	    $pos_lower_str = strrpos(substr($template->get_template_vars('SECTION_TITLE'),0,$pos_cat_str),"<");
+	    
+	    $nav_breadcrumbs = "";
+	    $nav_breadcrumbs .= substr($template->get_template_vars('SECTION_TITLE'),$pos_lower_str);
+	    
+	    if($user['theme']=='bootstrap_darkroom') {
+	        // Special treatment for bootstrap darkroom. Need to add a first level to map home icon to shared root category
+	        $nav_breadcrumbs = "<a class=\"nav-breadcrumb-item\" href=\"index.php?/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT)."\">".l10n('Home')."</a>".$nav_breadcrumbs;
+	    }
+	    $template->assign('SECTION_TITLE',  $nav_breadcrumbs );
 	}
 }
 

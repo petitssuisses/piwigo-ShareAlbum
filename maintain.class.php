@@ -139,7 +139,7 @@ class ShareAlbum_maintain extends PluginMaintain
   	$group_id = -1;
   	$result_group = pwg_query("
 			SELECT `id`
-			FROM ".GROUPS_TABLE."
+			FROM `".GROUPS_TABLE."`
 			WHERE `name`='sharealbum'"
   	);
   	if (pwg_db_num_rows($result_group))
@@ -156,7 +156,7 @@ class ShareAlbum_maintain extends PluginMaintain
   		pwg_query("
   			INSERT IGNORE INTO ".USER_GROUP_TABLE." (group_id, user_id)
 			SELECT g.id, u.id
-			FROM ".GROUPS_TABLE." g, ".USERS_TABLE." u
+			FROM `".GROUPS_TABLE."` g, ".USERS_TABLE." u
 			WHERE g.name like 'sharealbum'
 			AND u.username like 'share_%'
   		");
@@ -166,7 +166,7 @@ class ShareAlbum_maintain extends PluginMaintain
   	$group_id = -1;
   	$result_group = pwg_query("
 			SELECT `id`
-			FROM ".GROUPS_TABLE."
+			FROM `".GROUPS_TABLE."`
 			WHERE `name`='sharealbum_powerusers'"
   	    );
   	if (pwg_db_num_rows($result_group))
@@ -254,13 +254,13 @@ class ShareAlbum_maintain extends PluginMaintain
     // delete groups
     pwg_query("
     	DELETE 
-    	FROM ".GROUPS_TABLE."
+    	FROM `".GROUPS_TABLE."`
     	WHERE name like 'sharealbum'
     ");
     // 11.4
     pwg_query("
     	DELETE
-    	FROM ".GROUPS_TABLE."
+    	FROM `".GROUPS_TABLE."`
     	WHERE name like 'sharealbum_powerusers'
     ");
     

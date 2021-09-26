@@ -11,6 +11,11 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 12.1
+  * Piwigo 12 compatibility : Set the "Has Settings" keyword. Excaped groups keyword in SQL queries.
+  * Reverted #56 The link of the share button (in album view) had no action when album did not contain any picture.
+  * Fixed #83 When an album with sub albums does not contain any pic, share button does not work
+  * Fixed #84 Album name not displayed with Bootstrap Darkroom.
 * Version 11.8
   * Fixed #80 Need to improve compatibility of update method (to add columns) for older MySQL / MariaDB versions
 * Version 11.7
