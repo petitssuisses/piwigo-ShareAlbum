@@ -11,6 +11,8 @@ Administrative functions :
 * Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 12.2
+  * Enhanced maintain.class.php install / update code 
 * Version 12.1
   * Piwigo 12 compatibility : Set the "Has Settings" keyword. Excaped groups keyword in SQL queries.
   * Reverted #56 The link of the share button (in album view) had no action when album did not contain any picture.

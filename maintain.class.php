@@ -47,15 +47,24 @@ class ShareAlbum_maintain extends PluginMaintain
   {
     global $conf;
 
-    // add config parameter
+    // Add configuration parameters
     if (empty($conf['sharealbum']))
     {
       // conf_update_param well serialize and escape array before database insertion
       // the third parameter indicates to update $conf['sharealbum'] global variable as well
       conf_update_param('sharealbum', $this->default_conf, true);
+    } else {
+        // Check missing params from successive update
+        foreach (array_keys($this->default_conf) as $default_conf_key) {
+            $old_conf = safe_unserialize($conf['sharealbum']);
+            if (!array_key_exists($default_conf_key,$old_conf)) {
+                $old_conf += [ $default_conf_key => $this->default_conf[$default_conf_key] ];
+                conf_update_param('sharealbum', $old_conf, true);
+            }
+        }
     }
 
-    // add the piwigo_sharealbum configuration table
+    // Add the piwigo_sharealbum table
     pwg_query('
     CREATE TABLE IF NOT EXISTS `'. $this->table .'` (
       	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -68,6 +77,7 @@ class ShareAlbum_maintain extends PluginMaintain
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
     ');
     
+    // Add the piwigo_sharealbum_logs table
     pwg_query('
     CREATE TABLE IF NOT EXISTS `'. $this->table_log .'` (
     	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -78,17 +88,33 @@ class ShareAlbum_maintain extends PluginMaintain
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
     ');
 
-    // create the sharealbum group
-    pwg_query("
-		INSERT INTO `".GROUPS_TABLE."` (`name`)
-		VALUES ('sharealbum')
-	");
+    // Create the sharealbum group
+    $res_group = pwg_query("SELECT `id` FROM `".GROUPS_TABLE."` WHERE `name`='sharealbum'");
+    if (!pwg_db_num_rows($res_group)) {
+        pwg_query("INSERT INTO `".GROUPS_TABLE."` (`name`) VALUES ('sharealbum')");
+        
+        // Automatically assign group to previously created sharealbum users
+        pwg_query("
+  			INSERT IGNORE INTO `".USER_GROUP_TABLE."` (group_id, user_id)
+			SELECT g.id, u.id
+			FROM `".GROUPS_TABLE."` g, `".USERS_TABLE."` u
+			WHERE g.name like 'sharealbum'
+			AND u.username like 'share_%'
+  		");
+    }
     
-    // 11.4 create the sharealbum_powerusers group
-    pwg_query("
-		INSERT INTO `".GROUPS_TABLE."` (`name`)
-		VALUES ('sharealbum_powerusers')
-	");
+    // Create the sharealbum_powerusers group - added for version 11.4
+    $res_group = pwg_query("SELECT `id` FROM `".GROUPS_TABLE."` WHERE `name`='sharealbum_powerusers'");
+    if (!pwg_db_num_rows($res_group)) {
+        pwg_query("INSERT INTO `".GROUPS_TABLE."` (`name`) VALUES ('sharealbum_powerusers')");
+    }
+    
+    // Column sharealbum.created_by - added for version 11.4
+    $res_col = pwg_query("SHOW COLUMNS FROM `".$this->table."` LIKE 'created_by'");
+    if (!pwg_db_num_rows($res_col))
+    {
+        pwg_query('ALTER TABLE `'.$this->table.'` ADD `created_by` mediumint(8) DEFAULT NULL;');
+    }
     
     // create a local directory
     if (!file_exists($this->dir))
@@ -125,78 +151,7 @@ class ShareAlbum_maintain extends PluginMaintain
    */
   function update($old_version, $new_version, &$errors=array())
   {
-  	global $conf;
-  	// Check missing params from successive update 
-  	foreach (array_keys($this->default_conf) as $default_conf_key) {
-  		$old_conf = safe_unserialize($conf['sharealbum']);
-  		if (!array_key_exists($default_conf_key,$old_conf)) {
-  			$old_conf += [ $default_conf_key => $this->default_conf[$default_conf_key] ];
-  			conf_update_param('sharealbum', $old_conf, true);
-		}
-  	}
-  	
-  	// sharealbum group
-  	$group_id = -1;
-  	$result_group = pwg_query("
-			SELECT `id`
-			FROM `".GROUPS_TABLE."`
-			WHERE `name`='sharealbum'"
-  	);
-  	if (pwg_db_num_rows($result_group))
-  	{
-  		$row = pwg_db_fetch_assoc($result_group);
-  		$group_id = $row['id'];
-  	}
-  	if ($group_id < 0) {
-  		pwg_query("
-			INSERT INTO `".GROUPS_TABLE."` (`name`)
-			VALUES ('sharealbum')
-		");
-  		// automatically assign group to previously created users
-  		pwg_query("
-  			INSERT IGNORE INTO ".USER_GROUP_TABLE." (group_id, user_id)
-			SELECT g.id, u.id
-			FROM `".GROUPS_TABLE."` g, ".USERS_TABLE." u
-			WHERE g.name like 'sharealbum'
-			AND u.username like 'share_%'
-  		");
-  	}
-  	
-  	// 11.4 sharealbum_powerusers group
-  	$group_id = -1;
-  	$result_group = pwg_query("
-			SELECT `id`
-			FROM `".GROUPS_TABLE."`
-			WHERE `name`='sharealbum_powerusers'"
-  	    );
-  	if (pwg_db_num_rows($result_group))
-  	{
-  	    $row = pwg_db_fetch_assoc($result_group);
-  	    $group_id = $row['id'];
-  	}
-  	if ($group_id < 0) {
-  	    pwg_query("
-			INSERT INTO `".GROUPS_TABLE."` (`name`)
-			VALUES ('sharealbum_powerusers')
-		");
-  	}
-  	
-  	// Required for versions 11.4 and above : add 'created_by' column in sharealbum table
-//   	pwg_query('
-//             ALTER TABLE `'.$this->table.'` ADD COLUMN IF NOT EXISTS created_by mediumint(8) NULL
-//         ;');
-  	
-  	$res_check_column = pwg_query("
-           SHOW COLUMNS FROM `".$this->table."` LIKE 'created_by' 
-    ");
-  	if (pwg_db_num_rows($res_check_column) == 0) {
-  	    pwg_query("
-            ALTER TABLE `".$this->table."` ADD COLUMN created_by mediumint(8) NULL
-        ");
-  	}  	
-      	
-  	$old_conf = safe_unserialize($conf['sharealbum']);
-  	conf_update_param('sharealbum', $old_conf, true);
+      $this->install($new_version, $errors);
   }
 
   /**
@@ -210,65 +165,24 @@ class ShareAlbum_maintain extends PluginMaintain
     // delete configuration
     conf_delete_param('sharealbum');
 
-    // purge user access for shared albums
-    pwg_query("
-    	DELETE 
-    	FROM ".USER_ACCESS_TABLE."
-		WHERE user_id IN (
-			SELECT s.user_id
-    		FROM ".$this->table." s
-    	)
-    ");
-
-    // purge user infos
-    pwg_query("
-    	DELETE
-    	FROM ".USER_INFOS_TABLE."
-		WHERE user_id IN (
-			SELECT s.user_id
-    		FROM ".$this->table." s
-    	)
-    ");
+    // Delete sharealbum users
+    $res_sharealbum_users = pwg_query("SELECT user_id FROM ".$this->table);
+    while ($row = pwg_db_fetch_assoc($res_sharealbum_users)) {
+        delete_user($row['user_id']);
+    }
+ 
+    // Delete sharealbum groups (sharealbum, sharealbum_powerusers)
+    $res_sharealbum_groups = pwg_query("SELECT id FROM `".GROUPS_TABLE."` WHERE name IN ('sharealbum','sharealbum_powerusers')");
+    $sharealbum_groups_ids = array();
+    while ($row = pwg_db_fetch_assoc($res_sharealbum_groups)) {
+        array_push($sharealbum_groups_ids,$row['id']);
+    }
+    delete_groups($sharealbum_groups_ids);
     
-    // purge group membership
-    pwg_query("
-    	DELETE
-    	FROM ".USER_GROUP_TABLE."
-		WHERE user_id IN (
-			SELECT s.user_id
-    		FROM ".$this->table." s
-    	)
-    ");
-    
-    // delete sharealbum users
-    // purge group membership
-    pwg_query("
-    	DELETE
-    	FROM ".USERS_TABLE."
-		WHERE id IN (
-			SELECT s.user_id
-    		FROM ".$this->table." s
-    	)
-    ");
-    
-    // delete groups
-    pwg_query("
-    	DELETE 
-    	FROM `".GROUPS_TABLE."`
-    	WHERE name like 'sharealbum'
-    ");
-    // 11.4
-    pwg_query("
-    	DELETE
-    	FROM `".GROUPS_TABLE."`
-    	WHERE name like 'sharealbum_powerusers'
-    ");
-    
-    // delete tables
+    // delete sharealbum tables
     pwg_query('DROP TABLE `'. $this->table .'`;');
     pwg_query('DROP TABLE `'. $this->table_log .'`;');
   
-
     // delete local folder
     // use a recursive function if you plan to have nested directories
     foreach (scandir($this->dir) as $file)

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: ShareAlbum
-Version: 12.1
+Version: 12.2
 Description: Plugin enabling a simple share feature for albums
 Plugin URI: http://piwigo.org/ext/extension_view.php?eid=865
 Author: petitssuisses
