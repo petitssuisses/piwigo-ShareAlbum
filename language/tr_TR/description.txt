@@ -1,0 +1,1 @@
+Albümü Paylaş, özel albümlerin paylaşılmasına izin verir.
