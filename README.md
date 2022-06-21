@@ -6,15 +6,17 @@ In the administrative area, you can from the Plugin > Share album screens :
 - For each shared album, you can : copy the one-click share URL, regenerate this unique link, cancel it
 The same features are available when you navigate (as an administrator) in your albums.
 
+Only the publicly accessible pictures in the album show up [#71](https://github.com/petitssuisses/piwigo-ShareAlbum/issues/71)
+
 Administrative functions : 
-* Optionnaly remove breadcrumbs on shared albums
-* Optionnaly hide menus on shared albums (user name not shown, no albums navigation but current album)
+* Optionally remove breadcrumbs on shared albums
+* Optionally hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
 * Version 12.2
   * Enhanced maintain.class.php install / update code 
 * Version 12.1
-  * Piwigo 12 compatibility : Set the "Has Settings" keyword. Excaped groups keyword in SQL queries.
+  * Piwigo 12 compatibility : Set the "Has Settings" keyword. Escaped groups keyword in SQL queries.
   * Reverted #56 The link of the share button (in album view) had no action when album did not contain any picture.
   * Fixed #83 When an album with sub albums does not contain any pic, share button does not work
   * Fixed #84 Album name not displayed with Bootstrap Darkroom.
@@ -60,7 +62,7 @@ Administrative functions :
   * Fixed #40 You are not authorised to access the requested page. Thanks to drenghel
   * Fixed #42 Can't find Share Button
 * Version 1.4
-  * Fixed #45 Modus theme compatibiliy
+  * Fixed #45 Modus theme compatibility
 * Version 1.3
   * Implemented #29 Manage users within a group
   * Fixed #31 Translation : Activity logs shown below
@@ -79,7 +81,7 @@ Administrative functions :
   * Implemented #15 Add number of visits and last visit using the shared link enhancement 
   * Implemented #13 Provide a way to logout guest user when browsing in shared link mode enhancement
   * Implemented #2 Administration / List of the currently shared albums
-  * Fixed #12 When browsing in guest mode, access to identification.php produces undifined index category errors
+  * Fixed #12 When browsing in guest mode, access to identification.php produces undefined index category errors
   * Fixed #10 Prevent codes smaller or longer than expected
   * Fixed #9 Share button shows on categories (with subcategories) page
 * Version 0.5 Beta release
