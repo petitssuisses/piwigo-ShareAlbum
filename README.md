@@ -13,6 +13,9 @@ Administrative functions :
 * Optionally hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 12.3
+  * Fixed #88 php8 compatibility and fixed evaluation of return value for the sharealbum_generated_code() function. Thanks to mato7d5
+  * Fixed #89 Clarification in the README for photo permissions (which need to be publicly visible)
 * Version 12.2
   * Enhanced maintain.class.php install / update code 
 * Version 12.1
