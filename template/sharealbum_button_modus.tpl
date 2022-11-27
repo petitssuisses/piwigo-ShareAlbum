@@ -33,17 +33,17 @@ window.SwitchBox=window.SwitchBox||[]).push("#sharealbumSwitchLink", "#sharealbu
 </li>
 
 {/strip}
-{if ($SHAREALBUM_USER_MESSAGE == 'link_created')}
+{if (isset($SHAREALBUM_USER_MESSAGE) && $SHAREALBUM_USER_MESSAGE == 'link_created')}
 <script>
 	alert("{$T_SHAREALBUM_LINK_CREATED}");
 </script>
 {/if}
-{if ($SHAREALBUM_USER_MESSAGE == 'link_renewed')}
+{if (isset($SHAREALBUM_USER_MESSAGE) && $SHAREALBUM_USER_MESSAGE == 'link_renewed')}
 <script>
 	alert("{$T_SHAREALBUM_LINK_RENEWED}");
 	</script>
 {/if}
-{if ($SHAREALBUM_USER_MESSAGE == 'link_cancelled')}
+{if (isset($SHAREALBUM_USER_MESSAGE) && $SHAREALBUM_USER_MESSAGE == 'link_cancelled')}
 <script>
 	alert("{$T_SHAREALBUM_LINK_CANCELLED}");
 	</script>

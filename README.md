@@ -13,8 +13,9 @@ Administrative functions :
 * Optionally hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 13.2
+  * Additional corrections for PHP 8.0
 * Version 13.1
-  * Tested successfully with Piwigo 13 releases and PHP 8.0
   * Fixed #91 Deprecated: Required parameter $user_id follows optional parameter $nb_image_page
   * Fixed #92 ShareAlbum doesnt work under PHP 8.0
 * Version 12.3
