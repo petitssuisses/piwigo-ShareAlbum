@@ -37,10 +37,7 @@ if (isset($_POST['apply_filter'])) {
 	if (isset($_POST['show_link']) && $_POST['show_link']=="yes") {
 		$filter_show_links = "yes";
 	}
-
 }
-
-
 
 // Create a new share action
 if (isset($_POST['create']) && isset ($_POST['new_share_cat']) && ($_POST['new_share_cat']!="")) {
@@ -88,7 +85,6 @@ if ($conf['sharealbum']['option_recursive_shares']) {
         ORDER BY global_rank
         ";
 }
-
 
 $shareable_albums = query2array($private_albums_query);
 // replace album name with full path to album (with uppercats)

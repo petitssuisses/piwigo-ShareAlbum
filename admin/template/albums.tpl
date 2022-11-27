@@ -19,10 +19,6 @@ jQuery(".showInfo").tipTip({
 <div class="titrePage">
 	<h2>Share Album</h2>
 </div>
-<div id="helpContent">
-  <p>{$INTRO_CONTENT}</p>
-</div>
-
 <div align="left">
 <fieldset>
 <legend>{'Share a new album'|@translate}</legend>
@@ -70,19 +66,19 @@ jQuery(".showInfo").tipTip({
 <button type="submit" name="apply_action" value="apply_action" {if $shared_albums|@count eq 0}disabled{/if}>{'Go'|translate}</button>
 </td>
 <td>
-{'Show links'|@translate} : <input type="radio" name="show_link" value="yes" {if $smarty.post.show_link=="yes"}checked="checked"{/if}> {'Yes'|@translate} <input type="radio" name="show_link" {if $smarty.post.show_link!="yes"}checked="checked"{/if} value="no"> {'No'|@translate}
+{'Show links'|@translate} : <input type="radio" name="show_link" value="yes" {if isset($smarty.post.show_link) && $smarty.post.show_link=="yes"}checked="checked"{/if}> {'Yes'|@translate} <input type="radio" name="show_link" {if isset($smarty.post.show_link) && $smarty.post.show_link!="yes"}checked="checked"{/if} value="no"> {'No'|@translate}
  - 
 {'Sort by'|@translate} : <select name="sort_field" id="sort_field">
-<option value="sort_creation_date" {if $smarty.post.sort_field=="sort_creation_date"}selected{/if}>{'Creation date'|@translate}</option>
-<option value="sort_album_name" {if $smarty.post.sort_field=="sort_album_name"}selected{/if}>{'Album'|@translate}</option>
+<option value="sort_creation_date" {if isset($smarty.post.sort_field) && $smarty.post.sort_field=="sort_creation_date"}selected{/if}>{'Creation date'|@translate}</option>
+<option value="sort_album_name" {if isset($smarty.post.sort_field) && $smarty.post.sort_field=="sort_album_name"}selected{/if}>{'Album'|@translate}</option>
 
-<option value="sort_visits" {if $smarty.post.sort_field=="sort_visits"}selected{/if}>{'Visits'|@translate}</option>
-<option value="sort_last_visit" {if $smarty.post.sort_field=="sort_last_visit"}selected{/if}>{'Last visit'|@translate}</option>
+<option value="sort_visits" {if isset($smarty.post.sort_field) && $smarty.post.sort_field=="sort_visits"}selected{/if}>{'Visits'|@translate}</option>
+<option value="sort_last_visit" {if isset($smarty.post.sort_field) && $smarty.post.sort_field=="sort_last_visit"}selected{/if}>{'Last visit'|@translate}</option>
 </select>
 
 <select name="sort_order" id="sort_field">
-<option value="ASC" {if $smarty.post.sort_order=="ASC"}selected{/if}>{'Ascending'|@translate}</option>
-<option value="DESC" {if $smarty.post.sort_order=="DESC"}selected{/if}>{'Descending'|@translate}</option>
+<option value="ASC" {if isset($smarty.post.sort_order) && $smarty.post.sort_order=="ASC"}selected{/if}>{'Ascending'|@translate}</option>
+<option value="DESC" {if isset($smarty.post.sort_order) && $smarty.post.sort_order=="DESC"}selected{/if}>{'Descending'|@translate}</option>
 </select>
 <button type="submit" name="apply_filter" value="apply_filter">{'Apply'|translate}</button>
 </td>
@@ -107,10 +103,10 @@ jQuery(".showInfo").tipTip({
 {foreach from=$shared_albums item=shared_album}
 {strip}
 <tr>
-	<td><input type="checkbox" name="sa_cat[]" value="{$shared_album.category}" {foreach from=$smarty.post.sa_cat item=cat}{if $cat==$shared_album.category}checked="checked"{/if}{/foreach}></td>
+	<td><input type="checkbox" name="sa_cat[]" value="{$shared_album.category}" {if isset($smarty.post.sa_cat)}{foreach from=$smarty.post.sa_cat item=cat}{if $cat==$shared_album.category}checked="checked"{/if}{/foreach}{/if}></td>
 	<td>{$shared_album.creation_date}</td>
 	<td><i class="fa fa-user showInfo" title="{'User'|@translate}: {$shared_album.user}"></i>&nbsp; <a href="{$shared_root_path}/index.php?/category/{$shared_album.category}" target="_new" title="{$shared_album.album}">{$shared_album.album_short}</a></td>
-	<td><button type="image" class="sharealbum_button fa fa-copy showInfo" title="{'Copy to clipboard'|@translate}" data-clipboard-text="{$shared_album.code}"></button>{if $smarty.post.show_link=="yes"}&nbsp;{$shared_album.code}{/if}</td>
+	<td><button type="image" class="sharealbum_button fa fa-copy showInfo" title="{'Copy to clipboard'|@translate}" data-clipboard-text="{$shared_album.code}"></button>{if isset($smarty.post.show_link) && $smarty.post.show_link=="yes"}&nbsp;{$shared_album.code}{/if}</td>
 
 
 	<td align="center"><a href="{$shared_album_logs}{$shared_album.category}">{$shared_album.visits}</a></td>

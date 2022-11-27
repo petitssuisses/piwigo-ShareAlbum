@@ -324,7 +324,10 @@ function sharealbum_set_nb_image_page($nb_image_page) {
  * @param int $nb_image_page
  * @param int $user_id
  */
-function sharealbum_set_user_nb_image_page($nb_image_page = SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT, $user_id) {
+function sharealbum_set_user_nb_image_page($nb_image_page, $user_id) {
+	if (!$nb_image_page) {
+		$nb_image_page = SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT;
+	}
     pwg_query("
             UPDATE ".USER_INFOS_TABLE."
             SET `nb_image_page`=".$nb_image_page."
