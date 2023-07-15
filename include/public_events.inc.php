@@ -93,6 +93,11 @@ function sharealbum_loc_end_page()
 	//								- link_created
 	//								- link_renewed
 	// 								- link_cancelled
+	// Init variables
+	$template->assign('SHAREALBUM_LINK_IS_ACTIVE',0);
+	$template->assign('SHAREALBUM_USER_MESSAGE','');
+	$template->assign('SHAREALBUM_LINK_CREATE','');
+		
 	
 	if (isset($page['section']) and $page['section'] == 'categories' and isset($page['category']))
 	{	
@@ -132,25 +137,7 @@ function sharealbum_loc_end_page()
 			$template->assign('SHAREALBUM_LINK_RENEW',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_RENEW."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
 				
 		} else {
-			// No sharing detected
-			
-			// Check if album can be shared (is private and contains at least 1 picture) - Implemented #56
-// 			$result_chk = pwg_query("SELECT COUNT(ic.image_id) as nb
-// 				FROM ".CATEGORIES_TABLE." c, ".IMAGE_CATEGORY_TABLE." ic 
-// 				WHERE c.id = ".$page['category']['id']." 
-// 				AND c.status = 'private'
-// 				AND c.id = ic.category_id");
-// 			if (pwg_db_num_rows($result_chk)) 
-// 			{
-// 				$row_chk = pwg_db_fetch_assoc($result_chk);
-// 				if ($row_chk['nb'] > 0) {
-// 					$template->assign('SHAREALBUM_LINK_CREATE',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
-// 				} else {
-// 				    $template->assign('SHAREALBUM_LINK_IS_ACTIVE', 0);
-
-// 				}
-// 			}
-			
+			// No sharing detected		
 			$template->assign('SHAREALBUM_LINK_CREATE',get_root_url()."?".SHAREALBUM_URL_ACTION."=".SHAREALBUM_URL_ACTION_CREATE."&".SHAREALBUM_URL_CATEGORY."=".$page['category']['id']);
 		}
 	}

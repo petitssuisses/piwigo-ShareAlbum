@@ -13,6 +13,11 @@ Administrative functions :
 * Optionally hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 13.4
+  * Fixed #93 PHP 8 undefined array keys in template 
+  * Fixed #94 Undefined array key SHAREALBUM_USER_MESSAGE
+* Version 13.3
+  * Additional languages Czech [CZ] - Italian [IT] - Swedish [SE]
 * Version 13.2
   * Additional corrections for PHP 8.0
 * Version 13.1
