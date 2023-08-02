@@ -246,11 +246,11 @@ function sharealbum_replace_breadcrumb() {
 	if ((pwg_get_session_var(SHAREALBUM_SESSION_VAR) and ($conf['sharealbum']['option_replace_breadcrumbs']) and isset($page['category'])))
 	{
 	    // Breadcrumbs for albums navigation
-	    $pos_cat_str = strpos($template->get_template_vars('TITLE'),"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
-	    $pos_lower_str = strrpos(substr($template->get_template_vars('TITLE'),0,$pos_cat_str),"<");
+	    $pos_cat_str = strpos((string)$template->get_template_vars('TITLE'),"/category/".pwg_get_session_var(SHAREALBUM_SESSION_CAT));
+	    $pos_lower_str = strrpos(substr((string)$template->get_template_vars('TITLE'),0,$pos_cat_str),"<");
 	    
 	    $nav_breadcrumbs = "";
-	    $nav_breadcrumbs .= substr($template->get_template_vars('TITLE'),$pos_lower_str);
+	    $nav_breadcrumbs .= substr((string)$template->get_template_vars('TITLE'),$pos_lower_str);
 	    
 	    if($user['theme']=='bootstrap_darkroom') {
 	        // Special treatment for bootstrap darkroom. Need to add a first level to map home icon to shared root category
