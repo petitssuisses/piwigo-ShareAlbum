@@ -344,7 +344,7 @@ function sharealbum_is_poweruser($user_id) {
     } else {
         if ($conf['sharealbum']['option_enable_powerusers']) {
             $result = pwg_query("
-                SELECT * FROM piwigo_user_group pug WHERE pug.user_id=".$user_id." AND pug.group_id in (
+                SELECT * FROM `".USER_GROUP_TABLE."` pug WHERE pug.user_id=".$user_id." AND pug.group_id in (
                     SELECT pg.id FROM `".GROUPS_TABLE."` pg WHERE name LIKE 'sharealbum_powerusers' 
                 ) 
             ");
