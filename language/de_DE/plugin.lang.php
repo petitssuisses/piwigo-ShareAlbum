@@ -52,3 +52,4 @@ $lang['Shared by'] = 'Geteilt von';
 $lang['Warning : those users will be able to create shared albums as well as to remove existing shares'] = 'Warnung: Diese Benutzer können sowohl Freigegebene Alben erstellen als auch bestehende Freigaben entfernen';
 $lang['When checked, any user belonging to the group \'sharealbum_powerusers\' has access to the share option in private album pages'] = 'Wenn dieses Kontrollkästchen aktiviert ist, hat jeder Benutzer, der der Gruppe "sharealbum_powerusers" angehört, Zugriff auf die Freigabeoption in privaten Albumseiten';
 $lang['When checked, nested albums are shared as well as the parent shared album'] = 'Wenn diese Option aktiviert ist, können auch verschachtelte Alben durchsucht werden';
+$lang['Share Album'] = 'Album teilen';
