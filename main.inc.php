@@ -73,6 +73,8 @@ add_event_handler('ws_add_methods', 'sharealbum_ws_register_methods');
 
 // catch users deletion events
 add_event_handler('delete_user', 'sharealbum_on_delete_user');
+// catch category deletion events
+add_event_handler('delete_categories', 'sharealbum_on_delete_categories');
 // register new identification block
 add_event_handler('blockmanager_register_blocks', 'sharealbum_identification_menu_register');
 // hide menus for users using a sharealbum link
@@ -203,6 +205,25 @@ function sharealbum_on_delete_user($user_id) {
   		FROM `".SHAREALBUM_TABLE."`
   		WHERE `user_id`=".$user_id
 	);
+}
+
+/**
+ * Cleans sharealbum shares when categories are deleted
+ * @param array $category_ids Array of category IDs being deleted
+ */
+function sharealbum_on_delete_categories($category_ids) {
+	foreach ($category_ids as $cat_id) {
+		// Check if this category has a share
+		$result = pwg_query("
+			SELECT `id`
+			FROM `".SHAREALBUM_TABLE."`
+			WHERE `cat` = ".$cat_id
+		);
+		if (pwg_db_num_rows($result)) {
+			// Remove the share for this category
+			sharealbum_cancel_share($cat_id);
+		}
+	}
 }
 
 /**

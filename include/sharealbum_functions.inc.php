@@ -275,6 +275,10 @@ function sharealbum_getname_with_uppercats($cat_name, $uppercats) {
 	$separator = " / ";
 	
 	$arr_uppercats = array();
+	// Handle null or empty uppercats to prevent PHP 8.2 deprecation warning
+	if ($uppercats === null || $uppercats === '') {
+		return $cat_name;
+	}
 	$arr_uppercats = explode(",",$uppercats);
 	
 	$name_with_uppercats = "";
