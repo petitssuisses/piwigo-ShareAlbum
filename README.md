@@ -15,6 +15,8 @@ Administrative functions :
 # Versions history
 * Version 16.1
   * Added #33 Implemented web services (API) methods
+  * Fixed #102 PHP warnings when a shared album is deleted
+  * Template fix for theme bootstrap-darkroom
 * Version 15.1
   * Fixed #100 User groups table name is hardcoded with the prefix piwigo_ (Thanks for contibutions !)
 * Version 13.5 / 13.6

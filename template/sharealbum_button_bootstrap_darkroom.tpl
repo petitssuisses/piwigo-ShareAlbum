@@ -33,7 +33,7 @@
 		<a class="dropdown-item" href="{$SHAREALBUM_LINK_RENEW}" onclick="return(confirm('{$T_SHAREALBUM_RENEW_WARNING}'));">{$T_SHAREALBUM_RENEW}</a>
 		<a class="dropdown-item" href="{$SHAREALBUM_LINK_CANCEL}" onclick="return(confirm('{$T_SHAREALBUM_CANCEL_WARNING}'));">{$T_SHAREALBUM_CANCEL}</a>
 	{else}
-		<a href="{$SHAREALBUM_LINK_CREATE}" rel="nofollow">{$T_SHAREALBUM_SHARE}</a>
+		<a class="dropdown-item" href="{$SHAREALBUM_LINK_CREATE}" rel="nofollow">{$T_SHAREALBUM_SHARE}</a>
 	{/if}
 	</div>
 {/strip}
