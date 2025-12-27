@@ -13,6 +13,8 @@ Administrative functions :
 * Optionally hide menus on shared albums (user name not shown, no albums navigation but current album)
 
 # Versions history
+* Version 16.1
+  * Added #33 Implemented web services (API) methods
 * Version 15.1
   * Fixed #100 User groups table name is hardcoded with the prefix piwigo_ (Thanks for contibutions !)
 * Version 13.5 / 13.6

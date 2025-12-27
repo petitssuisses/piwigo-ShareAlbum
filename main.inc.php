@@ -60,12 +60,16 @@ define('SHAREALBUM_NB_IMAGES_PER_PAGE_DEFAULT',15);     // Default number of ima
 
 // load functions
 include_once(SHAREALBUM_PATH.'include/sharealbum_functions.inc.php');
+include_once(SHAREALBUM_PATH.'include/ws_functions.inc.php');
 
 // +-----------------------------------------------------------------------+
 // | Add event handlers                                                    |
 // +-----------------------------------------------------------------------+
 // init the plugin
 add_event_handler('init', 'sharealbum_init');
+
+// register web service methods
+add_event_handler('ws_add_methods', 'sharealbum_ws_register_methods');
 
 // catch users deletion events
 add_event_handler('delete_user', 'sharealbum_on_delete_user');
