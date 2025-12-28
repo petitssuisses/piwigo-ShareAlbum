@@ -158,10 +158,15 @@ function sharealbum_ws_get_info($params, &$service)
   
   $category_id = (int)$params['category_id'];
   
-  // Verify category exists
-  $category_query = "SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id;
-  $category_result = query2array($category_query);
-  if (empty($category_result)) {
+  // Check if shared first (this doesn't require category permissions)
+  $existing_code = sharealbum_get_share_code($category_id);
+  if ($existing_code === NULL) {
+    return new PwgError(404, 'Album is not shared');
+  }
+  
+  // Verify category exists using pwg_query to bypass permission checks
+  $category_result = pwg_query("SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id);
+  if (pwg_db_num_rows($category_result) == 0) {
     return new PwgError(404, 'Category not found');
   }
   
@@ -258,17 +263,16 @@ function sharealbum_ws_cancel($params, &$service)
   
   $category_id = (int)$params['category_id'];
   
-  // Verify category exists
-  $category_query = "SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id;
-  $category_result = query2array($category_query);
-  if (empty($category_result)) {
-    return new PwgError(404, 'Category not found');
-  }
-  
-  // Check if shared
+  // Check if shared first (this doesn't require category permissions)
   $existing_code = sharealbum_get_share_code($category_id);
   if ($existing_code === NULL) {
     return new PwgError(404, 'Album is not shared');
+  }
+  
+  // Verify category exists using pwg_query to bypass permission checks
+  $category_result = pwg_query("SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id);
+  if (pwg_db_num_rows($category_result) == 0) {
+    return new PwgError(404, 'Category not found');
   }
   
   // Cancel the share
@@ -294,17 +298,16 @@ function sharealbum_ws_renew($params, &$service)
   
   $category_id = (int)$params['category_id'];
   
-  // Verify category exists
-  $category_query = "SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id;
-  $category_result = query2array($category_query);
-  if (empty($category_result)) {
-    return new PwgError(404, 'Category not found');
-  }
-  
-  // Check if shared
+  // Check if shared first (this doesn't require category permissions)
   $existing_code = sharealbum_get_share_code($category_id);
   if ($existing_code === NULL) {
     return new PwgError(404, 'Album is not shared');
+  }
+  
+  // Verify category exists using pwg_query to bypass permission checks
+  $category_result = pwg_query("SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id);
+  if (pwg_db_num_rows($category_result) == 0) {
+    return new PwgError(404, 'Category not found');
   }
   
   // Renew the share
@@ -348,17 +351,16 @@ function sharealbum_ws_get_logs($params, &$service)
     $page = 0;
   }
   
-  // Verify category exists
-  $category_query = "SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id;
-  $category_result = query2array($category_query);
-  if (empty($category_result)) {
-    return new PwgError(404, 'Category not found');
-  }
-  
-  // Check if shared
+  // Check if shared first (this doesn't require category permissions)
   $existing_code = sharealbum_get_share_code($category_id);
   if ($existing_code === NULL) {
     return new PwgError(404, 'Album is not shared');
+  }
+  
+  // Verify category exists using pwg_query to bypass permission checks
+  $category_result = pwg_query("SELECT id, name, status FROM ".CATEGORIES_TABLE." WHERE id = ".$category_id);
+  if (pwg_db_num_rows($category_result) == 0) {
+    return new PwgError(404, 'Category not found');
   }
   
   // Get total count
