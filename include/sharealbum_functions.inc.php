@@ -97,7 +97,7 @@ function sharealbum_generate_code($len,$lower,$use_special_chars) {
 	{
 		$chars = $chars.$special_chars;
 	}
-	srand((double)microtime()*1000000);
+	srand((int)(microtime(true)*1000000));
 	$i = 0;
 	$code = '' ;
 
